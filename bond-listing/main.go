@@ -108,12 +108,12 @@ func main() {
 	}
 	defer file.Close()
 
-	for _, b := range bonds {
+	for i, b := range bonds {
 		if b == nil {
 			break
 		}
 
-		_, err = fmt.Fprintln(file, b)
+		_, err = fmt.Fprintf(file, "%v\n%v\n", i, b)
 		if err != nil {
 			log.Fatal(err)
 		}
