@@ -47,9 +47,9 @@ func (b *Bond) String() string {
 }
 
 func (b *Bond) Init(comissionPercent float64) {
-	if b.CleanPrice == 0.0 {
+	if b.CleanPricePercent != 0.0 {
 		b.CleanPrice = b.Nominal * b.CleanPricePercent / 100.0
-	} else if b.CleanPricePercent == 0.0 {
+	} else {
 		b.CleanPricePercent = b.CleanPrice / b.Nominal * 100.0
 	}
 
@@ -76,5 +76,8 @@ func (b *Bond) calcYield(comissionPercent float64, maturityDate time.Time) float
 		spread *= (1 - 0.13)
 	}
 
-	return (coupon + spread) / b.DirtyPrice * (365.0 / days) * 100.0
+	income := coupon + spread + b.Nominal
+	spent := b.DirtyPrice
+
+	return (income - spent) / spent * (365.0 / days) * 100.0
 }
