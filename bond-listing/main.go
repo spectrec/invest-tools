@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-var bondTypesArg = flag.String("types", "gov,mun,corp", "required bond types (corp,gov,mun)")
+var bondTypesArg = flag.String("types", "gov,mun,corp,euro", "required bond types (corp,gov,mun)")
 
 var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
 

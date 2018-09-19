@@ -7,10 +7,13 @@ const (
 	TypeGov
 	TypeMun
 	TypeCorp
+	TypeEuro
 )
 
 func Type(name string) BondType {
 	switch name {
+	case "euro":
+		return TypeEuro
 	case "corp":
 		return TypeCorp
 	case "mun":
@@ -30,6 +33,8 @@ func (t BondType) String() string {
 		return "mun"
 	case TypeGov:
 		return "gov"
+	case TypeEuro:
+		return "euro"
 	default:
 		return "unknown"
 	}

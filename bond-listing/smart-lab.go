@@ -83,6 +83,23 @@ func parseOptions(t bond.BondType) *bondOptions {
 				bondFieldSkip, bondFieldAccruedInterest, bondFieldSkip, bondFieldSkip, bondFieldOfferDate,
 			},
 		}
+	case bond.TypeEuro:
+		return &bondOptions{
+			bondType: t,
+			url:      "https://smart-lab.ru/q/eurobonds/",
+			fields: []string{
+				"№", "Время", "Имя", "",
+				"Погашение", "Лет до", "Доходн", "Год.куп.дох.",
+				"Куп.дох.", "Цена", "Объем, тыс. $", "Купон, $",
+				"Частота,", "НКД, $", "Дата купона", "Оферта",
+			},
+			bondFields: []bondField{
+				bondFieldSkip, bondFieldSkip, bondFieldName, bondFieldSkip,
+				bondFieldMaturityDate, bondFieldSkip, bondFieldSkip, bondFieldSkip,
+				bondFieldSkip, bondFieldCleanPrice, bondFieldSkip, bondFieldSkip,
+				bondFieldSkip, bondFieldAccruedInterest, bondFieldSkip, bondFieldOfferDate,
+			},
+		}
 	default:
 		return &bondOptions{
 			bondType: bond.TypeUndef,
