@@ -122,6 +122,7 @@ func parseBonds(bonds []*bond.Bond, opt *bondOptions) []*bond.Bond {
 	tbody := extractNodeByPath(root, []string{"html", "body", "div", "div", "table", "tbody"})
 
 	var headerChecked bool
+	var found, skipped uint32
 	for tr := tbody.FirstChild; tr != nil; tr = tr.NextSibling {
 		if tr.Type != html.ElementNode {
 			continue
@@ -134,10 +135,16 @@ func parseBonds(bonds []*bond.Bond, opt *bondOptions) []*bond.Bond {
 			continue
 		}
 
-		if bond := parseBond(tr, opt); bond != nil {
+		bond := parseBond(tr, opt)
+		if bond != nil {
 			bonds = append(bonds, bond)
+			found++
+		} else {
+			skipped++
 		}
 	}
+
+	log.Printf("`%s' bonds: %v found, %v skipped\n", opt.bondType, found, skipped)
 
 	return bonds
 }
@@ -178,15 +185,10 @@ func parseBond(root *html.Node, opt *bondOptions) *bond.Bond {
 			if err != nil {
 				log.Fatal("can't parse clean price: ", err)
 			}
-
-			if bond.CleanPricePercent < 50 {
-				// Assume that something wrong with this bond,
-				//  and it is not interesting for us
-				return nil
-			}
 		case bondFieldMaturityDate:
 			bond.MaturityDate = extractDate(text.Data)
 			if bond.MaturityDate == nil {
+				debug("skip `%s', maturity date not found\n", bond.ISIN)
 				return nil
 			}
 		case bondFieldOfferDate:
@@ -196,10 +198,7 @@ func parseBond(root *html.Node, opt *bondOptions) *bond.Bond {
 		}
 	}
 	if i != len(opt.bondFields) {
-		log.Println("skip partially parsed bond")
-		return nil
-	}
-	if bond.CleanPricePercent == 0.0 {
+		debug("skip partially parsed bond")
 		return nil
 	}
 

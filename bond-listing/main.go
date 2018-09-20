@@ -14,6 +14,7 @@ import (
 var bondTypesArg = flag.String("types", "gov,mun,corp,euro", "required bond types (corp,gov,mun)")
 
 var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
+var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 50.0, "minimum allowed clean percent (skip others)")
 
 var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 8, "min rubble yield percent")
 var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min rubble yield percent")
@@ -22,6 +23,14 @@ var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min rubble yiel
 var maturityDateArg = flag.String("maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 3 years)")
 
 var outputFileArg = flag.String("output", "output.txt", "path to output file")
+
+var debugArg = flag.Bool("debug", false, "enable debug output")
+
+func debug(fmt string, args ...interface{}) {
+	if *debugArg {
+		log.Printf(fmt, args)
+	}
+}
 
 func main() {
 	flag.Parse()
@@ -56,10 +65,21 @@ func main() {
 	listing := moexDownloadAndParse()
 
 	log.Println("Merging lists ...")
+
+	var skippedMoex, skippedPrice uint32
 	for i, b := range bonds {
 		v, exist := listing[b.ISIN]
 		if !exist {
+			skippedMoex++
 			bonds[i] = nil
+
+			continue
+		}
+
+		if bonds[i].CleanPricePercent < *minCleanPricePercentArg {
+			skippedPrice++
+			bonds[i] = nil
+
 			continue
 		}
 
@@ -84,6 +104,7 @@ func main() {
 			bonds[i] = nil
 		}
 	}
+	log.Printf("Merge stat: moex not found: %v, too low clean price: %v\n", skippedMoex, skippedPrice)
 
 	log.Println("Sorting results ...")
 	sort.Slice(bonds, func(i, j int) bool {
