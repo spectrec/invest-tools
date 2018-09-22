@@ -11,6 +11,7 @@ import (
 	"os"
 	"sort"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -31,16 +32,20 @@ var outputFileArg = flag.String("output", "output.txt", "path to output file")
 var debugArg = flag.Bool("debug", false, "enable debug output")
 
 func main() {
+	var finamBonds map[string]finam.Bond
+	var listing map[string]*moex.Bond
+	var bonds []*bond.Bond
+	var wg sync.WaitGroup
+	var err error
+
 	flag.Parse()
 
 	var maturityDate time.Time
 	if *maturityDateArg != "" {
-		t, err := time.Parse("2006-01-02", *maturityDateArg)
+		maturityDate, err = time.Parse("2006-01-02", *maturityDateArg)
 		if err != nil {
 			log.Fatal("can't parse maturity date: ", err)
 		}
-
-		maturityDate = t
 	} else {
 		// Skip 3 years from now
 		maturityDate = time.Now().AddDate(3, 0, 0)
@@ -48,12 +53,10 @@ func main() {
 
 	var statisticDate time.Time
 	if *statisticDateArg != "" {
-		t, err := time.Parse("2006-01-02", *statisticDateArg)
+		statisticDate, err = time.Parse("2006-01-02", *statisticDateArg)
 		if err != nil {
 			log.Fatal("can't parse statistic date: ", err)
 		}
-
-		statisticDate = t
 	} else if time.Now().Hour() < 18 {
 		// Take previuos date, becase exchange still works
 		statisticDate = time.Now().Add(-time.Hour * 24)
@@ -62,30 +65,54 @@ func main() {
 		statisticDate = time.Now()
 	}
 
-	bonds := make([]*bond.Bond, 0, 0)
-	for _, name := range strings.Split(*bondTypesArg, ",") {
+	wg.Add(1)
+	go func(wg *sync.WaitGroup) {
+		defer wg.Done()
+
+		for _, name := range strings.Split(*bondTypesArg, ",") {
+			var err error
+
+			log.Printf("Donwloading `%s' bonds list ...\n", name)
+			bonds, err = smartlab.DownloadAndParse(name, bonds, *debugArg)
+			log.Printf("Donwloading `%s' bonds finished ...\n", name)
+
+			if err != nil {
+				log.Fatal("smart-lab failed: ", err)
+			}
+		}
+	}(&wg)
+
+	wg.Add(1)
+	go func(wg *sync.WaitGroup) {
 		var err error
 
-		log.Printf("Donwloading `%s' bonds list ...\n", name)
+		defer wg.Done()
 
-		bonds, err = smartlab.DownloadAndParse(name, bonds, *debugArg)
+		log.Println("Donwloading moex listings ...")
+		listing, err = moex.DownloadAndParse(*debugArg)
+		log.Println("Donwloading moex finished ...")
+
 		if err != nil {
-			log.Fatal("smart-lab failed: ", err)
+			log.Fatal("moex failed: ", err)
 		}
-	}
+	}(&wg)
 
-	log.Println("Donwloading moex listings ...")
-	listing, err := moex.DownloadAndParse(*debugArg)
-	if err != nil {
-		log.Fatal("moex failed: ", err)
-	}
+	wg.Add(1)
+	go func(wg *sync.WaitGroup) {
+		var err error
 
-	log.Printf("Donwloading finam bonds list ...\n")
-	finamBonds, err := finam.DownloadAndParse(statisticDate, *debugArg)
-	if err != nil {
-		log.Fatal("finam failed: ", err)
-	}
+		defer wg.Done()
 
+		log.Printf("Donwloading finam bonds list ...\n")
+		finamBonds, err = finam.DownloadAndParse(statisticDate, *debugArg)
+		log.Printf("Donwloading finam bonds finished ...\n")
+
+		if err != nil {
+			log.Fatal("finam failed: ", err)
+		}
+	}(&wg)
+
+	wg.Wait()
 	log.Println("Merging lists ...")
 
 	var skippedMoex, skippedPrice, notFoundFinam uint32
