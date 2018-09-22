@@ -225,10 +225,7 @@ func parseBond(root *html.Node, opt *options) (*bond.Bond, error) {
 
 			bond.MaturityDate = &v
 		case fieldOfferDate:
-			v, err := time.Parse("2006-01-02", text.Data)
-			if err == nil {
-				bond.OfferDate = &v
-			}
+			// It is not interested for now
 		default:
 			panic("unknown bond field")
 		}

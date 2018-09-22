@@ -88,18 +88,11 @@ func main() {
 
 	log.Println("Merging lists ...")
 
-	var skippedMoex, skippedPrice uint32
+	var skippedMoex, skippedPrice, notFoundFinam uint32
 	for i, b := range bonds {
 		v, exist := listing[b.ISIN]
 		if !exist {
 			skippedMoex++
-			bonds[i] = nil
-
-			continue
-		}
-
-		if bonds[i].CleanPricePercent < *minCleanPricePercentArg {
-			skippedPrice++
 			bonds[i] = nil
 
 			continue
@@ -110,9 +103,24 @@ func main() {
 		b.Nominal = v.Nominal
 		b.Name = v.Name
 
-		_, found := finamBonds[bond.NormalizeBondShortName(b.ShortName)]
-		if found {
-			// TODO: fill info
+		fb, exist := finamBonds[bond.NormalizeBondShortName(b.ShortName)]
+		if exist {
+			b.SecuritiesCount = fb.SecuritiesCount
+			b.TransactionsCount = fb.TransactionsCount
+			b.TradeVolume = fb.TradeVolume
+
+			// Use the most pessimistic case
+			b.CleanPricePercent = fb.Ask
+		} else {
+			notFoundFinam++
+
+		}
+
+		if b.CleanPricePercent < *minCleanPricePercentArg {
+			skippedPrice++
+			bonds[i] = nil
+
+			continue
 		}
 
 		b.Init(*comissionPercentArg)
@@ -131,7 +139,8 @@ func main() {
 			bonds[i] = nil
 		}
 	}
-	log.Printf("Merge stat: moex not found: %v, too low clean price: %v\n", skippedMoex, skippedPrice)
+	log.Printf("Merge stat: moex not found: %v; finam not found: %v; too low clean price: %v\n",
+		skippedMoex, notFoundFinam, skippedPrice)
 
 	log.Println("Sorting results ...")
 	sort.Slice(bonds, func(i, j int) bool {
