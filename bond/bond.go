@@ -42,7 +42,6 @@ func (b *Bond) String() string {
 	}
 
 	fields := []string{
-		fmt.Sprintf("Liquid:             %s", b.Type),
 		fmt.Sprintf("Type:               %s", b.Type),
 		fmt.Sprintf("ISIN:               %s", b.ISIN),
 		fmt.Sprintf("Emitent:            %s (%s)", b.ShortName, b.Name),
