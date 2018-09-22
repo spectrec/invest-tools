@@ -1,4 +1,4 @@
-package main
+package moex
 
 import (
 	"encoding/csv"
@@ -66,15 +66,15 @@ var expectedOrder = []string{
 	"DISCLOSURE_PART_PAGE", "DISCLOSURE_RF_INFO_PAGE",
 }
 
-type moexBond struct {
+type Bond struct {
 	Name           string
 	Nominal        float64
 	CouponInterest float64
 	Currency       string
 }
 
-func moexDownloadAndParse() map[string]moexBond {
-	result := make(map[string]moexBond)
+func DownloadAndParse() map[string]Bond {
+	result := make(map[string]Bond)
 	headerChecked := false
 
 	resp, err := http.Get("https://www.moex.com/ru/listing/securities-list-csv.aspx?type=1")
@@ -149,7 +149,7 @@ func moexDownloadAndParse() map[string]moexBond {
 			log.Fatal("can't parse nominam (moex): ", err)
 		}
 
-		result[parsed[moexCsvISIN]] = moexBond{
+		result[parsed[moexCsvISIN]] = Bond{
 			Name:           parsed[moexCsvEmitentFullName],
 			Nominal:        nominal,
 			CouponInterest: percent,
@@ -157,7 +157,7 @@ func moexDownloadAndParse() map[string]moexBond {
 		}
 
 		if parsed[moexCsvISIN] != parsed[moexCsvTradeCode] {
-			result[parsed[moexCsvTradeCode]] = moexBond{
+			result[parsed[moexCsvTradeCode]] = Bond{
 				Name:           parsed[moexCsvEmitentFullName],
 				Nominal:        nominal,
 				CouponInterest: percent,

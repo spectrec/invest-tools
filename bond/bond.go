@@ -2,13 +2,16 @@ package bond
 
 import (
 	"fmt"
+	"strings"
 	"time"
+	"unicode"
 )
 
 type Bond struct {
-	Type BondType
-	Name string
-	ISIN string
+	Type      BondType
+	ShortName string
+	Name      string
+	ISIN      string
 
 	Nominal        float64
 	CouponInterest float64
@@ -30,6 +33,7 @@ type Bond struct {
 func (b *Bond) String() string {
 	return fmt.Sprintf(
 		"Type:               %s\n"+
+			"Short Name:         %s\n"+
 			"Emitent:            %s\n"+
 			"ISIN:               %s\n"+
 			"Nominal:            %.3f\n"+
@@ -41,7 +45,7 @@ func (b *Bond) String() string {
 			"Maturity Date:      %s\n"+
 			"Days to maturity:   %v\n"+
 			"Yield to maturity:  %.3f%%\n",
-		b.Type, b.Name, b.ISIN, b.Nominal, b.CouponInterest, b.Currency,
+		b.Type, b.ShortName, b.Name, b.ISIN, b.Nominal, b.CouponInterest, b.Currency,
 		b.AccruedInterst, b.CleanPrice, b.CleanPricePercent, b.DirtyPrice,
 		b.MaturityDate.Format("2006-01-02"), b.DaysToMaturity, b.YielToMaturity)
 }
@@ -80,4 +84,23 @@ func (b *Bond) calcYield(comissionPercent float64, maturityDate time.Time) float
 	spent := b.DirtyPrice
 
 	return (income - spent) / spent * (365.0 / days) * 100.0
+}
+
+func NormalizeBondShortName(name string) string {
+	return strings.Map(func(r rune) rune {
+		if unicode.IsSpace(r) {
+			return -1
+		}
+
+		switch r {
+		case '-':
+			return -1
+		case '/':
+			return -1
+		case '.':
+			return -1
+		default:
+			return unicode.ToUpper(r)
+		}
+	}, name)
 }

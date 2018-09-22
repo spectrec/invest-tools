@@ -4,6 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/spectrec/invest-tools/bond"
+	"github.com/spectrec/invest-tools/bond-listing/finam"
+	"github.com/spectrec/invest-tools/bond-listing/moex"
+	"github.com/spectrec/invest-tools/bond-listing/smart-lab"
 	"log"
 	"os"
 	"sort"
@@ -21,48 +24,62 @@ var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min rubble yiel
 var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min rubble yield percent")
 
 var maturityDateArg = flag.String("maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 3 years)")
+var statisticDateArg = flag.String("stat-date", "", "trade statistic date yyyy-mm-dd (by default: yestarday when `now' is before 6 p.m; otherwise today)")
 
 var outputFileArg = flag.String("output", "output.txt", "path to output file")
 
 var debugArg = flag.Bool("debug", false, "enable debug output")
-
-func debug(fmt string, args ...interface{}) {
-	if *debugArg {
-		log.Printf(fmt, args)
-	}
-}
 
 func main() {
 	flag.Parse()
 
 	var maturityDate time.Time
 	if *maturityDateArg != "" {
-		t := extractDate(*maturityDateArg)
-		if t == nil {
-			log.Fatal("can't parse maturity date")
+		t, err := time.Parse("2006-01-02", *maturityDateArg)
+		if err != nil {
+			log.Fatal("can't parse maturity date: ", err)
 		}
 
-		maturityDate = *t
+		maturityDate = t
 	} else {
 		// Skip 3 years from now
 		maturityDate = time.Now().AddDate(3, 0, 0)
 	}
 
+	var statisticDate time.Time
+	if *statisticDateArg != "" {
+		t, err := time.Parse("2006-01-02", *statisticDateArg)
+		if err != nil {
+			log.Fatal("can't parse statistic date: ", err)
+		}
+
+		statisticDate = t
+	} else if time.Now().Hour() < 18 {
+		// Take previuos date, becase exchange still works
+		statisticDate = time.Now().Add(-time.Hour * 24)
+	} else {
+		// We can take `now' because exchange is closed
+		statisticDate = time.Now()
+	}
+
 	bonds := make([]*bond.Bond, 0, 0)
 	for _, name := range strings.Split(*bondTypesArg, ",") {
-		o := parseOptions(bond.Type(name))
+		o := smartlab.ParseOptions(bond.Type(name))
 
-		if o.bondType == bond.TypeUndef {
+		if o.BondType == bond.TypeUndef {
 			continue
 		}
 
 		log.Printf("Donwloading `%s' bonds list ...\n", name)
-		bonds = parseBonds(bonds, o)
+		bonds = smartlab.ParseBonds(bonds, o)
 		log.Println("Donwload completed")
 	}
 
 	log.Println("Donwloading moex listings ...")
-	listing := moexDownloadAndParse()
+	listing := moex.DownloadAndParse()
+
+	log.Printf("Donwloading finam bonds list ...\n")
+	finamBonds := finam.ParseFinam(statisticDate)
 
 	log.Println("Merging lists ...")
 
@@ -87,6 +104,11 @@ func main() {
 		b.CouponInterest = v.CouponInterest
 		b.Nominal = v.Nominal
 		b.Name = v.Name
+
+		_, found := finamBonds[bond.NormalizeBondShortName(b.ShortName)]
+		if found {
+			// TODO: fill info
+		}
 
 		b.Init(*comissionPercentArg)
 
