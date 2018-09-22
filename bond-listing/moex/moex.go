@@ -2,55 +2,55 @@ package moex
 
 import (
 	"encoding/csv"
+	"fmt"
 	"golang.org/x/text/encoding/charmap"
 	"io"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
 )
 
 const (
-	moexCsvDatestamp uint32 = iota
-	moexCsvInstrumentID
-	moexCsvListSection
-	moexCsvRN
-	moexCsvSupertype
-	moexCsvInstrumentType
-	moexCsvInstrumentCategory
-	moexCsvTradeCode
-	moexCsvISIN
-	moexCsvRegistryNumber
-	moexCsvRegistryDate
-	moexCsvEmitentFullName
-	moexCsvInn
-	moexCsvNominal
-	moexCsvCurrency
-	moexCsvIssueAmount
-	moexCsvDecisionDate
-	moexCsvOksmEdr
-	moexCsvOnlyEmitentFullName
-	moexCsvRegCountry
-	moexCsvQualifiedInvestor
-	moexCsvHasProspectus
-	moexCsvIsConcessionAgreement
-	moexCsvIsMortgageAgent
-	moexCsvIncludedDuringCreation
-	moexCsvSecurityHasDefault
-	moexCsvSecurityHasTechDefault
-	moexCsvIncludedWithoutCompliance
-	moexCsvRetainedWithoutCompliance
-	moexCsvHasRestrictionCirculation
-	moexCsvListingLevelHist
-	moexCsvObligationProgramRn
-	moexCsvCouponPercent
-	moexCsvEarlyRepayment
-	moexCsvEarlyRedemption
-	moexCsvIssBoards
-	moexCsvOtherSecurities
-	moexCsvDisclosurePartPage
-	moexCsvDisclosureRfInfoPage
-	moexCsvLast
+	csvDatestamp uint32 = iota
+	csvInstrumentID
+	csvListSection
+	csvRN
+	csvSupertype
+	csvInstrumentType
+	csvInstrumentCategory
+	csvTradeCode
+	csvISIN
+	csvRegistryNumber
+	csvRegistryDate
+	csvEmitentFullName
+	csvInn
+	csvNominal
+	csvCurrency
+	csvIssueAmount
+	csvDecisionDate
+	csvOksmEdr
+	csvOnlyEmitentFullName
+	csvRegCountry
+	csvQualifiedInvestor
+	csvHasProspectus
+	csvIsConcessionAgreement
+	csvIsMortgageAgent
+	csvIncludedDuringCreation
+	csvSecurityHasDefault
+	csvSecurityHasTechDefault
+	csvIncludedWithoutCompliance
+	csvRetainedWithoutCompliance
+	csvHasRestrictionCirculation
+	csvListingLevelHist
+	csvObligationProgramRn
+	csvCouponPercent
+	csvEarlyRepayment
+	csvEarlyRedemption
+	csvIssBoards
+	csvOtherSecurities
+	csvDisclosurePartPage
+	csvDisclosureRfInfoPage
+	csvLast
 )
 
 var expectedOrder = []string{
@@ -73,13 +73,13 @@ type Bond struct {
 	Currency       string
 }
 
-func DownloadAndParse() map[string]Bond {
-	result := make(map[string]Bond)
+func DownloadAndParse(debug bool) (map[string]*Bond, error) {
+	result := make(map[string]*Bond)
 	headerChecked := false
 
 	resp, err := http.Get("https://www.moex.com/ru/listing/securities-list-csv.aspx?type=1")
 	if err != nil {
-		log.Fatal(err)
+		return result, err
 	}
 	defer resp.Body.Close()
 
@@ -91,13 +91,13 @@ func DownloadAndParse() map[string]Bond {
 				break
 			}
 
-			log.Fatal(err)
+			return result, err
 		}
 
 		if !headerChecked {
 			headerChecked = true
 			if len(parsed) < len(expectedOrder) {
-				log.Fatal("header changed, too short: ", parsed)
+				return result, fmt.Errorf("header changed, too short: ", parsed)
 			}
 
 			for i := range expectedOrder {
@@ -105,66 +105,64 @@ func DownloadAndParse() map[string]Bond {
 					continue
 				}
 
-				log.Fatalf("moex order changed: expected `%s', got `%s'",
-					expectedOrder[i], parsed[i])
+				return result, fmt.Errorf("order changed: expected `%s', got `%s'", expectedOrder[i], parsed[i])
 			}
 		}
 
 		// Exclude bad strings
-		if len(parsed) < int(moexCsvLast) {
-			log.Println("skip bad csv: ", parsed)
+		if len(parsed) < int(csvLast) {
+			if debug {
+				fmt.Println("skip bad csv: ", parsed)
+			}
+
 			continue
 		}
-		if parsed[moexCsvISIN] == "" {
+		if parsed[csvISIN] == "" {
 			continue
 		}
-		if parsed[moexCsvSupertype] != "Облигации" {
+		if parsed[csvSupertype] != "Облигации" {
 			continue
 		}
 
 		// We are not qualified investors yet
-		if parsed[moexCsvQualifiedInvestor] == "+" {
+		if parsed[csvQualifiedInvestor] == "+" {
 			continue
 		}
 
 		// Skip bad emitents
-		if parsed[moexCsvSecurityHasDefault] == "+" || parsed[moexCsvSecurityHasTechDefault] == "+" {
+		if parsed[csvSecurityHasDefault] == "+" || parsed[csvSecurityHasTechDefault] == "+" {
 			continue
 		}
 
-		i := strings.Index(parsed[moexCsvCouponPercent], "%")
+		i := strings.Index(parsed[csvCouponPercent], "%")
 		if i == -1 {
 			continue
 		}
 
-		percentString := strings.Replace(parsed[moexCsvCouponPercent][:i], ",", ".", 1)
+		percentString := strings.Replace(parsed[csvCouponPercent][:i], ",", ".", 1)
 		percent, err := strconv.ParseFloat(percentString, 64)
 		if err != nil {
-			log.Fatal("can't parse coupon percent (moex): ", err)
+			return result, fmt.Errorf("can't parse coupon percent (moex): ", err)
 		}
 
-		nominalString := strings.Replace(parsed[moexCsvNominal], ",", ".", 1)
+		nominalString := strings.Replace(parsed[csvNominal], ",", ".", 1)
 		nominal, err := strconv.ParseFloat(nominalString, 64)
 		if err != nil {
-			log.Fatal("can't parse nominam (moex): ", err)
+			return result, fmt.Errorf("can't parse nominal (moex): ", err)
 		}
 
-		result[parsed[moexCsvISIN]] = Bond{
-			Name:           parsed[moexCsvEmitentFullName],
+		b := Bond{
+			Name:           parsed[csvEmitentFullName],
 			Nominal:        nominal,
 			CouponInterest: percent,
-			Currency:       parsed[moexCsvCurrency],
+			Currency:       parsed[csvCurrency],
 		}
 
-		if parsed[moexCsvISIN] != parsed[moexCsvTradeCode] {
-			result[parsed[moexCsvTradeCode]] = Bond{
-				Name:           parsed[moexCsvEmitentFullName],
-				Nominal:        nominal,
-				CouponInterest: percent,
-				Currency:       parsed[moexCsvCurrency],
-			}
+		result[parsed[csvISIN]] = &b
+		if parsed[csvISIN] != parsed[csvTradeCode] {
+			result[parsed[csvTradeCode]] = &b
 		}
 	}
 
-	return result
+	return result, nil
 }

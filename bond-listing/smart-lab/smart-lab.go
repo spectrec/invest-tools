@@ -1,126 +1,140 @@
 package smartlab
 
 import (
+	"fmt"
 	"github.com/spectrec/invest-tools/bond"
 	util "github.com/spectrec/invest-tools/bond-listing/html"
 	"golang.org/x/net/html"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 )
 
-type bondField uint8
-
 const (
-	bondFieldSkip = iota
-	bondFieldName
-	bondFieldMaturityDate
-	bondFieldOfferDate
-	bondFieldAccruedInterest
-	bondFieldCleanPrice
+	fieldSkip = iota
+	fieldName
+	fieldMaturityDate
+	fieldOfferDate
+	fieldAccruedInterest
+	fieldCleanPrice
 )
 
-type bondOptions struct {
-	BondType   bond.BondType
-	couponTax  float64
+type options struct {
+	bondType bond.BondType
+
+	couponTax float64
+
 	url        string
-	fields     []string
-	bondFields []bondField
+	fieldNames []string
+	fields     []uint8
+
+	debug bool
 }
 
-func ParseOptions(t bond.BondType) *bondOptions {
+func getOptions(name string, debug bool) *options {
+	t := bond.Type(name)
+
 	switch t {
 	case bond.TypeCorp:
-		return &bondOptions{
-			BondType:  t,
+		return &options{
+			bondType:  t,
 			couponTax: 13.0,
 			url:       "https://smart-lab.ru/q/bonds/",
-			fields: []string{
+			fieldNames: []string{
 				"№", "Время", "Имя", "",
 				"Погашение", "Лет до", "Доходн", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем, млн руб", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона", "Оферта",
 			},
-			bondFields: []bondField{
-				bondFieldSkip, bondFieldSkip, bondFieldName, bondFieldSkip,
-				bondFieldMaturityDate, bondFieldSkip, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldCleanPrice, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldAccruedInterest, bondFieldSkip, bondFieldSkip, bondFieldOfferDate,
+			fields: []uint8{
+				fieldSkip, fieldSkip, fieldName, fieldSkip,
+				fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip,
+				fieldSkip, fieldCleanPrice, fieldSkip, fieldSkip,
+				fieldSkip, fieldAccruedInterest, fieldSkip, fieldSkip, fieldOfferDate,
 			},
+			debug: debug,
 		}
 	case bond.TypeGov:
-		return &bondOptions{
-			BondType: t,
+		return &options{
+			bondType: t,
 			url:      "https://smart-lab.ru/q/ofz/",
-			fields: []string{
+			fieldNames: []string{
 				"№", "Время", "Имя", "",
 				"Погашение", "Лет до", "Доходн", "!", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем,", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона",
 			},
-			bondFields: []bondField{
-				bondFieldSkip, bondFieldSkip, bondFieldName, bondFieldSkip,
-				bondFieldMaturityDate, bondFieldSkip, bondFieldSkip, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldCleanPrice, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldAccruedInterest, bondFieldSkip, bondFieldSkip,
+			fields: []uint8{
+				fieldSkip, fieldSkip, fieldName, fieldSkip,
+				fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip, fieldSkip,
+				fieldSkip, fieldCleanPrice, fieldSkip, fieldSkip,
+				fieldSkip, fieldAccruedInterest, fieldSkip, fieldSkip,
 			},
+			debug: debug,
 		}
 	case bond.TypeMun:
-		return &bondOptions{
-			BondType: t,
+		return &options{
+			bondType: t,
 			url:      "https://smart-lab.ru/q/subfed/",
-			fields: []string{
+			fieldNames: []string{
 				"№", "Время", "Имя", "",
 				"Погашение", "Лет до", "Доходн", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем, млн руб", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона", "Оферта",
 			},
-			bondFields: []bondField{
-				bondFieldSkip, bondFieldSkip, bondFieldName, bondFieldSkip,
-				bondFieldMaturityDate, bondFieldSkip, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldCleanPrice, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldAccruedInterest, bondFieldSkip, bondFieldSkip, bondFieldOfferDate,
+			fields: []uint8{
+				fieldSkip, fieldSkip, fieldName, fieldSkip,
+				fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip,
+				fieldSkip, fieldCleanPrice, fieldSkip, fieldSkip,
+				fieldSkip, fieldAccruedInterest, fieldSkip, fieldSkip, fieldOfferDate,
 			},
+			debug: debug,
 		}
 	case bond.TypeEuro:
-		return &bondOptions{
-			BondType: t,
+		return &options{
+			bondType: t,
 			url:      "https://smart-lab.ru/q/eurobonds/",
-			fields: []string{
+			fieldNames: []string{
 				"№", "Время", "Имя", "",
 				"Погашение", "Лет до", "Доходн", "Год.куп.дох.",
 				"Куп.дох.", "Цена", "Объем, тыс. $", "Купон, $",
 				"Частота,", "НКД, $", "Дата купона", "Оферта",
 			},
-			bondFields: []bondField{
-				bondFieldSkip, bondFieldSkip, bondFieldName, bondFieldSkip,
-				bondFieldMaturityDate, bondFieldSkip, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldCleanPrice, bondFieldSkip, bondFieldSkip,
-				bondFieldSkip, bondFieldAccruedInterest, bondFieldSkip, bondFieldOfferDate,
+			fields: []uint8{
+				fieldSkip, fieldSkip, fieldName, fieldSkip,
+				fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip,
+				fieldSkip, fieldCleanPrice, fieldSkip, fieldSkip,
+				fieldSkip, fieldAccruedInterest, fieldSkip, fieldOfferDate,
 			},
+			debug: debug,
 		}
 	default:
-		return &bondOptions{
-			BondType: bond.TypeUndef,
-		}
+		return nil
 	}
 }
 
-func ParseBonds(bonds []*bond.Bond, opt *bondOptions) []*bond.Bond {
+func DownloadAndParse(name string, bonds []*bond.Bond, debug bool) ([]*bond.Bond, error) {
+	opt := getOptions(name, debug)
+	if opt == nil {
+		return bonds, nil
+	}
+
 	resp, err := http.Get(opt.url)
 	if err != nil {
-		log.Fatal(err)
+		return bonds, err
 	}
 	defer resp.Body.Close()
 
 	root, err := html.Parse(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		return bonds, err
 	}
 
 	tbody := util.ExtractNodeByPath(root, []string{"html", "body", "div", "div", "table", "tbody"})
+	if tbody == nil {
+		return bonds, fmt.Errorf("bad html")
+	}
 
 	var headerChecked bool
 	var found, skipped uint32
@@ -130,40 +144,49 @@ func ParseBonds(bonds []*bond.Bond, opt *bondOptions) []*bond.Bond {
 		}
 
 		if !headerChecked {
-			checkSmartLabHeader(tr, opt)
-			headerChecked = true
+			if err := checkHeader(tr, opt); err != nil {
+				return bonds, err
+			}
 
+			headerChecked = true
 			continue
 		}
 
-		bond := parseSmartLabBond(tr, opt)
-		if bond != nil {
-			bonds = append(bonds, bond)
-			found++
-		} else {
-			skipped++
+		bond, err := parseBond(tr, opt)
+		if err != nil {
+			return bonds, err
 		}
+
+		if bond == nil {
+			skipped++
+			continue
+		}
+
+		bonds = append(bonds, bond)
+		found++
 	}
 
-	log.Printf("`%s' bonds: %v found, %v skipped\n", opt.BondType, found, skipped)
+	if opt.debug {
+		fmt.Printf("`%s' bonds: %v found, %v skipped\n", opt.bondType, found, skipped)
+	}
 
-	return bonds
+	return bonds, nil
 }
 
-func parseSmartLabBond(root *html.Node, opt *bondOptions) *bond.Bond {
+func parseBond(root *html.Node, opt *options) (*bond.Bond, error) {
 	var err error
 	var i int
 
-	bond := &bond.Bond{Type: opt.BondType}
+	bond := &bond.Bond{Type: opt.bondType}
 	for c := root.FirstChild; c != nil; c = c.NextSibling {
 		if c.Type != html.ElementNode {
 			continue
 		}
 
-		field := opt.bondFields[i]
+		field := opt.fields[i]
 		i++
 
-		if field == bondFieldSkip {
+		if field == fieldSkip {
 			continue
 		}
 
@@ -173,65 +196,82 @@ func parseSmartLabBond(root *html.Node, opt *bondOptions) *bond.Bond {
 		}
 
 		switch field {
-		case bondFieldName:
+		case fieldName:
 			bond.ShortName = text.Data
-			bond.ISIN = extractSmartLabISIN(text.Parent)
-		case bondFieldAccruedInterest:
+
+			bond.ISIN, err = extractISIN(text.Parent)
+			if err != nil {
+				return nil, err
+			}
+		case fieldAccruedInterest:
 			bond.AccruedInterst, err = strconv.ParseFloat(text.Data, 64)
 			if err != nil {
-				log.Fatal("can't parse accrued interest: ", err)
+				return nil, fmt.Errorf("can't parse accrued interest: ", err)
 			}
-		case bondFieldCleanPrice:
+		case fieldCleanPrice:
 			bond.CleanPricePercent, err = strconv.ParseFloat(text.Data, 64)
 			if err != nil {
-				log.Fatal("can't parse clean price: ", err)
+				return nil, fmt.Errorf("can't parse clean price: ", err)
 			}
-		case bondFieldMaturityDate:
-			bond.MaturityDate = extractDate(text.Data)
-			if bond.MaturityDate == nil {
-				// log.Printf("skip `%s', maturity date not found\n", bond.ISIN)
-				return nil
+		case fieldMaturityDate:
+			v, err := time.Parse("2006-01-02", text.Data)
+			if err != nil {
+				if opt.debug {
+					fmt.Printf("skip `%s', maturity date not found\n", bond.ISIN)
+				}
+
+				return nil, nil
 			}
-		case bondFieldOfferDate:
-			bond.OfferDate = extractDate(text.Data)
+
+			bond.MaturityDate = &v
+		case fieldOfferDate:
+			v, err := time.Parse("2006-01-02", text.Data)
+			if err == nil {
+				bond.OfferDate = &v
+			}
 		default:
 			panic("unknown bond field")
 		}
 	}
-	if i != len(opt.bondFields) {
-		// log.Println("skip partially parsed bond")
-		return nil
+	if i != len(opt.fields) {
+		if opt.debug {
+			fmt.Println("skip partially parsed bond")
+		}
+
+		return nil, nil
 	}
 
-	return bond
+	return bond, nil
 }
 
-func checkSmartLabHeader(tr *html.Node, opt *bondOptions) {
+func checkHeader(tr *html.Node, opt *options) error {
 	checked := 0
 	for c := tr.FirstChild; c != nil; c = c.NextSibling {
 		if c.Type != html.ElementNode {
 			continue
 		}
 
-		if opt.fields[checked] == "" {
+		if opt.fieldNames[checked] == "" {
 			// just ignore it
-		} else if v := util.ExtractTextNode(c); v.Data != opt.fields[checked] {
-			log.Fatalf("header format changed, expected `%s', got `%s'\n",
-				opt.fields[checked], v.Data)
+		} else if v := util.ExtractTextNode(c); v.Data != opt.fieldNames[checked] {
+			return fmt.Errorf("header format changed, expected `%s', got `%s'\n",
+				opt.fieldNames[checked], v.Data)
 		}
 
 		checked++
 	}
 
-	if checked != len(opt.fields) {
-		log.Fatalf("header format changed, expected %v fields, checked %v fields\n",
-			len(opt.fields), checked)
+	if checked != len(opt.fieldNames) {
+		return fmt.Errorf("header format changed, expected %v fields, checked %v fields\n",
+			len(opt.fieldNames), checked)
 	}
+
+	return nil
 }
 
-func extractSmartLabISIN(node *html.Node) string {
+func extractISIN(node *html.Node) (string, error) {
 	if node.Type != html.ElementNode || node.Data != "a" {
-		log.Fatal("can't extract ISIN: unexpected node: ", node.Type, node.Data)
+		return "", fmt.Errorf("can't extract ISIN: unexpected node: ", node.Type, node.Data)
 	}
 
 	for i := range node.Attr {
@@ -242,21 +282,11 @@ func extractSmartLabISIN(node *html.Node) string {
 		// must be `/q/bonds/RU000A0JU880/'
 		href := node.Attr[i].Val
 		if !strings.HasPrefix(node.Attr[i].Val, "") {
-			log.Fatal("can't extract ISIN: unknown link:", href)
+			return "", fmt.Errorf("can't extract ISIN: unknown link:", href)
 		}
 
-		return href[len("/q/bonds/") : len(href)-1]
+		return href[len("/q/bonds/") : len(href)-1], nil
 	}
 
-	log.Fatal("can't extract ISIN: href not found")
-	return ""
-}
-
-func extractDate(date string) *time.Time {
-	t, err := time.Parse("2006-01-02", date)
-	if err != nil {
-		return nil
-	}
-
-	return &t
+	return "", fmt.Errorf("can't extract ISIN: href not found")
 }

@@ -14,78 +14,83 @@ import (
 	"unicode"
 )
 
-type finamOptions struct {
-	tradingMode string
-	resultsType uint8
-
-	fields []uint8
-}
-
-type finamBond struct {
+type Bond struct {
 	Name string
 
 	Bid, Ask float64
 
 	SecuritiesCount   uint32
 	TransactionsCount uint32
-
-	TradeVolume float64
+	TradeVolume       float64
 }
 
 const (
-	finamBondFieldSkip = iota
-	finamBondFieldName
-	finamBondFieldBid
-	finamBondFieldAsk
-	finamBondFieldSecuritiesCount
-	finamBondFieldTransactionsCount
-	finamBondFieldTradeVolume
-	finamBondFieldLast
+	fieldSkip = iota
+	fieldName
+	fieldBid
+	fieldAsk
+	fieldSecuritiesCount
+	fieldTransactionsCount
+	fieldTradeVolume
+	fieldLast
 )
 
-func ParseFinam(rqdate time.Time) map[string]finamBond {
-	options := []finamOptions{
-		finamOptions{
+type options struct {
+	tradingMode string
+	resultsType uint8
+
+	fields []uint8
+
+	debug bool
+}
+
+func DownloadAndParse(rqdate time.Time, debug bool) (map[string]Bond, error) {
+	options := []options{
+		options{
 			tradingMode: "T0",
 			resultsType: 1,
 			fields: []uint8{
-				finamBondFieldName, finamBondFieldBid,
-				finamBondFieldAsk, finamBondFieldSkip, finamBondFieldSecuritiesCount,
-				finamBondFieldTradeVolume, finamBondFieldTransactionsCount, finamBondFieldLast,
+				fieldName, fieldBid,
+				fieldAsk, fieldSkip, fieldSecuritiesCount,
+				fieldTradeVolume, fieldTransactionsCount, fieldLast,
 			},
+			debug: debug,
 		},
-		finamOptions{
+		options{
 			tradingMode: "T+",
 			resultsType: 5,
 			fields: []uint8{
-				finamBondFieldSkip, finamBondFieldName, finamBondFieldBid,
-				finamBondFieldAsk, finamBondFieldSkip, finamBondFieldSecuritiesCount,
-				finamBondFieldTradeVolume, finamBondFieldTransactionsCount, finamBondFieldLast,
+				fieldSkip, fieldName, fieldBid,
+				fieldAsk, fieldSkip, fieldSecuritiesCount,
+				fieldTradeVolume, fieldTransactionsCount, fieldLast,
 			},
+			debug: debug,
 		},
 	}
 
-	result := make(map[string]finamBond)
+	result := make(map[string]Bond)
 	for i := range options {
-		parseFinamBonds(result, rqdate, options[i])
+		if err := parseFinamBonds(result, rqdate, &options[i]); err != nil {
+			return result, err
+		}
 	}
 
-	return result
+	return result, nil
 }
 
-func parseFinamBonds(bonds map[string]finamBond, rqdate time.Time, opt finamOptions) {
+func parseFinamBonds(bonds map[string]Bond, rqdate time.Time, opt *options) error {
 	url := fmt.Sprintf("http://bonds.finam.ru/trades/today/rqdate%s/default.asp?order=1&resultsType=%v&close=off&bid=on&ask=on&tradesOnly=1&page=0",
 		fmt.Sprintf("%X%02X%02X", rqdate.Year(), int(rqdate.Month()), rqdate.Day()), opt.resultsType)
 
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer resp.Body.Close()
 
 	root, err := html.Parse(charmap.Windows1251.NewDecoder().Reader(resp.Body))
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	// There are several elements which ends with `tr',
@@ -96,7 +101,7 @@ func parseFinamBonds(bonds map[string]finamBond, rqdate time.Time, opt finamOpti
 		"table", "tbody", "tr", "th",
 	})
 	if th == nil {
-		log.Fatal("finam result table was not found")
+		return fmt.Errorf("result table was not found")
 	}
 
 	initialLen := len(bonds)
@@ -107,22 +112,31 @@ func parseFinamBonds(bonds map[string]finamBond, rqdate time.Time, opt finamOpti
 			continue
 		}
 
-		b := parseFinamBond(tr, opt)
-		if b != nil {
-			bonds[bond.NormalizeBondShortName(b.Name)] = *b
-		} else {
-			skipped++
+		b, err := parseFinamBond(tr, opt)
+		if err != nil {
+			return err
 		}
+
+		if b == nil {
+			skipped++
+			continue
+		}
+
+		bonds[bond.NormalizeBondShortName(b.Name)] = *b
 	}
 
-	log.Printf("Finam `%s': %v found, %v skipped\n", opt.tradingMode, len(bonds)-initialLen, skipped)
+	if opt.debug {
+		fmt.Printf("Finam `%s': %v found, %v skipped\n", opt.tradingMode, len(bonds)-initialLen, skipped)
+	}
+
+	return nil
 }
 
-func parseFinamBond(node *html.Node, opt finamOptions) *finamBond {
+func parseFinamBond(node *html.Node, opt *options) (*Bond, error) {
 	var err error
 	var i int
 
-	b := &finamBond{}
+	b := &Bond{}
 	for c := node.FirstChild; c != nil; c = c.NextSibling {
 		if c.Type != html.ElementNode {
 			continue
@@ -131,10 +145,10 @@ func parseFinamBond(node *html.Node, opt finamOptions) *finamBond {
 		field := opt.fields[i]
 		i++
 
-		if field == finamBondFieldSkip {
+		if field == fieldSkip {
 			continue
 		}
-		if field == finamBondFieldLast {
+		if field == fieldLast {
 			break
 		}
 
@@ -144,7 +158,7 @@ func parseFinamBond(node *html.Node, opt finamOptions) *finamBond {
 		}
 
 		data := strings.Map(func(r rune) rune {
-			if field == finamBondFieldName {
+			if field == fieldName {
 				return r
 			}
 
@@ -161,36 +175,36 @@ func parseFinamBond(node *html.Node, opt finamOptions) *finamBond {
 		}
 
 		switch field {
-		case finamBondFieldName:
+		case fieldName:
 			b.Name = data
-		case finamBondFieldBid:
+		case fieldBid:
 			b.Bid, err = strconv.ParseFloat(data, 64)
 			if err != nil {
-				log.Fatal("can't parse bid: ", err)
+				return nil, fmt.Errorf("can't parse bid: ", err)
 			}
-		case finamBondFieldAsk:
+		case fieldAsk:
 			b.Ask, err = strconv.ParseFloat(data, 64)
 			if err != nil {
-				log.Fatal("can't parse ask: ", err)
+				return nil, fmt.Errorf("can't parse ask: ", err)
 			}
-		case finamBondFieldSecuritiesCount:
+		case fieldSecuritiesCount:
 			v, err := strconv.ParseUint(data, 10, 32)
 			if err != nil {
-				log.Fatal("can't parse securities count: ", err)
+				return nil, fmt.Errorf("can't parse securities count: ", err)
 			}
 
 			b.SecuritiesCount = uint32(v)
-		case finamBondFieldTransactionsCount:
+		case fieldTransactionsCount:
 			v, err := strconv.ParseUint(data, 10, 32)
 			if err != nil {
-				log.Fatal("can't parse transactions count: ", err)
+				return nil, fmt.Errorf("can't parse transactions count: ", err)
 			}
 
 			b.TransactionsCount = uint32(v)
-		case finamBondFieldTradeVolume:
+		case fieldTradeVolume:
 			b.TradeVolume, err = strconv.ParseFloat(data, 64)
 			if err != nil {
-				log.Fatal("can't parse trade volume: ", err)
+				return nil, fmt.Errorf("can't parse trade volume: ", err)
 			}
 		default:
 			panic("unknown finam bond field")
@@ -198,8 +212,8 @@ func parseFinamBond(node *html.Node, opt finamOptions) *finamBond {
 	}
 	if i != len(opt.fields) {
 		log.Println("finam: skip partially parsed bond")
-		return nil
+		return nil, nil
 	}
 
-	return b
+	return b, nil
 }

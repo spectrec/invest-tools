@@ -64,22 +64,27 @@ func main() {
 
 	bonds := make([]*bond.Bond, 0, 0)
 	for _, name := range strings.Split(*bondTypesArg, ",") {
-		o := smartlab.ParseOptions(bond.Type(name))
-
-		if o.BondType == bond.TypeUndef {
-			continue
-		}
+		var err error
 
 		log.Printf("Donwloading `%s' bonds list ...\n", name)
-		bonds = smartlab.ParseBonds(bonds, o)
-		log.Println("Donwload completed")
+
+		bonds, err = smartlab.DownloadAndParse(name, bonds, *debugArg)
+		if err != nil {
+			log.Fatal("smart-lab failed: ", err)
+		}
 	}
 
 	log.Println("Donwloading moex listings ...")
-	listing := moex.DownloadAndParse()
+	listing, err := moex.DownloadAndParse(*debugArg)
+	if err != nil {
+		log.Fatal("moex failed: ", err)
+	}
 
 	log.Printf("Donwloading finam bonds list ...\n")
-	finamBonds := finam.ParseFinam(statisticDate)
+	finamBonds, err := finam.DownloadAndParse(statisticDate, *debugArg)
+	if err != nil {
+		log.Fatal("finam failed: ", err)
+	}
 
 	log.Println("Merging lists ...")
 
