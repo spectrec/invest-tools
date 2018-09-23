@@ -15,9 +15,6 @@ var cleanPrice = flag.Float64("clean-price", 1000.0, "buy price of the one bond 
 var cleanPricePercent = flag.Float64("clean-price-percent", 0.0, "buy price of the one bond in percents (not including comission and accrued coupon)")
 var nominal = flag.Float64("nominal", 1000.0, "nominal price of the one bond")
 
-var priceTax = flag.Float64("price-tax", 13.0, "specify price tax")
-var couponTax = flag.Float64("coupon-tax", 13.0, "specify coupon tax") // Assume the worst case
-
 var accruedCouponIncome = flag.Float64("accrued-coupon", 0.0, "accrued coupon income")
 var couponInterest = flag.Float64("coupon-interest", 0.0, "coupon interest percent (0-100)")
 
