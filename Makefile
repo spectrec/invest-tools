@@ -1,6 +1,6 @@
 GO=go
 
-all: bond-listing bond-yield
+all: bond-listing bond-yield calc
 
 bond-yield:
 	$(GO) build -o $@.bin $@/*.go
@@ -8,7 +8,10 @@ bond-yield:
 bond-listing:
 	$(GO) build -o $@.bin $@/*.go
 
+calc:
+	$(GO) build -o $@.bin $@/*.go
+
 clean:
 	rm -f *.bin
 
-.PHONY: clean all bond-listing bond-yield
+.PHONY: clean all bond-listing bond-yield calc
