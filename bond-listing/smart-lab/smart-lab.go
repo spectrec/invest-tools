@@ -179,6 +179,11 @@ func parseBond(root *html.Node, opt *options) (*bond.Bond, error) {
 
 	bond := &bond.Bond{Type: opt.bondType}
 	for c := root.FirstChild; c != nil; c = c.NextSibling {
+		if i == len(opt.fields) {
+			// All required fields have been checked
+			break
+		}
+
 		if c.Type != html.ElementNode {
 			continue
 		}
@@ -244,6 +249,11 @@ func parseBond(root *html.Node, opt *options) (*bond.Bond, error) {
 func checkHeader(tr *html.Node, opt *options) error {
 	checked := 0
 	for c := tr.FirstChild; c != nil; c = c.NextSibling {
+		if checked == len(opt.fieldNames) {
+			// All required fields have been checked
+			break
+		}
+
 		if c.Type != html.ElementNode {
 			continue
 		}

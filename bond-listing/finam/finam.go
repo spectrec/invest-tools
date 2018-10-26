@@ -138,6 +138,11 @@ func parseFinamBond(node *html.Node, opt *options) (*Bond, error) {
 
 	b := &Bond{}
 	for c := node.FirstChild; c != nil; c = c.NextSibling {
+		if i == len(opt.fields) {
+			// All required fields have been checked
+			break
+		}
+
 		if c.Type != html.ElementNode {
 			continue
 		}
