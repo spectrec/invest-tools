@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 	"unicode"
 )
@@ -68,10 +69,52 @@ func DownloadAndParse(rqdate time.Time, debug bool) (map[string]Bond, error) {
 		},
 	}
 
+	// Collect results from the last week about transactions
+	const days = 7
+
+	wg := sync.WaitGroup{}
+	wg.Add(days)
+
+	results := make([]map[string]Bond, days)
+	for d := 0; d < 7; d++ {
+		go func(d int, wg *sync.WaitGroup) {
+			defer wg.Done()
+
+			log.Printf("Dowlading finam bonds, day %v of 7 ...", d)
+
+			date := rqdate.AddDate(0, 0, -d)
+
+			res := make(map[string]Bond)
+			for i := range options {
+				if err := parseFinamBonds(res, date, &options[i]); err != nil {
+					log.Fatal("finam failed: ", err)
+				}
+			}
+
+			results[d] = res
+
+			log.Printf("Dowlading finam bonds, day %v of 7 done", d)
+		}(d, &wg)
+	}
+	wg.Wait()
+
 	result := make(map[string]Bond)
-	for i := range options {
-		if err := parseFinamBonds(result, rqdate, &options[i]); err != nil {
-			return result, err
+	for d := 0; d < days; d++ {
+		for name, b := range results[d] {
+			v, exist := result[name]
+			if !exist {
+				// Store all new values as is
+				result[name] = b
+				continue
+			}
+
+			// Take only information about transactions if value
+			// already exist
+			v.SecuritiesCount += b.SecuritiesCount
+			v.TransactionsCount += b.TransactionsCount
+			v.TradeVolume += b.TradeVolume
+
+			result[name] = v
 		}
 	}
 
