@@ -97,7 +97,7 @@ func DownloadAndParse(debug bool) (map[string]*Bond, error) {
 		if !headerChecked {
 			headerChecked = true
 			if len(parsed) < len(expectedOrder) {
-				return result, fmt.Errorf("header changed, too short: ", parsed)
+				return result, fmt.Errorf("header changed, too short: %+v", parsed)
 			}
 
 			for i := range expectedOrder {
