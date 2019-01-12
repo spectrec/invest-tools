@@ -89,10 +89,10 @@ func (b *Bond) calcYield(comissionPercent float64, maturityDate time.Time) float
 		spread *= (1 - 0.13)
 	}
 
-	income := coupon + spread + b.Nominal
+	income := coupon + spread
 	spent := b.DirtyPrice
 
-	return (income - spent) / spent * (365.0 / days) * 100.0
+	return income / spent * (365.0 / days) * 100.0
 }
 
 func NormalizeBondShortName(name string) string {
