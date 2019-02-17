@@ -24,10 +24,11 @@ var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 8, "min rubble yiel
 var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min rubble yield percent")
 var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min rubble yield percent")
 
-var maturityDateArg = flag.String("maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 3 years)")
+var maturityDateArg = flag.String("maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 5 years)")
 var statisticDateArg = flag.String("stat-date", "", "trade statistic date yyyy-mm-dd (by default: yestarday when `now' is before 6 p.m; otherwise today)")
 
 var outputFileArg = flag.String("output", "output.txt", "path to output file")
+var moexResults = flag.String("moex-cache", "", "path to file, downloaded from 'https://www.moex.com/ru/listing/securities-list-csv.aspx?type=1' (needed when moex failed)")
 
 var debugArg = flag.Bool("debug", false, "enable debug output")
 
@@ -47,8 +48,8 @@ func main() {
 			log.Fatal("can't parse maturity date: ", err)
 		}
 	} else {
-		// Skip 3 years from now
-		maturityDate = time.Now().AddDate(3, 0, 0)
+		// Skip 5 years from now
+		maturityDate = time.Now().AddDate(5, 0, 0)
 	}
 
 	var statisticDate time.Time
@@ -89,7 +90,7 @@ func main() {
 		defer wg.Done()
 
 		log.Println("Donwloading moex listings ...")
-		listing, err = moex.DownloadAndParse(*debugArg)
+		listing, err = moex.DownloadAndParse(*moexResults, *debugArg)
 		log.Println("Donwloading moex finished ...")
 
 		if err != nil {

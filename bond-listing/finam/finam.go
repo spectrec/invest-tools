@@ -70,17 +70,17 @@ func DownloadAndParse(rqdate time.Time, debug bool) (map[string]Bond, error) {
 	}
 
 	// Collect results from the last week about transactions
-	const days = 7
+	const days = 3
 
 	wg := sync.WaitGroup{}
 	wg.Add(days)
 
 	results := make([]map[string]Bond, days)
-	for d := 0; d < 7; d++ {
+	for d := 0; d < days; d++ {
 		go func(d int, wg *sync.WaitGroup) {
 			defer wg.Done()
 
-			log.Printf("Dowlading finam bonds, day %v of 7 ...", d)
+			log.Printf("Dowlading finam bonds, day %v of %v ...", d, days)
 
 			date := rqdate.AddDate(0, 0, -d)
 
@@ -93,7 +93,7 @@ func DownloadAndParse(rqdate time.Time, debug bool) (map[string]Bond, error) {
 
 			results[d] = res
 
-			log.Printf("Dowlading finam bonds, day %v of 7 done", d)
+			log.Printf("Dowlading finam bonds, day %v of %v done", d, days)
 		}(d, &wg)
 	}
 	wg.Wait()

@@ -6,6 +6,7 @@ import (
 	"golang.org/x/text/encoding/charmap"
 	"io"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -73,17 +74,30 @@ type Bond struct {
 	Currency       string
 }
 
-func DownloadAndParse(debug bool) (map[string]*Bond, error) {
+func DownloadAndParse(cachedFile string, debug bool) (map[string]*Bond, error) {
 	result := make(map[string]*Bond)
 	headerChecked := false
 
-	resp, err := http.Get("https://www.moex.com/ru/listing/securities-list-csv.aspx?type=1")
-	if err != nil {
-		return result, err
-	}
-	defer resp.Body.Close()
+	var reader io.ReadCloser
+	if cachedFile != "" {
+		file, err := os.Open(cachedFile)
+		if err != nil {
+			return result, err
+		}
+		defer file.Close()
 
-	r := csv.NewReader(charmap.Windows1251.NewDecoder().Reader(resp.Body))
+		reader = file
+	} else {
+		resp, err := http.Get("https://www.moex.com/ru/listing/securities-list-csv.aspx?type=1")
+		if err != nil {
+			return result, err
+		}
+		defer resp.Body.Close()
+
+		reader = resp.Body
+	}
+
+	r := csv.NewReader(charmap.Windows1251.NewDecoder().Reader(reader))
 	for {
 		parsed, err := r.Read()
 		if err != nil {
