@@ -3,16 +3,17 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/spectrec/invest-tools/bond"
-	"github.com/spectrec/invest-tools/bond-listing/finam"
-	"github.com/spectrec/invest-tools/bond-listing/moex"
-	"github.com/spectrec/invest-tools/bond-listing/smart-lab"
 	"log"
 	"os"
 	"sort"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/spectrec/invest-tools/internal/stock/finam"
+	"github.com/spectrec/invest-tools/internal/stock/moex"
+	smartlab "github.com/spectrec/invest-tools/internal/stock/smart-lab"
+	"github.com/spectrec/invest-tools/pkg/bond"
 )
 
 var bondTypesArg = flag.String("types", "gov,mun,corp,euro", "required bond types (corp,gov,mun)")
@@ -67,27 +68,27 @@ func main() {
 	}
 
 	wg.Add(1)
-	go func(wg *sync.WaitGroup) {
+	go func() {
 		defer wg.Done()
 
 		for _, name := range strings.Split(*bondTypesArg, ",") {
 			var err error
 
-			log.Printf("Donwloading `%s' bonds list ...\n", name)
+			log.Printf("Donwloading `%s' bonds list ...", name)
 			bonds, err = smartlab.DownloadAndParse(name, bonds, *debugArg)
-			log.Printf("Donwloading `%s' bonds finished ...\n", name)
+			log.Printf("Donwloading `%s' bonds finished ...", name)
 
 			if err != nil {
 				log.Fatal("smart-lab failed: ", err)
 			}
 		}
-	}(&wg)
+	}()
 
 	wg.Add(1)
-	go func(wg *sync.WaitGroup) {
-		var err error
-
+	go func() {
 		defer wg.Done()
+
+		var err error
 
 		log.Println("Donwloading moex listings ...")
 		listing, err = moex.DownloadAndParse(*moexResults, *debugArg)
@@ -96,22 +97,22 @@ func main() {
 		if err != nil {
 			log.Fatal("moex failed: ", err)
 		}
-	}(&wg)
+	}()
 
 	wg.Add(1)
-	go func(wg *sync.WaitGroup) {
-		var err error
-
+	go func() {
 		defer wg.Done()
 
-		log.Printf("Donwloading finam bonds list ...\n")
+		var err error
+
+		log.Printf("Donwloading finam bonds list ...")
 		finamBonds, err = finam.DownloadAndParse(statisticDate, *debugArg)
-		log.Printf("Donwloading finam bonds finished ...\n")
+		log.Printf("Donwloading finam bonds finished ...")
 
 		if err != nil {
 			log.Fatal("finam failed: ", err)
 		}
-	}(&wg)
+	}()
 
 	wg.Wait()
 	log.Println("Merging lists ...")
@@ -167,7 +168,7 @@ func main() {
 			bonds[i] = nil
 		}
 	}
-	log.Printf("Merge stat: moex not found: %v; finam not found: %v; too low clean price: %v\n",
+	log.Printf("Merge stat: moex not found: %v; finam not found: %v; too low clean price: %v",
 		skippedMoex, notFoundFinam, skippedPrice)
 
 	log.Println("Sorting results ...")
@@ -204,5 +205,5 @@ func main() {
 		}
 	}
 
-	log.Printf("Results stored into `%s'\n", *outputFileArg)
+	log.Printf("Results stored into `%s'", *outputFileArg)
 }

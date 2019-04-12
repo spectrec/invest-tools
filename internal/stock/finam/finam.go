@@ -2,10 +2,6 @@ package finam
 
 import (
 	"fmt"
-	"github.com/spectrec/invest-tools/bond"
-	util "github.com/spectrec/invest-tools/bond-listing/html"
-	"golang.org/x/net/html"
-	"golang.org/x/text/encoding/charmap"
 	"log"
 	"net/http"
 	"strconv"
@@ -13,6 +9,12 @@ import (
 	"sync"
 	"time"
 	"unicode"
+
+	"golang.org/x/net/html"
+	"golang.org/x/text/encoding/charmap"
+
+	"github.com/spectrec/invest-tools/pkg/bond"
+	util "github.com/spectrec/invest-tools/pkg/html"
 )
 
 type Bond struct {
@@ -77,7 +79,7 @@ func DownloadAndParse(rqdate time.Time, debug bool) (map[string]Bond, error) {
 
 	results := make([]map[string]Bond, days)
 	for d := 0; d < days; d++ {
-		go func(d int, wg *sync.WaitGroup) {
+		go func(d int) {
 			defer wg.Done()
 
 			log.Printf("Dowlading finam bonds, day %v of %v ...", d, days)
@@ -94,7 +96,7 @@ func DownloadAndParse(rqdate time.Time, debug bool) (map[string]Bond, error) {
 			results[d] = res
 
 			log.Printf("Dowlading finam bonds, day %v of %v done", d, days)
-		}(d, &wg)
+		}(d)
 	}
 	wg.Wait()
 

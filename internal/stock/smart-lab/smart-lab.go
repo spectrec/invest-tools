@@ -2,13 +2,15 @@ package smartlab
 
 import (
 	"fmt"
-	"github.com/spectrec/invest-tools/bond"
-	util "github.com/spectrec/invest-tools/bond-listing/html"
-	"golang.org/x/net/html"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/net/html"
+
+	"github.com/spectrec/invest-tools/pkg/bond"
+	util "github.com/spectrec/invest-tools/pkg/html"
 )
 
 const (

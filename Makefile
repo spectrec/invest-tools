@@ -1,17 +1,17 @@
 GO=go
 
-all: bond-listing bond-yield calc
+all: income bond-yield listing
+
+income:
+	$(GO) build -o bin/$@.bin cmd/$@/*.go
 
 bond-yield:
-	$(GO) build -o $@.bin $@/*.go
+	$(GO) build -o bin/$@ cmd/$@/*.go
 
-bond-listing:
-	$(GO) build -o $@.bin $@/*.go
-
-calc:
-	$(GO) build -o $@.bin $@/*.go
+listing:
+	$(GO) build -o bin/$@ cmd/$@/*.go
 
 clean:
-	rm -f *.bin
+	rm -rf bin
 
-.PHONY: clean all bond-listing bond-yield calc
+.PHONY: clean all income bond-yield listing

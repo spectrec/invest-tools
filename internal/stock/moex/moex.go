@@ -3,12 +3,13 @@ package moex
 import (
 	"encoding/csv"
 	"fmt"
-	"golang.org/x/text/encoding/charmap"
 	"io"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
+
+	"golang.org/x/text/encoding/charmap"
 )
 
 const (

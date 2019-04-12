@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/spectrec/invest-tools/bond"
 	"log"
 	"time"
+
+	"github.com/spectrec/invest-tools/pkg/bond"
 )
 
 var maturityDate = flag.String("maturity-date", "", "when you want to sale a bond (yyyy-mm-dd)")
