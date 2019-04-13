@@ -3,7 +3,7 @@ GO=go
 all: income bond-yield listing
 
 income:
-	$(GO) build -o bin/$@.bin cmd/$@/*.go
+	$(GO) build -o bin/$@ cmd/$@/*.go
 
 bond-yield:
 	$(GO) build -o bin/$@ cmd/$@/*.go
