@@ -63,13 +63,13 @@ func getOptions(name string, debug bool) *options {
 			url:      "https://smart-lab.ru/q/ofz/",
 			fieldNames: []string{
 				"№", "Время", "Имя", "",
-				"Размещение", "Погашение", "Лет до", "Доходн", "!", "Год.куп.",
+				"Погашение", "Лет до", "Доходн", "!", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем,", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона",
 			},
 			fields: []uint8{
 				fieldSkip, fieldSkip, fieldName, fieldSkip,
-				fieldSkip, fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip, fieldSkip,
+				fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip, fieldSkip,
 				fieldSkip, fieldCleanPrice, fieldSkip, fieldSkip,
 				fieldSkip, fieldAccruedInterest, fieldSkip, fieldSkip,
 			},
@@ -81,13 +81,13 @@ func getOptions(name string, debug bool) *options {
 			url:      "https://smart-lab.ru/q/subfed/",
 			fieldNames: []string{
 				"№", "Время", "Имя", "",
-				"Размещение", "Погашение", "Лет до", "Доходн", "Год.куп.",
+				"Погашение", "Лет до", "Доходн", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем, млн руб", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона", "Оферта",
 			},
 			fields: []uint8{
 				fieldSkip, fieldSkip, fieldName, fieldSkip,
-				fieldSkip, fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip,
+				fieldMaturityDate, fieldSkip, fieldSkip, fieldSkip,
 				fieldSkip, fieldCleanPrice, fieldSkip, fieldSkip,
 				fieldSkip, fieldAccruedInterest, fieldSkip, fieldSkip, fieldOfferDate,
 			},
