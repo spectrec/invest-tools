@@ -22,8 +22,8 @@ var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 50.0, "minimum allowed clean percent (skip others)")
 
 var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 8, "min rubble yield percent")
-var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min rubble yield percent")
-var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min rubble yield percent")
+var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min dollar yield percent")
+var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min euro yield percent")
 
 var maturityDateArg = flag.String("maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 5 years)")
 var statisticDateArg = flag.String("stat-date", "", "trade statistic date yyyy-mm-dd (by default: yestarday when `now' is before 6 p.m; otherwise today)")
