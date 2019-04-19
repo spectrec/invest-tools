@@ -21,6 +21,8 @@ var bondTypesArg = flag.String("types", "gov,mun,corp,euro", "required bond type
 var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 50.0, "minimum allowed clean percent (skip others)")
 
+var minTransactionsCount = flag.Uint("min-txn-count", 50, "minimum suitable transactions count (filter out non liquid bonds)")
+
 var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 8, "min rubble yield percent")
 var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min dollar yield percent")
 var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min euro yield percent")
@@ -142,7 +144,10 @@ func main() {
 			b.CleanPricePercent = fb.Ask
 		} else {
 			notFoundFinam++
-
+		}
+		if b.TransactionsCount < uint32(*minTransactionsCount) {
+			bonds[i] = nil
+			continue
 		}
 
 		if b.CleanPricePercent < *minCleanPricePercentArg {
