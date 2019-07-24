@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"log"
@@ -32,6 +33,7 @@ var statisticDateArg = flag.String("stat-date", "", "trade statistic date yyyy-m
 
 var outputFileArg = flag.String("output", "output.txt", "path to output file")
 var moexResults = flag.String("moex-cache", "", "path to file, downloaded from 'https://www.moex.com/ru/listing/securities-list-csv.aspx?type=1' (needed when moex failed)")
+var companyBlacklist = flag.String("blacklist", "", "path to file, contains blacklisted companies (to exclude them from result)")
 
 var debugArg = flag.Bool("debug", false, "enable debug output")
 
@@ -43,6 +45,23 @@ func main() {
 	var err error
 
 	flag.Parse()
+
+	var excludeCompany = make([]string, 0)
+	if *companyBlacklist != "" {
+		f, err := os.Open(*companyBlacklist)
+		if err != nil {
+			log.Fatalf("can't open file `%v': %v", *companyBlacklist, err)
+		}
+		defer f.Close()
+
+		scanner := bufio.NewScanner(f)
+		for scanner.Scan() {
+			excludeCompany = append(excludeCompany, scanner.Text())
+		}
+		if err = scanner.Err(); err != nil {
+			log.Fatalf("blacklist scan failed: %v", err)
+		}
+	}
 
 	var maturityDate time.Time
 	if *maturityDateArg != "" {
@@ -199,9 +218,22 @@ func main() {
 	}
 	defer file.Close()
 
+	var blacklisted uint32
 	for i, b := range bonds {
 		if b == nil {
 			break
+		}
+
+		var skip bool
+		for _, exclude := range excludeCompany {
+			if strings.Contains(b.Name, exclude) {
+				skip = true
+				break
+			}
+		}
+		if skip == true {
+			blacklisted++
+			continue
 		}
 
 		_, err = fmt.Fprintf(file, "%v\n%v\n", i, b)
@@ -210,5 +242,5 @@ func main() {
 		}
 	}
 
-	log.Printf("Results stored into `%s'", *outputFileArg)
+	log.Printf("Results stored into `%s', skipped: %v (blacklist)", *outputFileArg, blacklisted)
 }
