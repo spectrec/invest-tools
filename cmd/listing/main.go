@@ -13,11 +13,15 @@ import (
 
 	"github.com/spectrec/invest-tools/internal/stock/finam"
 	"github.com/spectrec/invest-tools/internal/stock/moex"
+	"github.com/spectrec/invest-tools/internal/stock/rusbonds"
 	smartlab "github.com/spectrec/invest-tools/internal/stock/smart-lab"
 	"github.com/spectrec/invest-tools/pkg/bond"
 )
 
 var bondTypesArg = flag.String("types", "gov,mun,corp,euro", "required bond types (corp,gov,mun)")
+
+var anyCouponTypesArg = flag.Bool("any-coupon-type", false, "show bonds with all coupon types (by default: fixed only)")
+var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds with all redemption types (by default: non amortization only)")
 
 var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 50.0, "minimum allowed clean percent (skip others)")
@@ -138,12 +142,26 @@ func main() {
 	wg.Wait()
 	log.Println("Merging lists ...")
 
-	var skippedMoex, skippedPrice, notFoundFinam uint32
+	var skippedMoex, skippedPrice, notFoundFinam, blacklisted uint32
 	for i, b := range bonds {
 		v, exist := listing[b.ISIN]
 		if !exist {
 			skippedMoex++
 			bonds[i] = nil
+
+			continue
+		}
+
+		var skip bool
+		for _, exclude := range excludeCompany {
+			if strings.Contains(v.Name, exclude) {
+				skip = true
+				break
+			}
+		}
+		if skip == true {
+			bonds[i] = nil
+			blacklisted++
 
 			continue
 		}
@@ -190,10 +208,37 @@ func main() {
 
 		if maturityDate.Before(*b.MaturityDate) || b.YielToMaturity < minYieldPercent {
 			bonds[i] = nil
+			continue
+		}
+
+		log.Printf("checking rusbonds for `%v'", b.ISIN)
+
+		rb, err := rusbonds.Search(b.ISIN)
+		if err != nil {
+			log.Printf("rusbonds for `%v' failed: %v", b.ISIN, err)
+			continue
+		}
+		if rb != nil {
+			if rb.CouponType != bond.CouponTypeFixed && *anyCouponTypesArg == false {
+				bonds[i] = nil
+				continue
+			}
+
+			if rb.Redemption == bond.RedemptionTypeAmortization && *anyRedemptionTypesArg == false {
+				bonds[i] = nil
+				continue
+			}
+
+			b.CouponType = rb.CouponType
+			b.CouponFreq = rb.CouponFreq
+			b.CouponPeriod = rb.CouponPeriod
+
+			b.Redemption = rb.Redemption
+			b.Options = rb.Options
 		}
 	}
-	log.Printf("Merge stat: moex not found: %v; finam not found: %v; too low clean price: %v",
-		skippedMoex, notFoundFinam, skippedPrice)
+	log.Printf("Merge stat: moex not found: %v; finam not found: %v; too low clean price: %v; blacklisted: %v",
+		skippedMoex, notFoundFinam, skippedPrice, blacklisted)
 
 	log.Println("Sorting results ...")
 	sort.Slice(bonds, func(i, j int) bool {
@@ -218,22 +263,9 @@ func main() {
 	}
 	defer file.Close()
 
-	var blacklisted uint32
 	for i, b := range bonds {
 		if b == nil {
 			break
-		}
-
-		var skip bool
-		for _, exclude := range excludeCompany {
-			if strings.Contains(b.Name, exclude) {
-				skip = true
-				break
-			}
-		}
-		if skip == true {
-			blacklisted++
-			continue
 		}
 
 		_, err = fmt.Fprintf(file, "%v\n%v\n", i, b)
@@ -242,5 +274,5 @@ func main() {
 		}
 	}
 
-	log.Printf("Results stored into `%s', skipped: %v (blacklist)", *outputFileArg, blacklisted)
+	log.Printf("Results stored into `%s'", *outputFileArg)
 }

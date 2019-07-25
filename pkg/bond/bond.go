@@ -16,6 +16,9 @@ type Bond struct {
 	Nominal        float64
 	CouponInterest float64
 	Currency       string
+	CouponType     string
+	CouponFreq     uint32
+	CouponPeriod   string
 
 	AccruedInterst    float64
 	DirtyPrice        float64
@@ -26,27 +29,29 @@ type Bond struct {
 	YielToMaturity float64
 	DaysToMaturity uint32
 
+	Options    string
+	Redemption string
+
 	SecuritiesCount   uint32
 	TransactionsCount uint32
 	TradeVolume       float64
 }
 
+const (
+	CouponTypeFixed            = `Постоянный`
+	RedemptionTypeAmortization = `Амортизация`
+)
+
 func (b *Bond) String() string {
-	var liquid string
-
-	if b.TransactionsCount != 0 {
-		liquid = fmt.Sprintf("Liquid:             yes (securities/transactions/volume: %v/%v/%.3f)",
-			b.SecuritiesCount, b.TransactionsCount, b.TradeVolume)
-	} else {
-		liquid = "Liquid:             no"
-	}
-
 	fields := []string{
 		fmt.Sprintf("Type:               %s", b.Type),
 		fmt.Sprintf("ISIN:               %s", b.ISIN),
 		fmt.Sprintf("Emitent:            %s (%s)", b.ShortName, b.Name),
 		fmt.Sprintf("Nominal:            %.3f", b.Nominal),
 		fmt.Sprintf("Coupon:             %.3f%%", b.CouponInterest),
+		fmt.Sprintf("CouponType:         %s", b.CouponType),
+		fmt.Sprintf("CouponFreq:         %v (per year)", b.CouponFreq),
+		fmt.Sprintf("CouponPeriod:       %s", b.CouponPeriod),
 		fmt.Sprintf("Currency:           %s", b.Currency),
 		fmt.Sprintf("Accurred interest:  %.3f", b.AccruedInterst),
 		fmt.Sprintf("Clean price:        %.3f (%.3f%%)", b.CleanPrice, b.CleanPricePercent),
@@ -54,9 +59,24 @@ func (b *Bond) String() string {
 		fmt.Sprintf("Maturity Date:      %s", b.MaturityDate.Format("2006-01-02")),
 		fmt.Sprintf("Days to maturity:   %v", b.DaysToMaturity),
 		fmt.Sprintf("Yield to maturity:  %.3f%%", b.YielToMaturity),
-		liquid,
-		"",
 	}
+
+	if b.Redemption != "" {
+		fields = append(fields, fmt.Sprintf("Redemption:         %s", b.Redemption))
+	}
+
+	if b.Options != "" {
+		fields = append(fields, fmt.Sprintf("Options:            %s", b.Options))
+	}
+
+	var liquid string
+	if b.TransactionsCount != 0 {
+		liquid = fmt.Sprintf("Liquid:             yes (securities/transactions/volume: %v/%v/%.3f)",
+			b.SecuritiesCount, b.TransactionsCount, b.TradeVolume)
+	} else {
+		liquid = "Liquid:             no"
+	}
+	fields = append(fields, liquid, "")
 
 	return strings.Join(fields, "\n")
 
