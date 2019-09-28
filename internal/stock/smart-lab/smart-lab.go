@@ -44,7 +44,7 @@ func getOptions(name string, debug bool) *options {
 			couponTax: 13.0,
 			url:       "https://smart-lab.ru/q/bonds/",
 			fieldNames: []string{
-				"№", "Время", "Имя", "",
+				"№", "", "Имя", "",
 				"Размещение", "Погашение", "Лет до", "Доходн", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем, млн руб", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона", "Оферта",
@@ -62,7 +62,7 @@ func getOptions(name string, debug bool) *options {
 			bondType: t,
 			url:      "https://smart-lab.ru/q/ofz/",
 			fieldNames: []string{
-				"№", "Время", "Имя", "",
+				"№", "", "Имя", "",
 				"Погашение", "Лет до", "Доходн", "!", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем,", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона",
@@ -80,7 +80,7 @@ func getOptions(name string, debug bool) *options {
 			bondType: t,
 			url:      "https://smart-lab.ru/q/subfed/",
 			fieldNames: []string{
-				"№", "Время", "Имя", "",
+				"№", "", "Имя", "",
 				"Погашение", "Лет до", "Доходн", "Год.куп.",
 				"Куп.дох.", "Цена", "Объем, млн руб", "Купон, руб",
 				"Частота,", "НКД, руб", "Дюр-я, лет", "Дата купона", "Оферта",
@@ -98,7 +98,7 @@ func getOptions(name string, debug bool) *options {
 			bondType: t,
 			url:      "https://smart-lab.ru/q/eurobonds/",
 			fieldNames: []string{
-				"№", "Время", "Имя", "",
+				"№", "", "Имя", "",
 				"Погашение", "Лет до", "Доходн", "Год.куп.дох.",
 				"Куп.дох.", "Цена", "Объем, тыс. $", "Купон, $",
 				"Частота,", "НКД, $", "Дата купона", "Оферта",
@@ -262,9 +262,9 @@ func checkHeader(tr *html.Node, opt *options) error {
 
 		if opt.fieldNames[checked] == "" {
 			// just ignore it
-		} else if v := util.ExtractTextNode(c); v.Data != opt.fieldNames[checked] {
-			return fmt.Errorf("header format changed, expected `%s', got `%s'\n",
-				opt.fieldNames[checked], v.Data)
+		} else if v := util.ExtractTextNode(c); v == nil || v.Data != opt.fieldNames[checked] {
+			return fmt.Errorf("header format changed, expected `%s', got `%+v'\n",
+				opt.fieldNames[checked], v)
 		}
 
 		checked++
