@@ -133,7 +133,7 @@ func DownloadAndParse(name string, bonds []*bond.Bond, debug bool) ([]*bond.Bond
 		return bonds, err
 	}
 
-	tbody := util.ExtractNodeByPath(root, []string{"html", "body", "div", "div", "table", "tbody"})
+	tbody := util.ExtractNodeByPath(root, []string{"html", "body", "div", "div", "div", "div", "div", "table", "tbody"})
 	if tbody == nil {
 		return bonds, fmt.Errorf("bad html")
 	}
