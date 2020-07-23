@@ -28,7 +28,7 @@ var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 50.0, "min
 
 var minTransactionsCount = flag.Uint("min-txn-count", 50, "minimum suitable transactions count (filter out non liquid bonds)")
 
-var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 8, "min rubble yield percent")
+var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 6, "min rubble yield percent")
 var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min dollar yield percent")
 var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min euro yield percent")
 
@@ -104,7 +104,7 @@ func main() {
 			log.Printf("Donwloading `%s' bonds finished ...", name)
 
 			if err != nil {
-				log.Fatal("smart-lab failed: ", err)
+				log.Fatalf("smart-lab (%v) failed: %v", name, err)
 			}
 		}
 	}()

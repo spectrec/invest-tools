@@ -96,23 +96,21 @@ func (b *Bond) Init(comissionPercent float64) {
 }
 
 func (b *Bond) calcYield(comissionPercent float64, maturityDate time.Time) float64 {
+	const tax = 1 - 0.13
+
+	spread := 0.0
+	if b.Nominal > b.CleanPrice {
+		spread = (b.Nominal - b.CleanPrice) * tax
+	}
+
 	days := maturityDate.Sub(time.Now()).Hours() / 24
+	futureCoupon := b.Nominal * (b.CouponInterest / 100.0) * (days / 365.0) * tax
+	accurredInterest := b.AccruedInterst * tax // `futureCoupon' doesn't include it
 
-	coupon := b.Nominal * (b.CouponInterest / 100.0) * (days / 365.0)
-	if b.Type == TypeCorp {
-		coupon *= (1 - 0.13)
-	}
-
-	spread := (b.Nominal - b.CleanPrice)
-	if spread >= 0.0 {
-		// Take taxes
-		spread *= (1 - 0.13)
-	}
-
-	income := coupon + spread
+	income := b.Nominal + spread + accurredInterest + futureCoupon
 	spent := b.DirtyPrice
 
-	return income / spent * (365.0 / days) * 100.0
+	return (income/spent - 1) * (365.0 / days) * 100.0
 }
 
 func NormalizeBondShortName(name string) string {
