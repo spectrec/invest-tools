@@ -1,11 +1,8 @@
 GO=go
 
-all: income bond-yield fund-yield listing
+all: income fund-yield listing
 
 income:
-	$(GO) build -o bin/$@ cmd/$@/*.go
-
-bond-yield:
 	$(GO) build -o bin/$@ cmd/$@/*.go
 
 fund-yield:

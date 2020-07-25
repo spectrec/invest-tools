@@ -2,49 +2,341 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
+	"math"
+	"net/http"
 	"os"
 	"sort"
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/spectrec/invest-tools/internal/stock/finam"
-	"github.com/spectrec/invest-tools/internal/stock/moex"
-	"github.com/spectrec/invest-tools/internal/stock/rusbonds"
-	smartlab "github.com/spectrec/invest-tools/internal/stock/smart-lab"
-	"github.com/spectrec/invest-tools/pkg/bond"
 )
 
-var bondTypesArg = flag.String("types", "gov,mun,corp,euro", "required bond types (corp,gov,mun)")
+// moex references:
+// - http://iss.moex.com/iss/reference/ - api methods
+// - https://www.moex.com/a2193 - common api description
+// - https://iss.moex.com/iss/engines/stock/markets/bonds/securities/columns.json columns description
+// - http://iss.moex.com/iss/securities/TATN/dividends.json?iss.json=extended - dividend history (for future)
 
 var anyCouponTypesArg = flag.Bool("any-coupon-type", false, "show bonds with all coupon types (by default: fixed only)")
 var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds with all redemption types (by default: non amortization only)")
 
 var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
-var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 50.0, "minimum allowed clean percent (skip others)")
-
-var minTransactionsCount = flag.Uint("min-txn-count", 50, "minimum suitable transactions count (filter out non liquid bonds)")
+var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 95.0, "minimum allowed clean percent (skip others)")
 
 var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 6, "min rubble yield percent")
 var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min dollar yield percent")
 var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min euro yield percent")
 
-var maturityDateArg = flag.String("maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 5 years)")
-var statisticDateArg = flag.String("stat-date", "", "trade statistic date yyyy-mm-dd (by default: yestarday when `now' is before 6 p.m; otherwise today)")
+var minMaturityDateArg = flag.String("min-maturity-date", "", "min maturity date yyyy-mm-dd (by default: today + 1 years)")
+var maxMaturityDateArg = flag.String("max-maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 5 years)")
+
+var threadPoolSizeArg = flag.Int("thread-pool-size", 10, "max number of goroutines for checking coupons and amortization")
+
+var emitentCacheArg = flag.String("emitent-cache", "emitent.cache", "path to output file")
 
 var outputFileArg = flag.String("output", "output.txt", "path to output file")
-var moexResults = flag.String("moex-cache", "", "path to file, downloaded from 'https://www.moex.com/ru/listing/securities-list-csv.aspx?type=1' (needed when moex failed)")
+
 var companyBlacklist = flag.String("blacklist", "", "path to file, contains blacklisted companies (to exclude them from result)")
 
-var debugArg = flag.Bool("debug", false, "enable debug output")
+type Emitent struct {
+	Type  string `json:"type"`
+	Title string `json:"title"`
+	INN   string `json:"inn"`
+}
+
+func downloadEmitents() (map[string]*Emitent, error) {
+	var result = make(map[string]*Emitent)
+
+	var offset = 0
+	for {
+		var columns = []string{"secid", "type", "emitent_title", "emitent_inn"}
+
+		list := strings.Join(columns, ",")
+		url := fmt.Sprintf("https://iss.moex.com/iss/securities.json?engine=stock&market=bonds&iss.meta=off&securities.columns=%v&start=%v", list, offset)
+		log.Printf("requesting emitents `%v' ...", url)
+
+		resp, err := http.Get(url)
+		if err != nil {
+			return nil, fmt.Errorf("GET failed: %v", err)
+		}
+
+		data, err := ioutil.ReadAll(resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			return nil, fmt.Errorf("body read failed: %v", err)
+		}
+
+		var response struct {
+			Securities struct {
+				Data [][]string `json:"data"`
+			} `json:"securities"`
+		}
+		if err = json.Unmarshal(data, &response); err != nil {
+			return nil, fmt.Errorf("decode `%v' failed: %v", string(data), err)
+		}
+
+		for _, v := range response.Securities.Data {
+			if len(v) != len(columns) {
+				log.Fatalf("unknown format `%v'", string(data))
+			}
+
+			result[v[0]] = &Emitent{Type: v[1], Title: v[2], INN: v[3]}
+		}
+		if len(response.Securities.Data) == 0 {
+			break
+		}
+
+		offset += len(response.Securities.Data)
+	}
+
+	return result, nil
+}
+
+type Security struct {
+	ID        string `json:"secid"`
+	ISIN      string `json:"isin"`
+	ShortName string `json:"short_name"`
+	SecName   string `json:"sec_name"`
+
+	Coupon struct {
+		Percent         float64 `json:"percent"`
+		Value           float64 `json:"value"`
+		Period          float64 `json:"period"`
+		AccruedInterest float64 `json:"accrued_interest"`
+		NextCouponDate  string  `json:"next_coupon_date"`
+
+		IsConstant bool `json:"is_constant"`
+		IsFixed    bool `json:"is_fixed"`
+	} `json:"coupon"`
+
+	CleanPricePercent float64 `json:"clean_price_precent"`
+	CleanPrice        float64 `json:"clean_price"`
+	DirtyPrice        float64 `json:"dirty_price"`
+	Currency          string  `json:"currency"`
+
+	Nominal float64 `json:"nominal"`
+	Lot     struct {
+		Price     float64 `json:"price"`
+		BondCount float64 `json:"bond_count"`
+	} `json:"lot"`
+
+	MaturityDate   time.Time `json:"maturity_date"`
+	DaysToMaturity float64   `json:"days_to_maturity"`
+	OfferDate      string    `json:"offer_date"`
+
+	YieldToMaturity float64 `json:"yield_to_maturity"`
+
+	Amortization bool `json:"amortization"`
+
+	Emitent      *Emitent `json:"emitent"`
+	ListingLevel float64  `json:"listing_level"`
+
+	MarketBoard  string `json:"market_board"`
+	RusbondsLink string `json:"rusbonds_link"`
+}
+
+func (s *Security) String() string {
+	data, err := json.MarshalIndent(s, "", "\t")
+	if err != nil {
+		log.Fatalf("can't encode `%v' to json: %+v", *s, err)
+	}
+
+	data = bytes.ReplaceAll(data, []byte("\\"), []byte{})
+	data = bytes.ReplaceAll(data, []byte("u0026"), []byte("&"))
+
+	return string(data)
+}
+
+func (s *Security) init() {
+	const tax = 1 - 0.13
+
+	s.Nominal = s.Lot.Price / s.Lot.BondCount
+	s.DaysToMaturity = math.Round(s.MaturityDate.Sub(time.Now()).Hours() / 24)
+
+	s.CleanPrice = s.Nominal * s.CleanPricePercent / 100.0
+	s.DirtyPrice = (s.CleanPrice + s.Coupon.AccruedInterest) * (1 + *comissionPercentArg/100.0)
+
+	var spread = 0.0
+	if s.Nominal > s.CleanPrice {
+		spread = (s.Nominal - s.CleanPrice) * tax
+	}
+
+	var futureCoupon = s.Nominal * (s.Coupon.Percent / 100.0) * (s.DaysToMaturity / 365.0) * tax
+	var accurredInterest = s.Coupon.AccruedInterest * tax // `futureCoupon' doesn't include it
+
+	var income = s.Nominal + spread + accurredInterest + futureCoupon
+	var spent = s.DirtyPrice
+
+	s.YieldToMaturity = (income/spent - 1) * (365.0 / s.DaysToMaturity) * 100.0
+
+	s.RusbondsLink = fmt.Sprintf("https://www.rusbonds.ru/srch_simple.asp?go=1&nick=%v", s.ISIN)
+}
+
+func downloadSecurities() (map[string]*Security, error) {
+	var columns = []string{
+		"SECID",
+		"ISIN",
+		"SHORTNAME",
+		"SECNAME",
+		"COUPONPERCENT",
+		"COUPONVALUE",
+		"ACCRUEDINT",
+		"NEXTCOUPON",
+		"COUPONPERIOD",
+		"LOTVALUE",
+		"LOTSIZE",
+		"OFFERDATE",
+		"MATDATE",
+		"FACEUNIT",
+		"PREVADMITTEDQUOTE",
+		"LISTLEVEL",
+		"BOARDNAME",
+	}
+
+	list := strings.Join(columns, ",")
+	url := fmt.Sprintf("https://iss.moex.com/iss/engines/stock/markets/bonds/securities.json?iss.meta=off&iss.only=securities&securities.columns=%v", list)
+	log.Printf("downloading securities `%v' ...", url)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, fmt.Errorf("GET failed: %v", err)
+	}
+
+	data, err := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+	if err != nil {
+		return nil, fmt.Errorf("body read failed: %v", err)
+	}
+
+	var response struct {
+		Securities struct {
+			Data [][]interface{} `json:"data"`
+		} `json:"securities"`
+	}
+	if err = json.Unmarshal(data, &response); err != nil {
+		return nil, fmt.Errorf("decode `%v' failed: %v", string(data), err)
+	}
+
+	var result = make(map[string]*Security)
+	for _, v := range response.Securities.Data {
+		if len(v) != len(columns) {
+			log.Fatalf("unknown format `%v'", string(data))
+		}
+
+		var secid = v[0].(string)
+		var sec = result[secid]
+		if sec == nil {
+			sec = &Security{ID: secid}
+			result[secid] = sec
+		}
+
+		sec.ISIN = v[1].(string)
+		sec.ShortName = v[2].(string)
+		sec.SecName = v[3].(string)
+
+		if v[4] != nil {
+			sec.Coupon.Percent = v[4].(float64)
+		}
+		sec.Coupon.Value = v[5].(float64)
+		sec.Coupon.AccruedInterest = v[6].(float64)
+		sec.Coupon.NextCouponDate = v[7].(string)
+		sec.Coupon.Period = v[8].(float64)
+
+		sec.Lot.Price = v[9].(float64)
+		sec.Lot.BondCount = v[10].(float64)
+
+		if v[11] != nil {
+			sec.OfferDate = v[11].(string)
+		}
+
+		var date = v[12].(string)
+		if date == "0000-00-00" {
+			// it will be excluded by maturity date
+			date = "3999-01-01"
+		}
+		sec.MaturityDate, err = time.Parse("2006-01-02", date)
+		if err != nil {
+			return nil, fmt.Errorf("can't decode maturity date `%v': %v", date, err)
+		}
+
+		sec.Currency = v[13].(string)
+		if v[14] != nil {
+			sec.CleanPricePercent = v[14].(float64)
+		}
+
+		sec.ListingLevel = v[15].(float64)
+		if v[14] != nil {
+			// override marken only when price is available to make it consistent
+			sec.MarketBoard = v[16].(string)
+		}
+	}
+
+	return result, nil
+}
+
+func (s *Security) downloadBondization() error {
+	var amortizationColumns = []string{"amortdate", "valueprc", "value"}
+	var couponsColumns = []string{"coupondate", "valueprc", "value"}
+	var offerColumns = []string{"offerdate", "offerdatestart", "offerdateend", "offertype"}
+
+	url := fmt.Sprintf("http://iss.moex.com/iss/securities/%v/bondization.json?limit=unlimited&iss.meta=off&amortizations.columns=%v&coupons.columns=%v&offers.columns=%v",
+		s.ID, strings.Join(amortizationColumns, ","), strings.Join(couponsColumns, ","), strings.Join(offerColumns, ","))
+	log.Printf("downloading bondization `%v' ...", url)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return fmt.Errorf("GET failed: %v", err)
+	}
+
+	data, err := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+	if err != nil {
+		return fmt.Errorf("body read failed: %v", err)
+	}
+
+	var response struct {
+		Amortizations struct {
+			Data [][]interface{} `json:"data"`
+		} `json:"amortizations"`
+		Coupons struct {
+			Data [][]interface{} `json:"data"`
+		} `json:"coupons"`
+		Offers struct {
+			Data [][]interface{} `json:"data"`
+		} `json:"offers"`
+	}
+	if err = json.Unmarshal(data, &response); err != nil {
+		return fmt.Errorf("decode `%v' failed: %v", string(data), err)
+	}
+
+	if len(response.Amortizations.Data) > 1 {
+		s.Amortization = true
+	}
+
+	s.Coupon.IsFixed = true
+	s.Coupon.IsConstant = true
+	for i := 0; i < len(response.Coupons.Data); i++ {
+		if response.Coupons.Data[i][1] == nil {
+			s.Coupon.IsConstant = false
+			s.Coupon.IsFixed = false
+			break
+		}
+
+		if i > 0 && response.Coupons.Data[i-1][1] != response.Coupons.Data[i][1] {
+			s.Coupon.IsConstant = false
+		}
+	}
+
+	return nil
+}
 
 func main() {
-	var finamBonds map[string]finam.Bond
-	var listing map[string]*moex.Bond
-	var bonds []*bond.Bond
 	var wg sync.WaitGroup
 	var err error
 
@@ -67,193 +359,178 @@ func main() {
 		}
 	}
 
-	var maturityDate time.Time
-	if *maturityDateArg != "" {
-		maturityDate, err = time.Parse("2006-01-02", *maturityDateArg)
+	var minMaturityDate = time.Now().AddDate(1, 0, 0) // skip 1 years from now
+	if *minMaturityDateArg != "" {
+		date, err := time.Parse("2006-01-02", *minMaturityDateArg)
 		if err != nil {
 			log.Fatal("can't parse maturity date: ", err)
 		}
-	} else {
-		// Skip 5 years from now
-		maturityDate = time.Now().AddDate(5, 0, 0)
+
+		minMaturityDate = date
 	}
 
-	var statisticDate time.Time
-	if *statisticDateArg != "" {
-		statisticDate, err = time.Parse("2006-01-02", *statisticDateArg)
+	var maxMaturityDate = time.Now().AddDate(5, 0, 0) // skip 5 years from now
+	if *maxMaturityDateArg != "" {
+		date, err := time.Parse("2006-01-02", *maxMaturityDateArg)
 		if err != nil {
-			log.Fatal("can't parse statistic date: ", err)
+			log.Fatal("can't parse max maturity date: ", err)
 		}
-	} else if time.Now().Hour() < 18 {
-		// Take previuos date, becase exchange still works
-		statisticDate = time.Now().Add(-time.Hour * 24)
-	} else {
-		// We can take `now' because exchange is closed
-		statisticDate = time.Now()
+
+		maxMaturityDate = date
 	}
 
-	wg.Add(1)
+	wg.Add(2)
+
+	var secid2emitent map[string]*Emitent
 	go func() {
 		defer wg.Done()
 
-		for _, name := range strings.Split(*bondTypesArg, ",") {
-			var err error
+		if *emitentCacheArg != "" {
+			data, err := ioutil.ReadFile(*emitentCacheArg)
+			if err == nil {
+				if err = json.Unmarshal(data, &secid2emitent); err == nil {
+					return
+				}
 
-			log.Printf("Donwloading `%s' bonds list ...", name)
-			bonds, err = smartlab.DownloadAndParse(name, bonds, *debugArg)
-			log.Printf("Donwloading `%s' bonds finished ...", name)
+				log.Printf("can't decode emitents cache `%v' (will be requested again): %v", *emitentCacheArg, err)
+			} else if !os.IsNotExist(err) {
+				log.Fatalf("can't read emitents cache `%v': %v", *emitentCacheArg, err)
+			}
+		}
 
+		secid2emitent, err = downloadEmitents()
+		if err != nil {
+			log.Fatalf("can't download emitents: %v", err)
+		}
+
+		if *emitentCacheArg != "" {
+			data, err := json.Marshal(&secid2emitent)
 			if err != nil {
-				log.Fatalf("smart-lab (%v) failed: %v", name, err)
+				log.Fatalf("can't encode emitents cache: %v", err)
+			}
+			if err = ioutil.WriteFile(*emitentCacheArg, data, 0644); err != nil {
+				log.Fatalf("can't store emitents cache into `%v': %v", *emitentCacheArg, err)
 			}
 		}
 	}()
 
-	wg.Add(1)
+	var securities map[string]*Security
 	go func() {
 		defer wg.Done()
 
-		var err error
-
-		log.Println("Donwloading moex listings ...")
-		listing, err = moex.DownloadAndParse(*moexResults, *debugArg)
-		log.Println("Donwloading moex finished ...")
-
+		securities, err = downloadSecurities()
 		if err != nil {
-			log.Fatal("moex failed: ", err)
-		}
-	}()
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-
-		var err error
-
-		log.Printf("Donwloading finam bonds list ...")
-		finamBonds, err = finam.DownloadAndParse(statisticDate, *debugArg)
-		log.Printf("Donwloading finam bonds finished ...")
-
-		if err != nil {
-			log.Fatal("finam failed: ", err)
+			log.Fatalf("can't download securities: %v", err)
 		}
 	}()
 
 	wg.Wait()
-	log.Println("Merging lists ...")
 
-	var skippedMoex, skippedPrice, notFoundFinam, blacklisted uint32
-	for i, b := range bonds {
-		v, exist := listing[b.ISIN]
-		if !exist {
-			skippedMoex++
-			bonds[i] = nil
+	var blacklisted, skipLowPrice, skipLowYield, skipMaturityDate, skipCouponType, skipAmortization int
+	for secid, v := range securities {
+		v.init()
 
-			continue
-		}
+		if e := secid2emitent[secid]; e != nil {
+			var skip bool
 
-		var skip bool
-		for _, exclude := range excludeCompany {
-			if strings.Contains(v.Name, exclude) {
-				skip = true
-				break
+			v.Emitent = e
+			for _, exclude := range excludeCompany {
+				if strings.Contains(v.Emitent.Title, exclude) {
+					skip = true
+					break
+				}
 			}
-		}
-		if skip == true {
-			bonds[i] = nil
-			blacklisted++
+			if skip == true {
+				delete(securities, secid)
+				blacklisted++
 
-			continue
-		}
-
-		b.Currency = v.Currency
-		b.CouponInterest = v.CouponInterest
-		b.Nominal = v.Nominal
-		b.Name = v.Name
-
-		fb, exist := finamBonds[bond.NormalizeBondShortName(b.ShortName)]
-		if exist {
-			b.SecuritiesCount = fb.SecuritiesCount
-			b.TransactionsCount = fb.TransactionsCount
-			b.TradeVolume = fb.TradeVolume
-
-			// Use the most pessimistic case
-			b.CleanPricePercent = fb.Ask
+				continue
+			}
 		} else {
-			notFoundFinam++
-		}
-		if b.TransactionsCount < uint32(*minTransactionsCount) {
-			bonds[i] = nil
-			continue
+			log.Printf("emitent for `%v' not found", secid)
 		}
 
-		if b.CleanPricePercent < *minCleanPricePercentArg {
-			skippedPrice++
-			bonds[i] = nil
+		if v.CleanPricePercent < *minCleanPricePercentArg {
+			delete(securities, secid)
+			skipLowPrice++
 
 			continue
 		}
 
-		b.Init(*comissionPercentArg)
+		if minMaturityDate.After(v.MaturityDate) || maxMaturityDate.Before(v.MaturityDate) {
+			skipMaturityDate++
+			delete(securities, secid)
+
+			continue
+		}
 
 		var minYieldPercent float64
-		switch b.Currency {
-		case "Рубль":
+		switch v.Currency {
+		case "SUR":
 			minYieldPercent = *minRubSuitablePercentArg
-		case "Доллар США":
+		case "USD":
 			minYieldPercent = *minUsdSuitablePercentArg
-		case "Евро":
+		case "EUR":
 			minYieldPercent = *minEurSuitablePercentArg
 		}
 
-		if maturityDate.Before(*b.MaturityDate) || b.YielToMaturity < minYieldPercent {
-			bonds[i] = nil
-			continue
-		}
-
-		log.Printf("checking rusbonds for `%v'", b.ISIN)
-
-		rb, err := rusbonds.Search(b.ISIN)
-		if err != nil {
-			log.Printf("rusbonds for `%v' failed: %v", b.ISIN, err)
-			continue
-		}
-		if rb != nil {
-			if rb.CouponType != bond.CouponTypeFixed && *anyCouponTypesArg == false {
-				bonds[i] = nil
-				continue
-			}
-
-			if rb.Redemption == bond.RedemptionTypeAmortization && *anyRedemptionTypesArg == false {
-				bonds[i] = nil
-				continue
-			}
-
-			b.CouponType = rb.CouponType
-			b.CouponFreq = rb.CouponFreq
-			b.CouponPeriod = rb.CouponPeriod
-
-			b.Redemption = rb.Redemption
-			b.Options = rb.Options
+		if v.YieldToMaturity < minYieldPercent {
+			skipLowYield++
+			delete(securities, secid)
 		}
 	}
-	log.Printf("Merge stat: moex not found: %v; finam not found: %v; too low clean price: %v; blacklisted: %v",
-		skippedMoex, notFoundFinam, skippedPrice, blacklisted)
 
-	log.Println("Sorting results ...")
+	var ch = make(chan *Security, *threadPoolSizeArg)
+	wg.Add(*threadPoolSizeArg)
+	for i := 0; i < *threadPoolSizeArg; i++ {
+		go func() {
+			defer wg.Done()
+
+			for {
+				var sec = <-ch
+				if sec == nil {
+					return
+				}
+
+				if err := sec.downloadBondization(); err != nil {
+					log.Printf("can't donwnload coupon/amortization/offers info for `%v': %v", sec, err)
+				}
+			}
+		}()
+	}
+	for _, v := range securities {
+		ch <- v
+	}
+	close(ch)
+
+	wg.Wait()
+
+	var bonds []*Security
+	for _, v := range securities {
+		if v.Coupon.IsConstant == false && *anyCouponTypesArg == false {
+			skipCouponType++
+			continue
+		}
+
+		if v.Amortization && *anyRedemptionTypesArg == false {
+			skipAmortization++
+			continue
+		}
+
+		bonds = append(bonds, v)
+	}
+
+	log.Printf("\nskip stat:\n")
+	log.Printf("\tblacklisted: %v\n", blacklisted)
+	log.Printf("\tlow price: %v\n", skipLowPrice)
+	log.Printf("\tlow yield: %v\n", skipLowYield)
+	log.Printf("\tfar maturity date: %v\n", skipMaturityDate)
+	log.Printf("\tnon fixed coupon: %v\n", skipCouponType)
+	log.Printf("\tamortization: %v\n\n", skipAmortization)
+
+	log.Printf("Sorting `%v' results ...", len(bonds))
 	sort.Slice(bonds, func(i, j int) bool {
-		if bonds[i] == nil && bonds[j] == nil {
-			return false // they are equal
-		}
-
-		if bonds[i] == nil {
-			return false // move them to the end
-		}
-		if bonds[j] == nil {
-			return true
-		}
-
-		return bonds[i].YielToMaturity > bonds[j].YielToMaturity
+		return bonds[i].YieldToMaturity > bonds[j].YieldToMaturity
 	})
 
 	log.Println("Storing results ...")
@@ -264,13 +541,9 @@ func main() {
 	defer file.Close()
 
 	for i, b := range bonds {
-		if b == nil {
-			break
-		}
-
-		_, err = fmt.Fprintf(file, "%v\n%v\n", i, b)
+		_, err = fmt.Fprintf(file, "%v: %v\n\n", i, b)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("can't store results into `%v'", *outputFileArg, err)
 		}
 	}
 
