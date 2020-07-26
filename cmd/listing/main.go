@@ -27,7 +27,7 @@ var anyCouponTypesArg = flag.Bool("any-coupon-type", false, "show bonds with all
 var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds with all redemption types (by default: non amortization only)")
 
 var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
-var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 95.0, "minimum allowed clean percent (skip others)")
+var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 90.0, "minimum allowed clean percent (skip others)")
 
 var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 6, "min rubble yield percent")
 var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min dollar yield percent")
@@ -42,7 +42,8 @@ var emitentCacheArg = flag.String("emitent-cache", "emitent.cache", "path to out
 
 var outputFileArg = flag.String("output", "output.txt", "path to output file")
 
-var companyBlacklist = flag.String("blacklist", "", "path to file, contains blacklisted companies (to exclude them from result)")
+var emitentBlacklist = flag.String("emitent-blacklist", "emitent.blacklist", "path to file, contains blacklisted companies (to exclude them from result)")
+var securitiesBlacklist = flag.String("securities-blacklist", "securities.blacklist", "path to file, contains blacklisted security names (to exclude them from result)")
 
 type Emitent struct {
 	Type  string `json:"type"`
@@ -342,20 +343,37 @@ func main() {
 
 	flag.Parse()
 
-	var excludeCompany = make([]string, 0)
-	if *companyBlacklist != "" {
-		f, err := os.Open(*companyBlacklist)
+	var excludeEmitent = make([]string, 0)
+	if *emitentBlacklist != "" {
+		f, err := os.Open(*emitentBlacklist)
 		if err != nil {
-			log.Fatalf("can't open file `%v': %v", *companyBlacklist, err)
+			log.Fatalf("can't open file `%v': %v", *emitentBlacklist, err)
 		}
 		defer f.Close()
 
 		scanner := bufio.NewScanner(f)
 		for scanner.Scan() {
-			excludeCompany = append(excludeCompany, scanner.Text())
+			excludeEmitent = append(excludeEmitent, scanner.Text())
 		}
 		if err = scanner.Err(); err != nil {
-			log.Fatalf("blacklist scan failed: %v", err)
+			log.Fatalf("emitent blacklist scan failed: %v", err)
+		}
+	}
+
+	var excludeSecurities = make([]string, 0)
+	if *securitiesBlacklist != "" {
+		f, err := os.Open(*securitiesBlacklist)
+		if err != nil {
+			log.Fatalf("can't open file `%v': %v", *securitiesBlacklist, err)
+		}
+		defer f.Close()
+
+		scanner := bufio.NewScanner(f)
+		for scanner.Scan() {
+			excludeSecurities = append(excludeSecurities, scanner.Text())
+		}
+		if err = scanner.Err(); err != nil {
+			log.Fatalf("securities blacklist scan failed: %v", err)
 		}
 	}
 
@@ -428,26 +446,36 @@ func main() {
 
 	var blacklisted, skipLowPrice, skipLowYield, skipMaturityDate, skipCouponType, skipAmortization int
 	for secid, v := range securities {
+		var skip bool
+
 		v.init()
 
 		if e := secid2emitent[secid]; e != nil {
-			var skip bool
-
 			v.Emitent = e
-			for _, exclude := range excludeCompany {
+
+			for _, exclude := range excludeEmitent {
 				if strings.Contains(v.Emitent.Title, exclude) {
 					skip = true
 					break
 				}
 			}
-			if skip == true {
-				delete(securities, secid)
-				blacklisted++
-
-				continue
-			}
 		} else {
 			log.Printf("emitent for `%v' not found", secid)
+		}
+
+		if skip == false {
+			for _, exclude := range excludeSecurities {
+				if strings.Contains(v.ISIN, exclude) || strings.Contains(v.ShortName, exclude) || strings.Contains(v.SecName, exclude) {
+					skip = true
+					break
+				}
+			}
+		}
+		if skip == true {
+			delete(securities, secid)
+			blacklisted++
+
+			continue
 		}
 
 		if v.CleanPricePercent < *minCleanPricePercentArg {
@@ -524,7 +552,7 @@ func main() {
 	log.Printf("\tblacklisted: %v\n", blacklisted)
 	log.Printf("\tlow price: %v\n", skipLowPrice)
 	log.Printf("\tlow yield: %v\n", skipLowYield)
-	log.Printf("\tfar maturity date: %v\n", skipMaturityDate)
+	log.Printf("\tclose/far maturity date: %v\n", skipMaturityDate)
 	log.Printf("\tnon fixed coupon: %v\n", skipCouponType)
 	log.Printf("\tamortization: %v\n\n", skipAmortization)
 
