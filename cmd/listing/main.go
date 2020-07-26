@@ -353,7 +353,12 @@ func main() {
 
 		scanner := bufio.NewScanner(f)
 		for scanner.Scan() {
-			excludeEmitent = append(excludeEmitent, scanner.Text())
+			line := scanner.Text()
+			if len(line) == 0 || strings.HasPrefix(line, "#") {
+				continue
+			}
+
+			excludeEmitent = append(excludeEmitent, line)
 		}
 		if err = scanner.Err(); err != nil {
 			log.Fatalf("emitent blacklist scan failed: %v", err)
@@ -370,7 +375,12 @@ func main() {
 
 		scanner := bufio.NewScanner(f)
 		for scanner.Scan() {
-			excludeSecurities = append(excludeSecurities, scanner.Text())
+			line := scanner.Text()
+			if len(line) == 0 || strings.HasPrefix(line, "#") {
+				continue
+			}
+
+			excludeSecurities = append(excludeSecurities, line)
 		}
 		if err = scanner.Err(); err != nil {
 			log.Fatalf("securities blacklist scan failed: %v", err)
