@@ -43,6 +43,7 @@ var emitentCacheArg = flag.String("emitent-cache", "emitent.cache", "path to out
 var outputFileArg = flag.String("output", "output.txt", "path to output file")
 
 var emitentBlacklist = flag.String("emitent-blacklist", "emitent.blacklist", "path to file, contains blacklisted companies (to exclude them from result)")
+var emitentComments = flag.String("emitent-comments", "emitent.comments", "path to file, contains comments for companies")
 var securitiesBlacklist = flag.String("securities-blacklist", "securities.blacklist", "path to file, contains blacklisted security names (to exclude them from result)")
 
 type Emitent struct {
@@ -136,6 +137,7 @@ type Security struct {
 	Amortization bool `json:"amortization"`
 
 	Emitent      *Emitent `json:"emitent"`
+	Comment      string   `json:"comment"`
 	ListingLevel float64  `json:"listing_level"`
 
 	MarketBoard  string `json:"market_board"`
@@ -365,6 +367,33 @@ func main() {
 		}
 	}
 
+	var emitentComment = make(map[string]string)
+	if *emitentComments != "" {
+		f, err := os.Open(*emitentComments)
+		if err != nil {
+			log.Fatalf("can't open file `%v': %v", *emitentComments, err)
+		}
+		defer f.Close()
+
+		scanner := bufio.NewScanner(f)
+		for scanner.Scan() {
+			line := scanner.Text()
+			if len(line) == 0 || strings.HasPrefix(line, "#") {
+				continue
+			}
+
+			parts := strings.Split(line, " -> ")
+			if len(parts) != 2 {
+				log.Fatalf("bad comment format `%v' (expected: `emitent' -> `comment'", line)
+			}
+
+			emitentComment[parts[0]] = parts[1]
+		}
+		if err = scanner.Err(); err != nil {
+			log.Fatalf("emitent comments scan failed: %v", err)
+		}
+	}
+
 	var excludeSecurities = make([]string, 0)
 	if *securitiesBlacklist != "" {
 		f, err := os.Open(*securitiesBlacklist)
@@ -469,6 +498,8 @@ func main() {
 					break
 				}
 			}
+
+			v.Comment = emitentComment[e.Title]
 		} else {
 			log.Printf("emitent for `%v' not found", secid)
 		}
