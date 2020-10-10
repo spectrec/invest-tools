@@ -147,7 +147,7 @@ type Security struct {
 func (s *Security) String() string {
 	data, err := json.MarshalIndent(s, "", "\t")
 	if err != nil {
-		log.Fatalf("can't encode `%v' to json: %+v", *s, err)
+		log.Fatalf("can't encode `%+v' to json: %v", *s, err)
 	}
 
 	data = bytes.ReplaceAll(data, []byte("\\"), []byte{})
@@ -532,21 +532,6 @@ func main() {
 
 			continue
 		}
-
-		var minYieldPercent float64
-		switch v.Currency {
-		case "SUR":
-			minYieldPercent = *minRubSuitablePercentArg
-		case "USD":
-			minYieldPercent = *minUsdSuitablePercentArg
-		case "EUR":
-			minYieldPercent = *minEurSuitablePercentArg
-		}
-
-		if v.YieldToMaturity < minYieldPercent {
-			skipLowYield++
-			delete(securities, secid)
-		}
 	}
 
 	var ch = make(chan *Security, *threadPoolSizeArg)
@@ -583,6 +568,21 @@ func main() {
 
 		if v.Amortization && *anyRedemptionTypesArg == false {
 			skipAmortization++
+			continue
+		}
+
+		// skip only contants coupons because of low yield, because yield for other bond types could be incorrect
+		var minYieldPercent float64
+		switch v.Currency {
+		case "SUR":
+			minYieldPercent = *minRubSuitablePercentArg
+		case "USD":
+			minYieldPercent = *minUsdSuitablePercentArg
+		case "EUR":
+			minYieldPercent = *minEurSuitablePercentArg
+		}
+		if v.Coupon.IsConstant && v.YieldToMaturity < minYieldPercent {
+			skipLowYield++
 			continue
 		}
 
