@@ -576,7 +576,7 @@ func main() {
 
 	var bonds []*Security
 	for _, v := range securities {
-		if v.Coupon.IsConstant == false && *anyCouponTypesArg == false {
+		if v.Coupon.IsFixed == false && *anyCouponTypesArg == false {
 			skipCouponType++
 			continue
 		}
