@@ -27,6 +27,8 @@ var anyCouponTypesArg = flag.Bool("any-coupon-type", false, "show bonds with all
 var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds with all redemption types (by default: non amortization only)")
 
 var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
+
+var minCouponPercentArg = flag.Float64("min-coupon-percent", 1.0, "minimum allowed coupon percent (skip others)")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 90.0, "minimum allowed clean percent (skip others)")
 
 var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 6, "min rubble yield percent")
@@ -483,7 +485,7 @@ func main() {
 
 	wg.Wait()
 
-	var blacklisted, skipLowPrice, skipLowYield, skipMaturityDate, skipCouponType, skipAmortization int
+	var blacklisted, skipLowPrice, skipLowCouponPercent, skipLowYield, skipMaturityDate, skipCouponType, skipAmortization int
 	for secid, v := range securities {
 		var skip bool
 
@@ -522,6 +524,12 @@ func main() {
 		if v.CleanPricePercent < *minCleanPricePercentArg {
 			delete(securities, secid)
 			skipLowPrice++
+
+			continue
+		}
+		if v.Coupon.Percent < *minCouponPercentArg {
+			delete(securities, secid)
+			skipLowCouponPercent++
 
 			continue
 		}
@@ -581,7 +589,7 @@ func main() {
 		case "EUR":
 			minYieldPercent = *minEurSuitablePercentArg
 		}
-		if v.Coupon.IsConstant && v.YieldToMaturity < minYieldPercent {
+		if v.Coupon.IsFixed && v.YieldToMaturity < minYieldPercent {
 			skipLowYield++
 			continue
 		}
@@ -592,6 +600,7 @@ func main() {
 	log.Printf("\nskip stat:\n")
 	log.Printf("\tblacklisted: %v\n", blacklisted)
 	log.Printf("\tlow price: %v\n", skipLowPrice)
+	log.Printf("\tlow coupon: %v\n", skipLowCouponPercent)
 	log.Printf("\tlow yield: %v\n", skipLowYield)
 	log.Printf("\tclose/far maturity date: %v\n", skipMaturityDate)
 	log.Printf("\tnon fixed coupon: %v\n", skipCouponType)
