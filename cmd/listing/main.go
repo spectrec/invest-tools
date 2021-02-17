@@ -26,7 +26,7 @@ import (
 var anyCouponTypesArg = flag.Bool("any-coupon-type", false, "show bonds with all coupon types (by default: fixed only)")
 var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds with all redemption types (by default: non amortization only)")
 
-var comissionPercentArg = flag.Float64("comission", 0.1, "comission percent")
+var comissionPercentArg = flag.Float64("comission", 0.0, "comission percent")
 
 var minCouponPercentArg = flag.Float64("min-coupon-percent", 1.0, "minimum allowed coupon percent (skip others)")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 90.0, "minimum allowed clean percent (skip others)")
@@ -134,7 +134,8 @@ type Security struct {
 	DaysToMaturity float64   `json:"days_to_maturity"`
 	OfferDate      string    `json:"offer_date"`
 
-	YieldToMaturity float64 `json:"yield_to_maturity"`
+	YieldToMaturity        float64 `json:"yield_to_maturity"`
+	YieldToMaturityWithNKD float64 `json:"yield_to_maturity_with_nkd"`
 
 	Amortization bool `json:"amortization"`
 
@@ -175,10 +176,13 @@ func (s *Security) init() {
 	var futureCoupon = s.Nominal * (s.Coupon.Percent / 100.0) * (s.DaysToMaturity / 365.0) * tax
 	var accurredInterest = s.Coupon.AccruedInterest * tax // `futureCoupon' doesn't include it
 
-	var income = s.Nominal + spread + accurredInterest + futureCoupon
-	var spent = s.DirtyPrice
-
+	var income = s.Nominal + spread + futureCoupon
+	var spent = s.CleanPrice * (1 + *comissionPercentArg/100.0)
 	s.YieldToMaturity = (income/spent - 1) * (365.0 / s.DaysToMaturity) * 100.0
+
+	income = s.Nominal + spread + accurredInterest + futureCoupon
+	spent = s.DirtyPrice
+	s.YieldToMaturityWithNKD = (income/spent - 1) * (365.0 / s.DaysToMaturity) * 100.0
 
 	s.RusbondsLink = fmt.Sprintf("https://www.rusbonds.ru/srch_simple.asp?go=1&nick=%v", s.ISIN)
 }
