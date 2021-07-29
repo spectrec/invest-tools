@@ -22,6 +22,14 @@ type config struct {
 	ExpectedReturn float64 `yaml:"expected_return"`
 }
 
+type exchangeData struct {
+	CapitalizationRegular float64 `yaml:"capitalization_regular"`
+	StockCountRegular     float64 `yaml:"stock_count_regular"`
+
+	CapitalizationPriv float64 `yaml:"capitalization_priv"`
+	StockCountPriv     float64 `yaml:"stock_count_priv"`
+}
+
 type financials struct {
 	Year int `yaml:"year"`
 
@@ -39,8 +47,9 @@ type financials struct {
 	InterestExpences float64 `yaml:"interest_expences"`
 	NetIncome        float64 `yaml:"net_income"`
 
-	Dividents      float64 `yaml:"dividends"`
-	Capitalization float64 `yaml:"capitalization"`
+	Dividents float64 `yaml:"dividends"`
+
+	Exchange exchangeData `yaml:"exchange"`
 
 	IsBank bool `yaml:"is_bank"`
 
@@ -115,7 +124,7 @@ func analyze(w io.Writer, data []financials, conf config) {
 
 	fmt.Fprintf(w, columnNameFmt, "Капитализация (млрд)")
 	for _, r := range data {
-		fmt.Fprintf(w, columnDataFmt, r.Capitalization/balanceNormalizer)
+		fmt.Fprintf(w, columnDataFmt, (r.Exchange.CapitalizationPriv+r.Exchange.CapitalizationRegular)/balanceNormalizer)
 	}
 	fmt.Fprintf(w, "\n\n")
 
@@ -206,6 +215,13 @@ func analyze(w io.Writer, data []financials, conf config) {
 			tooHighPayoutRatio = true
 		}
 	}
+	fmt.Fprintf(w, "\n")
+
+	fmt.Fprintf(w, columnNameFmt, "E/P")
+	for _, r := range data {
+		capitalization := r.Exchange.CapitalizationPriv + r.Exchange.CapitalizationRegular
+		fmt.Fprintf(w, columnDataFmt, r.NetIncome*r.Multiplier/capitalization*100.0)
+	}
 	fmt.Fprintf(w, "\n\n")
 
 	// summary
@@ -267,10 +283,14 @@ func analyze(w io.Writer, data []financials, conf config) {
 			fmt.Fprintf(w, "\t\tROE (avg): не ок (%.2f)\n", roe_avg)
 		}
 
-		fmt.Fprintf(w, "\t\tТекущая доходность (E/P): %.2f%%\n", lastYear.NetIncome*lastYear.Multiplier/lastYear.Capitalization*100)
+		capitalization := lastYear.Exchange.CapitalizationPriv + lastYear.Exchange.CapitalizationRegular
+		fmt.Fprintf(w, "\t\tТекущая доходность (E/P): %.2f%%\n", lastYear.NetIncome*lastYear.Multiplier/capitalization*100)
 
-		capitalization := lastYear.Equity * lastYear.Multiplier * roe_avg / conf.ExpectedReturn
-		fmt.Fprintf(w, "\t\tОценка по Арсагере (r=%.2f): %.2f млрд (текущая: %.2f млрд)\n",
-			conf.ExpectedReturn, capitalization/balanceNormalizer, lastYear.Capitalization/balanceNormalizer)
+		// equity*roe == expected net income
+		expectedCapitalization := lastYear.Equity * lastYear.Multiplier * roe_avg / conf.ExpectedReturn
+		k := expectedCapitalization / capitalization
+		fmt.Fprintf(w, "\t\tОценка по Арсагере (r=%.2f): ao=%.2f ап=%.2f\n", conf.ExpectedReturn,
+			lastYear.Exchange.CapitalizationRegular/lastYear.Exchange.StockCountRegular*k,
+			lastYear.Exchange.CapitalizationPriv/lastYear.Exchange.StockCountPriv*k)
 	}
 }

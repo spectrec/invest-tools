@@ -2,7 +2,13 @@
 
 - year: 2016
   is_bank: true
-  capitalization: 3839907013800.0
+
+  exchange:
+    stock_count_regular: 21586948000
+    stock_count_priv: 1000000000
+
+    capitalization_regular: 3709717013800
+    capitalization_priv: 130190000000
 
   multiplier: 1e9
 
@@ -22,7 +28,13 @@
 
 - year: 2017
   is_bank: true
-  capitalization: 5049050255840
+
+  exchange:
+    stock_count_regular: 21586948000
+    stock_count_priv: 1000000000
+
+    capitalization_regular: 4858790255840
+    capitalization_priv: 190260000000
 
   multiplier: 1e9
 
@@ -42,7 +54,13 @@
 
 - year: 2018
   is_bank: true
-  capitalization: 4182653414360
+
+  exchange:
+    stock_count_regular: 21586948000
+    stock_count_priv: 1000000000
+
+    capitalization_regular: 4016683414360
+    capitalization_priv: 165970000000
 
   multiplier: 1e9
 
@@ -62,7 +80,13 @@
 
 - year: 2019
   is_bank: true
-  capitalization: 5709855444600
+
+  exchange:
+    stock_count_regular: 21586948000
+    stock_count_priv: 1000000000
+
+    capitalization_regular: 5482005444600
+    capitalization_priv: 227850000000
 
   multiplier: 1e9
 
@@ -82,7 +106,13 @@
 
 - year: 2020
   is_bank: true
-  capitalization: 6115656811840
+
+  exchange:
+    stock_count_regular: 21586948000
+    stock_count_priv: 1000000000
+
+    capitalization_regular: 5873376811840
+    capitalization_priv: 242280000000
 
   multiplier: 1e9
 
