@@ -157,14 +157,7 @@ func analyze(w io.Writer, data []financials, conf config) {
 	for _, r := range data {
 		fmt.Fprintf(w, columnDataFmt, r.Dividents*r.Multiplier/resultsNormalizer)
 	}
-	fmt.Fprintf(w, "\n")
-
-	for _, r := range data {
-		if len(r.Comments) != 0 {
-			fmt.Fprintf(w, columnNameFmt+"%s\n", "Комментарий к %v", r.Year, r.Comments)
-		}
-	}
-	fmt.Fprintf(w, "\n")
+	fmt.Fprintf(w, "\n\n")
 
 	fmt.Fprintf(w, columnNameFmt, "Закредитованность (Обязательства/Активы)")
 	for _, r := range data {
@@ -223,6 +216,13 @@ func analyze(w io.Writer, data []financials, conf config) {
 		fmt.Fprintf(w, columnDataFmt, r.NetIncome*r.Multiplier/capitalization*100.0)
 	}
 	fmt.Fprintf(w, "\n\n")
+
+	for _, r := range data {
+		if len(r.Comments) != 0 {
+			fmt.Fprintf(w, columnNameFmt+"%s\n", fmt.Sprintf("Комментарий к %v", r.Year), r.Comments)
+		}
+	}
+	fmt.Fprintf(w, "\n")
 
 	// summary
 	fmt.Fprintf(w, "%s\n", "Заключение:")
