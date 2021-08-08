@@ -1,0 +1,114 @@
+# https://lukoil.ru/InvestorAndShareholderCenter/ReportsAndPresentations/FinancialReports
+#
+# див. политика (https://lukoil.ru/InvestorAndShareholderCenter/Securities/Dividends):
+# - общая сумма дивидендов по размещенным акциям Компании за вычетом акций, принадлежащих организациям Группы «ЛУКОЙЛ», составляет не менее 100% от скорректированного свободного денежного потока Компании.
+# - скорректированный свободный денежный поток рассчитывается по данным консолидированной финансовой отчетности ПАО «ЛУКОЙЛ», подготовленной в соответствии с МСФО, и определяется как чистые денежные средства, полученные от операционной деятельности, за вычетом капитальных затрат, уплаченных процентов, погашения обязательств по аренде, а также расходов на приобретение акций ПАО «ЛУКОЙЛ».
+# - дивиденды выплачиваются дважды в год, при этом размер промежуточного дивиденда рассчитывается по данным консолидированной финансовой отчетности за 6 месяцев.
+# - дивиденд на одну обыкновенную акцию округляется до цифры, кратной одному российскому рублю.
+
+- year: 2016
+  exchange:
+    stock_count_regular: 850563255
+    capitalization_regular: 2916156119767.50
+
+  multiplier: 1e6
+
+  assets: 5014673
+  cash_and_equivalents: 261367
+  liabilities: 1787009
+  short_term_debt: 550247
+  long_term_debt: 640161
+  equity: 3227664
+
+  revenue: 5227045
+  operating_income: 419143
+  interest_expences: 47030
+  net_income: 206794
+
+  dividends: 127345
+
+- year: 2017
+  exchange:
+    stock_count_regular: 850563255
+    capitalization_regular: 2823444724972.50
+
+  multiplier: 1e6
+
+  assets: 5226215
+  cash_and_equivalents: 330390
+  liabilities: 1735816
+  short_term_debt: 559977
+  long_term_debt: 487647
+  equity: 3490399
+
+  revenue: 5936705
+  operating_income: 506516
+  interest_expences: 27331
+  net_income: 418805
+
+  dividends: 138810
+
+- year: 2018
+  exchange:
+    stock_count_regular: 750000000
+    capitalization_regular: 3739125000000.00
+
+  multiplier: 1e6
+
+  assets: 5732382
+  cash_and_equivalents: 492650
+  liabilities: 1658856
+  short_term_debt: 547128
+  long_term_debt: 435422
+  equity: 4073526
+
+  revenue: 8035889
+  operating_income: 771715
+  interest_expences: 38298
+  net_income: 619174
+
+  dividends: 158370
+
+- year: 2019
+  exchange:
+    stock_count_regular: 715000000
+    capitalization_regular: 4405472500000.00
+
+  multiplier: 1e6
+
+  assets: 5947050
+  cash_and_equivalents: 516032
+  liabilities: 1973601
+  short_term_debt: 607734
+  long_term_debt: 422932
+  equity: 3973449
+
+  revenue: 7841246
+  operating_income: 821098
+  interest_expences: 44356
+  net_income: 640178
+
+  dividends: 180747
+
+- year: 2020
+  exchange:
+    stock_count_regular: 692865762
+    capitalization_regular: 3590430378684.00
+
+  multiplier: 1e6
+
+  assets: 5991579
+  cash_and_equivalents: 343832
+  liabilities: 1860813
+  short_term_debt: 597932
+  long_term_debt: 577075
+  equity: 4130766
+
+  revenue: 7841246 # real: 5639401
+  operating_income: 821098 # real: 281654
+  interest_expences: 44122
+  net_income: 640178 # real: 15175
+
+  dividends: 407309
+
+  comments: 'взял фин. результаты из 2019, считаем что выручка в 2020 упала из-за коронавируса (меньше стали летать|ездить, меньше нужно бензина)'
