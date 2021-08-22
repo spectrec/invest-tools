@@ -273,8 +273,8 @@ func analyze(w io.Writer, data []financials, conf config) {
 
 	var lastYear = data[len(data)-1]
 	fmt.Fprintf(w, "\tРазмер компании:\n")
-	fmt.Fprintf(w, "\t\tАктивы: %.1f млн (required min: %v)\n", lastYear.Assets, conf.MinAssets)
-	fmt.Fprintf(w, "\t\tВыручка: %.1f млн (required min: %v)\n", lastYear.Revenue, conf.MinRevenue)
+	fmt.Fprintf(w, "\t\tАктивы: %.1f мрлд (required min: %v)\n", lastYear.Assets/1e3, conf.MinAssets)
+	fmt.Fprintf(w, "\t\tВыручка: %.1f мрлд (required min: %v)\n", lastYear.Revenue/1e3, conf.MinRevenue)
 
 	fmt.Fprintf(w, "\tУстойчивость компании:\n")
 	fmt.Fprintf(w, "\t\tЗакредитованность: %.2f, bank: %v (required max: %v)\n",
