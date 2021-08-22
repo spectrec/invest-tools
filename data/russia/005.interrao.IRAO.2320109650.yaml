@@ -1,0 +1,108 @@
+# comments
+
+- year: 2016
+  exchange:
+    stock_count_regular: 104400000000
+    capitalization_regular: 396615600000.00
+
+  multiplier: 1e6
+
+  assets: 571594
+  cash_and_equivalents: 95988
+  liabilities: 152368
+  short_term_debt: 105468
+  long_term_debt: 0
+  equity: 417035
+
+  revenue: 868182
+  operating_income: 77260
+  interest_expences: 23311
+  net_income: 61312
+
+  dividends: 1953
+
+- year: 2017
+  exchange:
+    stock_count_regular: 104400000000
+    capitalization_regular: 350314200000
+
+  multiplier: 1e6
+
+  assets: 625056
+  cash_and_equivalents: 142062
+  liabilities: 165647
+  short_term_debt: 118378
+  long_term_debt: 0
+  equity: 459409
+
+  revenue: 917049
+  operating_income: 56120
+  interest_expences: 3638
+  net_income: 54448
+
+  dividends: 12185
+
+- year: 2018
+  exchange:
+    stock_count_regular: 104400000000
+    capitalization_regular: 406168200000
+
+  multiplier: 1e6
+
+  assets: 728587
+  cash_and_equivalents: 153747
+  liabilities: 243109
+  short_term_debt: 149886
+  long_term_debt: 42991
+  equity: 485478
+
+  revenue: 962582
+  operating_income: 87289
+  interest_expences: 6789
+  net_income: 71675
+
+  dividends: 11101
+
+- year: 2019
+  exchange:
+    stock_count_regular: 104400000000
+    capitalization_regular: 525393000000
+
+  multiplier: 1e6
+
+  assets: 751009
+  cash_and_equivalents: 95924
+  liabilities: 198230
+  short_term_debt: 110859
+  long_term_debt: 48934
+  equity: 552779
+
+  revenue: 1032120
+  operating_income: 98307
+  interest_expences: 12538
+  net_income: 81930
+
+  dividends: 13787
+
+- year: 2020
+  exchange:
+    stock_count_regular: 104400000000
+    capitalization_regular: 555094800000
+
+  multiplier: 1e6
+
+  assets: 865243
+  cash_and_equivalents: 181116
+  liabilities: 249146
+  short_term_debt: 125015
+  long_term_debt: 78839
+  equity: 616097
+
+  revenue: 986292
+  operating_income: 80540
+  interest_expences: 8515
+  net_income: 75465
+
+  dividends: 15660
+
+#  comments: ''

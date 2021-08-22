@@ -1,0 +1,108 @@
+# comments
+
+- year: 2016
+  exchange:
+    stock_count_regular: 
+    capitalization_regular: 
+
+  multiplier: 1e6
+
+  assets: 
+  cash_and_equivalents: 
+  liabilities: 
+  short_term_debt: 
+  long_term_debt: 
+  equity: 
+
+  revenue: 
+  operating_income: 
+  interest_expences: 
+  net_income: 
+
+  dividends: 
+
+- year: 2017
+  exchange:
+    stock_count_regular: 
+    capitalization_regular: 
+
+  multiplier: 1e6
+
+  assets: 
+  cash_and_equivalents: 
+  liabilities: 
+  short_term_debt: 
+  long_term_debt: 
+  equity: 
+
+  revenue: 
+  operating_income: 
+  interest_expences: 
+  net_income: 
+
+  dividends: 
+
+- year: 2018
+  exchange:
+    stock_count_regular: 
+    capitalization_regular: 
+
+  multiplier: 1e6
+
+  assets: 
+  cash_and_equivalents: 
+  liabilities: 
+  short_term_debt: 
+  long_term_debt: 
+  equity: 
+
+  revenue: 
+  operating_income: 
+  interest_expences: 
+  net_income: 
+
+  dividends: 
+
+- year: 2019
+  exchange:
+    stock_count_regular: 
+    capitalization_regular: 
+
+  multiplier: 1e6
+
+  assets: 
+  cash_and_equivalents: 
+  liabilities: 
+  short_term_debt: 
+  long_term_debt: 
+  equity: 
+
+  revenue: 
+  operating_income: 
+  interest_expences: 
+  net_income: 
+
+  dividends: 
+
+- year: 2020
+  exchange:
+    stock_count_regular: 
+    capitalization_regular: 
+
+  multiplier: 1e6
+
+  assets: 
+  cash_and_equivalents: 
+  liabilities: 
+  short_term_debt: 
+  long_term_debt: 
+  equity: 
+
+  revenue: 
+  operating_income: 
+  interest_expences: 
+  net_income: 
+
+  dividends: 
+
+#  comments: ''
