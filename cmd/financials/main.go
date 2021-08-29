@@ -158,6 +158,14 @@ func calcROE(data []financials) (roe []float64, avg float64) {
 	return roe, avg
 }
 
+func calcNetIncomeAvg(data []financials) (avg float64) {
+	for i := range data {
+		avg += data[i].NetIncome
+	}
+
+	return avg / float64(len(data))
+}
+
 func analyze(w io.Writer, data []financials, conf config) {
 	if len(data) == 0 {
 		return
@@ -290,6 +298,7 @@ func analyze(w io.Writer, data []financials, conf config) {
 
 		capitalization := lastYear.Exchange.CapitalizationPriv + lastYear.Exchange.CapitalizationRegular
 		fmt.Fprintf(w, "\t\tТекущая доходность (E/P): %.2f%%\n", lastYear.NetIncome/capitalization*100)
+		fmt.Fprintf(w, "\t\tТекущая доходность (E_avg/P): %.2f%%\n", calcNetIncomeAvg(data)/capitalization*100)
 
 		// equity*roe == expected net income
 		expectedCapitalization := lastYear.Equity * roe_avg / conf.ExpectedReturn
