@@ -36,7 +36,7 @@ var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min dollar yiel
 var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min euro yield percent")
 
 var minMaturityDateArg = flag.String("min-maturity-date", "", "min maturity date yyyy-mm-dd (by default: today + 1 years)")
-var maxMaturityDateArg = flag.String("max-maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 5 years)")
+var maxMaturityDateArg = flag.String("max-maturity-date", "", "max maturity date yyyy-mm-dd (by default: today + 3 years)")
 
 var threadPoolSizeArg = flag.Int("thread-pool-size", 10, "max number of goroutines for checking coupons and amortization")
 
@@ -432,7 +432,7 @@ func main() {
 		minMaturityDate = date
 	}
 
-	var maxMaturityDate = time.Now().AddDate(5, 0, 0) // skip 5 years from now
+	var maxMaturityDate = time.Now().AddDate(3, 0, 0) // skip 3 years from now
 	if *maxMaturityDateArg != "" {
 		date, err := time.Parse("2006-01-02", *maxMaturityDateArg)
 		if err != nil {
