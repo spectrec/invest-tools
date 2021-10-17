@@ -134,8 +134,7 @@ type Security struct {
 	DaysToMaturity float64   `json:"days_to_maturity"`
 	OfferDate      string    `json:"offer_date"`
 
-	YieldToMaturity        float64 `json:"yield_to_maturity"`
-	YieldToMaturityWithNKD float64 `json:"yield_to_maturity_with_nkd"`
+	YieldToMaturity float64 `json:"yield_to_maturity"`
 
 	Amortization bool `json:"amortization"`
 
@@ -169,20 +168,16 @@ func (s *Security) init() {
 	s.DirtyPrice = (s.CleanPrice + s.Coupon.AccruedInterest) * (1 + *comissionPercentArg/100.0)
 
 	var spread = 0.0
-	if s.Nominal > s.CleanPrice {
-		spread = (s.Nominal - s.CleanPrice) * tax
+	if s.Nominal > s.DirtyPrice {
+		spread = (s.Nominal - s.DirtyPrice) * tax
 	}
 
 	var futureCoupon = s.Nominal * (s.Coupon.Percent / 100.0) * (s.DaysToMaturity / 365.0) * tax
 	var accurredInterest = s.Coupon.AccruedInterest * tax // `futureCoupon' doesn't include it
 
-	var income = s.Nominal + spread + futureCoupon
-	var spent = s.CleanPrice * (1 + *comissionPercentArg/100.0)
+	var income = s.Nominal + spread + accurredInterest + futureCoupon
+	var spent = s.DirtyPrice
 	s.YieldToMaturity = (income/spent - 1) * (365.0 / s.DaysToMaturity) * 100.0
-
-	income = s.Nominal + spread + accurredInterest + futureCoupon
-	spent = s.DirtyPrice
-	s.YieldToMaturityWithNKD = (income/spent - 1) * (365.0 / s.DaysToMaturity) * 100.0
 
 	s.RusbondsLink = fmt.Sprintf("https://www.rusbonds.ru/srch_simple.asp?go=1&nick=%v", s.ISIN)
 }
