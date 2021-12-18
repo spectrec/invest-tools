@@ -26,8 +26,6 @@ import (
 var anyCouponTypesArg = flag.Bool("any-coupon-type", false, "show bonds with all coupon types (by default: fixed only)")
 var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds with all redemption types (by default: non amortization only)")
 
-var comissionPercentArg = flag.Float64("comission", 0.0, "comission percent")
-
 var minCouponPercentArg = flag.Float64("min-coupon-percent", 1.0, "minimum allowed coupon percent (skip others)")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 90.0, "minimum allowed clean percent (skip others)")
 
@@ -159,27 +157,26 @@ func (s *Security) String() string {
 }
 
 func (s *Security) init() {
-	const tax = 1 - 0.13
-
 	s.Nominal = s.Lot.Price / s.Lot.BondCount
 	s.DaysToMaturity = math.Round(s.MaturityDate.Sub(time.Now()).Hours() / 24)
 
 	s.CleanPrice = s.Nominal * s.CleanPricePercent / 100.0
-	s.DirtyPrice = (s.CleanPrice + s.Coupon.AccruedInterest) * (1 + *comissionPercentArg/100.0)
+	s.DirtyPrice = (s.CleanPrice + s.Coupon.AccruedInterest)
 
-	var spread = 0.0
+	var futureCoupon = s.Nominal * (s.Coupon.Percent / 100.0) * (s.DaysToMaturity / 365.0)
+	var accurredInterest = s.Coupon.AccruedInterest // `futureCoupon' doesn't include it
+
+	const taxPercent = 0.13
+	var taxes = (futureCoupon + accurredInterest) * taxPercent
 	if s.Nominal > s.DirtyPrice {
-		spread = (s.Nominal - s.DirtyPrice) * tax
+		taxes += (s.Nominal - s.DirtyPrice) * taxPercent
 	}
 
-	var futureCoupon = s.Nominal * (s.Coupon.Percent / 100.0) * (s.DaysToMaturity / 365.0) * tax
-	var accurredInterest = s.Coupon.AccruedInterest * tax // `futureCoupon' doesn't include it
-
-	var income = s.Nominal + spread + accurredInterest + futureCoupon
+	var income = s.Nominal + accurredInterest + futureCoupon - taxes
 	var spent = s.DirtyPrice
 	s.YieldToMaturity = (income/spent - 1) * (365.0 / s.DaysToMaturity) * 100.0
 
-	s.RusbondsLink = fmt.Sprintf("https://www.rusbonds.ru/srch_simple.asp?go=1&nick=%v", s.ISIN)
+	s.RusbondsLink = fmt.Sprintf("https://www.old.rusbonds.ru/srch_simple.asp?go=1&nick=%v", s.ISIN)
 }
 
 func downloadSecurities() (map[string]*Security, error) {
