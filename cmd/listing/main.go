@@ -29,6 +29,10 @@ var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds 
 var minCouponPercentArg = flag.Float64("min-coupon-percent", 1.0, "minimum allowed coupon percent (skip others)")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 90.0, "minimum allowed clean percent (skip others)")
 
+var minCouponYieldArg = flag.Float64("min-coupon-yield", 6.0, "minimum allowed coupon yield (skip others)")
+
+var taxPercentArg = flag.Float64("tax-percent", 0.13, "tax percent")
+
 var minRubSuitablePercentArg = flag.Float64("min-rub-yield", 6, "min rubble yield percent")
 var minUsdSuitablePercentArg = flag.Float64("min-usd-yield", 4, "min dollar yield percent")
 var minEurSuitablePercentArg = flag.Float64("min-eur-yield", 4, "min euro yield percent")
@@ -132,7 +136,8 @@ type Security struct {
 	DaysToMaturity float64   `json:"days_to_maturity"`
 	OfferDate      string    `json:"offer_date"`
 
-	YieldToMaturity float64 `json:"yield_to_maturity"`
+	YieldToMaturity    float64 `json:"yield_to_maturity"`
+	CurrentCouponYield float64 `json:"current_coupon_yield"`
 
 	Amortization bool `json:"amortization"`
 
@@ -166,7 +171,7 @@ func (s *Security) init() {
 	var futureCoupon = s.Nominal * (s.Coupon.Percent / 100.0) * (s.DaysToMaturity / 365.0)
 	var accurredInterest = s.Coupon.AccruedInterest // `futureCoupon' doesn't include it
 
-	const taxPercent = 0.13
+	var taxPercent = *taxPercentArg
 	var taxes = (futureCoupon + accurredInterest) * taxPercent
 	if s.Nominal > s.DirtyPrice {
 		taxes += (s.Nominal - s.DirtyPrice) * taxPercent
@@ -175,6 +180,8 @@ func (s *Security) init() {
 	var income = s.Nominal + accurredInterest + futureCoupon - taxes
 	var spent = s.DirtyPrice
 	s.YieldToMaturity = (income/spent - 1) * (365.0 / s.DaysToMaturity) * 100.0
+
+	s.CurrentCouponYield = (s.Nominal * s.Coupon.Percent / 100.0) * (1 - taxPercent) / s.CleanPrice * 100.0
 
 	s.RusbondsLink = fmt.Sprintf("https://www.old.rusbonds.ru/srch_simple.asp?go=1&nick=%v", s.ISIN)
 }
@@ -481,7 +488,7 @@ func main() {
 
 	wg.Wait()
 
-	var blacklisted, skipLowPrice, skipLowCouponPercent, skipLowYield, skipMaturityDate, skipCouponType, skipAmortization int
+	var blacklisted, skipLowPrice, skipLowCouponPercent, skipLowCouponYield, skipLowYield, skipMaturityDate, skipCouponType, skipAmortization int
 	for secid, v := range securities {
 		var skip bool
 
@@ -529,6 +536,12 @@ func main() {
 
 			continue
 		}
+		if v.CurrentCouponYield < *minCouponYieldArg {
+			delete(securities, secid)
+			skipLowCouponYield++
+
+			continue
+		}
 
 		if minMaturityDate.After(v.MaturityDate) || maxMaturityDate.Before(v.MaturityDate) {
 			skipMaturityDate++
@@ -565,7 +578,7 @@ func main() {
 
 	var bonds []*Security
 	for _, v := range securities {
-		if v.Coupon.IsFixed == false && *anyCouponTypesArg == false {
+		if (v.Coupon.IsFixed == false || v.Coupon.IsConstant == false) && *anyCouponTypesArg == false {
 			skipCouponType++
 			continue
 		}
@@ -597,6 +610,7 @@ func main() {
 	log.Printf("\tblacklisted: %v\n", blacklisted)
 	log.Printf("\tlow price: %v\n", skipLowPrice)
 	log.Printf("\tlow coupon: %v\n", skipLowCouponPercent)
+	log.Printf("\tlow current coupon yield: %v\n", skipLowCouponYield)
 	log.Printf("\tlow yield: %v\n", skipLowYield)
 	log.Printf("\tclose/far maturity date: %v\n", skipMaturityDate)
 	log.Printf("\tnon fixed coupon: %v\n", skipCouponType)
