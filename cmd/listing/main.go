@@ -202,7 +202,7 @@ func downloadSecurities() (map[string]*Security, error) {
 		"OFFERDATE",
 		"MATDATE",
 		"FACEUNIT",
-		"PREVADMITTEDQUOTE",
+		"PREVPRICE",
 		"LISTLEVEL",
 		"BOARDNAME",
 	}
