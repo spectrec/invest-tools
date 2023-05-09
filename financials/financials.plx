@@ -119,28 +119,34 @@ print "$hline\n";
 print "\n$hline\n";
 my $next_net_income_roe = $company_ref->{roe_avg} / 100 * $company_ref->{balance}{equity}[-1];
 my $next_eps_roe = $next_net_income_roe/$company_ref->{stock_count}[-1];
-printf("Средний ROE: %6.2f%%, прогноз ЧП: %s, прогноз EPS: %s, справедливая цена (%.1f%%): %s\n",
+printf("Средний ROE: %6.2f%%\n\tпрогноз ЧП: %s, прогноз EPS: %s\n\tсправедливая цена (%.1f%%): %s\n\tмаксимально-допустимая цена (%.1f%%): %s\n",
 	$company_ref->{roe_avg},
 	num2str($next_net_income_roe),
 	num2str($next_eps_roe),
 	$config_ref->{expected_return},
 	num2str($next_eps_roe / $config_ref->{expected_return} * 100),
+	$config_ref->{minimal_return},
+	num2str($next_eps_roe / $config_ref->{minimal_return} * 100),
 );
 
 my $next_net_income_ros = $company_ref->{ros_avg} / 100 * $company_ref->{income}{revenue}[-1];
 my $next_eps_ros = $next_net_income_ros/$company_ref->{stock_count}[-1];
-printf("Средний ROS: %6.2f%%, прогноз ЧП: %s, прогноз EPS: %s, справедливая цена (%.1f%%): %s\n",
+printf("Средний ROS: %6.2f%%\n\tпрогноз ЧП: %s, прогноз EPS: %s\n\tсправедливая цена (%.1f%%): %s\n\tмаксимально-допустимая цена (%.1f%%): %s\n",
 	$company_ref->{ros_avg},
 	num2str($next_net_income_ros),
 	num2str($next_eps_ros),
 	$config_ref->{expected_return},
 	num2str($next_eps_ros / $config_ref->{expected_return} * 100),
+	$config_ref->{minimal_return},
+	num2str($next_eps_ros / $config_ref->{minimal_return} * 100),
 );
 
-printf("Средняя EPS: %s, справедливая цена (%.1f%%): %s\n",
+printf("Средняя EPS: %s\n\tсправедливая цена (%.1f%%): %s\n\tмаксимально-допустимая цена (%.1f%%): %s\n",
 	num2str($company_ref->{adj_avg_eps}),
 	$config_ref->{expected_return},
 	num2str($company_ref->{adj_avg_eps} / $config_ref->{expected_return} * 100),
+	$config_ref->{minimal_return},
+	num2str($company_ref->{adj_avg_eps} / $config_ref->{minimal_return} * 100),
 );
 
 sub print_row
