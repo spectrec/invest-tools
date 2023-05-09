@@ -1,6 +1,6 @@
 GO=go
 
-all: income fund-yield listing financials
+all: income fund-yield listing
 
 income:
 	$(GO) build -o bin/$@ cmd/$@/*.go
@@ -11,10 +11,7 @@ fund-yield:
 listing:
 	$(GO) build -o bin/$@ cmd/$@/*.go
 
-financials:
-	$(GO) build -o bin/$@ cmd/$@/*.go
-
 clean:
 	rm -rf bin
 
-.PHONY: clean all income bond-yield fund-yield listing financials
+.PHONY: clean all income bond-yield fund-yield listing
