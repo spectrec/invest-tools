@@ -1,0 +1,33 @@
+{
+	"asset_weight_plan": {
+		"crowd_landing": 15,
+		"stock": 20,
+		"fund": 25,
+		"bond": 40
+	},
+	"portfolio": [
+		{
+			"company": "Финам",
+			"assets": [
+				{ "type": "bond", "isin": "SU26229RMFS3", "name": "ОФЗ 26229", "count": 5275, "nominal": 1000, "percent": 7.15, "maturity_date": "2025-11-12" },
+
+				{ "type": "stock", "isin": "RU0009029557", "ticker": "SBERP", "name": "Сбер (прев)", "lot_count": 1000, "lot_size": 10 },
+
+				{ "type": "fund", "isin": "RU000A105328", "name": "Парул-ЛОГ", "count": 1000, "raw_dividend": 8.43, "dividend_periods": 12 },
+				{ "type": "fund", "isin": "RU000A0JWAW3", "name": "СФНАрБизн", "count": 1, "raw_dividend": 6700, "dividend_periods": 4 }
+			]
+		},
+		{
+			"company": "JetLend",
+			"assets": [
+				{ "type": "crowd_landing", "price": 100000.0, "dividend": 1000, "dividend_periods": 12 }
+			]
+		},
+		{
+			"company": "УК",
+			"assets": [
+				{ "type": "fund", "isin": "some isin", "name": "some name", "count": 2, "price": 2500, "raw_dividend": 1000, "dividend_periods": 4 }
+			]
+		}
+	]
+}
