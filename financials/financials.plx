@@ -53,6 +53,8 @@ for (my $i = 0; $i < @{ $company_ref->{years} }; $i++) {
 
 	if ($company_ref->{income}{operating_income}[$i] != 0 and $company_ref->{income}{interest_expences}[$i] != 0) {
 		$company_ref->{'op_income/interest'}[$i] = $company_ref->{income}{operating_income}[$i] / $company_ref->{income}{interest_expences}[$i];
+	} else {
+		$company_ref->{'op_income/interest'} = undef;
 	}
 
 	$company_ref->{ros}[$i] = $company_ref->{income}{adj_net_income}[$i] / $company_ref->{income}{revenue}[$i] * 100;
