@@ -9,7 +9,7 @@ use Getopt::Long;
 use LWP::UserAgent;
 use POSIX qw(abs mktime);
 
-my %good_boards = map { $_ => 1 } qw(TQIF TQCB TQBR TQOB);
+my %good_boards = map { $_ => 1 } qw(TQIF TQCB TQBR TQOB TQTF);
 
 my $price_cache_path = 'price.cache';
 GetOptions(
@@ -173,7 +173,7 @@ sub expected_cash_flow
 	if ($sec->{type} eq 'crowd_landing') {
 		return $sec->{dividend} * $sec->{dividend_periods};
 	}
-	if ($sec->{type} eq 'stock') {
+	if ($sec->{type} eq 'stock' or $sec->{type} eq 'etf') {
 		return 0;
 	}
 
@@ -187,7 +187,7 @@ sub full_price
 	if ($sec->{type} eq 'bond') {
 		return $sec->{nominal} * $sec->{price} / 100.0 * $sec->{count};
 	}
-	if ($sec->{type} eq 'stock') {
+	if ($sec->{type} eq 'stock' or $sec->{type} eq 'etf') {
 		return $sec->{price} * $sec->{lot_count} * $sec->{lot_size};
 	}
 	if ($sec->{type} eq 'fund') {
@@ -205,7 +205,7 @@ sub fetch_price
 	my $url;
 	if ($security->{type} eq 'bond') {
 		$url = "http://iss.moex.com/iss/engines/stock/markets/bonds/securities/$security->{isin}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
-	} elsif ($security->{type} eq 'stock') {
+	} elsif ($security->{type} eq 'stock' or $security->{type} eq 'etf') {
 		$url = "http://iss.moex.com/iss/engines/stock/markets/shares/securities/$security->{ticker}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
 	} else {
 		$url = "http://iss.moex.com/iss/engines/stock/markets/shares/securities/$security->{isin}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
