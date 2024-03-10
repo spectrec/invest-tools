@@ -89,12 +89,18 @@ if ($need_update_price_cache) {
 printf "\nTotal price: %s\n", price2str($stat->{total_price});
 foreach my $type (sort { $stat->{price_by_type}{$b} <=> $stat->{price_by_type}{$a} } keys %{ $stat->{price_by_type} }) {
 	my $percent = $stat->{price_by_type}{$type} / $stat->{total_price} * 100;
-	my $expected = $stat->{total_price} / 100 * $input_ref->{asset_weight_plan}{ $type };
-	my $diff = abs($stat->{price_by_type}{$type} - $expected);
 
-	printf "\t%-15s: %s (%.1f%%), planned: %s (diff: %s, percent: %.1f%%)\n",
-		$type, price2str($stat->{price_by_type}{$type}), $percent,
-		price2str($expected), price2str($diff), $diff/$expected*100;
+	my $plan = '';
+	if ($input_ref->{asset_weight_plan}{ $type }) {
+		my $expected = $stat->{total_price} / 100 * $input_ref->{asset_weight_plan}{ $type };
+		my $diff = abs($stat->{price_by_type}{$type} - $expected);
+
+		$plan = sprintf ", planned: %s (diff: %s, percent: %.1f%%)",
+			price2str($expected), price2str($diff), $diff/$expected*100;
+	}
+
+	printf "\t%-15s: %s (%.1f%%)%s\n",
+		$type, price2str($stat->{price_by_type}{$type}), $percent, $plan;
 }
 
 printf "\nExpected cash flow: %s (yield: %.2f%%), monthly: %s\n",
@@ -102,10 +108,14 @@ printf "\nExpected cash flow: %s (yield: %.2f%%), monthly: %s\n",
 	$stat->{expected_cash_flow} / $stat->{total_price} * 100,
 	price2str($stat->{expected_cash_flow} / 12);
 foreach my $type (sort { $stat->{cash_flow_by_type}{$b} <=> $stat->{cash_flow_by_type}{$a} } keys %{ $stat->{cash_flow_by_type} }) {
-	my $percent = $stat->{cash_flow_by_type}{$type} / $stat->{expected_cash_flow} * 100;
+	my $portfolio_yield_part = $stat->{cash_flow_by_type}{$type} / $stat->{expected_cash_flow} * 100;
+	my $net_asset_yield_percent = $stat->{cash_flow_by_type}{$type} / $stat->{price_by_type}{$type} * 100;
+	my $dirty_asset_yield_percent = $net_asset_yield_percent / 0.87;
+	next if $stat->{cash_flow_by_type}{$type} == 0;
 
-	printf "\t%-15s: %s (%.1f%%)\n",
-		$type, price2str($stat->{cash_flow_by_type}{$type}), $percent;
+	printf "\t%-15s: %s, monthly: %s (cache flow part: %.1f%%, dirty asset yield: %.1f%%, net asset yield: %.1f%%)\n",
+		$type, price2str($stat->{cash_flow_by_type}{$type}), price2str($stat->{cash_flow_by_type}{$type} / 12),
+		$portfolio_yield_part, $dirty_asset_yield_percent, $net_asset_yield_percent;
 }
 
 if (@expired) {
@@ -167,7 +177,7 @@ sub expected_cash_flow
 	if ($sec->{type} eq 'bond') {
 		return $sec->{nominal} * $sec->{percent} / 100.0 * $sec->{count} * (1 - $tax);
 	}
-	if ($sec->{type} eq 'fund') {
+	if ($sec->{type} eq 'div_fund') {
 		return $sec->{raw_dividend} * $sec->{count} * $sec->{dividend_periods} * (1 - $tax);
 	}
 	if ($sec->{type} eq 'crowd_landing') {
@@ -190,7 +200,7 @@ sub full_price
 	if ($sec->{type} eq 'stock' or $sec->{type} eq 'etf') {
 		return $sec->{price} * $sec->{lot_count} * $sec->{lot_size};
 	}
-	if ($sec->{type} eq 'fund') {
+	if ($sec->{type} eq 'fund' or $sec->{type} eq 'div_fund') {
 		return $sec->{price} * $sec->{count};
 	}
 

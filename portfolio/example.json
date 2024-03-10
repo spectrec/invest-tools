@@ -14,7 +14,9 @@
 				{ "type": "stock", "isin": "RU0009029557", "ticker": "SBERP", "name": "Сбер (прев)", "lot_count": 1000, "lot_size": 10 },
 
 				{ "type": "fund", "isin": "RU000A105328", "name": "Парул-ЛОГ", "count": 1000, "raw_dividend": 8.43, "dividend_periods": 12 },
-				{ "type": "fund", "isin": "RU000A0JWAW3", "name": "СФНАрБизн", "count": 1, "raw_dividend": 6700, "dividend_periods": 4 }
+				{ "type": "fund", "isin": "RU000A0JWAW3", "name": "СФНАрБизн", "count": 1, "raw_dividend": 6700, "dividend_periods": 4 },
+
+				{ "type": "etf", "isin": "RU000A104X08", "ticker": "AKMM", "name": "AKMM", "lot_count": 7705, "lot_size": 1 }
 			]
 		},
 		{
