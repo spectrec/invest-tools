@@ -184,6 +184,9 @@ sub expected_cash_flow
 		return $sec->{dividend} * $sec->{dividend_periods};
 	}
 	if ($sec->{type} eq 'stock' or $sec->{type} eq 'etf') {
+		return $sec->{dividend_yield} / 100 * $sec->{price} * $sec->{lot_count} * (1 - $tax)
+			if $sec->{dividend_yield};
+
 		return 0;
 	}
 

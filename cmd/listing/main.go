@@ -25,6 +25,7 @@ import (
 
 var anyCouponTypesArg = flag.Bool("any-coupon-type", false, "show bonds with all coupon types (by default: fixed only)")
 var anyRedemptionTypesArg = flag.Bool("any-redemption-type", false, "show bonds with all redemption types (by default: non amortization only)")
+var sortByCurrentCouponYieldArg = flag.Bool("sort-by-current-coupon-yield", false, "sort result using current coupon yield instead of yield to maturity")
 
 var minCouponPercentArg = flag.Float64("min-coupon-percent", 1.0, "minimum allowed coupon percent (skip others)")
 var minCleanPricePercentArg = flag.Float64("min-clean-price-percent", 90.0, "minimum allowed clean percent (skip others)")
@@ -617,9 +618,15 @@ func main() {
 	log.Printf("\tamortization: %v\n\n", skipAmortization)
 
 	log.Printf("Sorting `%v' results ...", len(bonds))
-	sort.Slice(bonds, func(i, j int) bool {
-		return bonds[i].YieldToMaturity > bonds[j].YieldToMaturity
-	})
+	if *sortByCurrentCouponYieldArg {
+		sort.Slice(bonds, func(i, j int) bool {
+			return bonds[i].CurrentCouponYield > bonds[j].CurrentCouponYield
+		})
+	} else {
+		sort.Slice(bonds, func(i, j int) bool {
+			return bonds[i].YieldToMaturity > bonds[j].YieldToMaturity
+		})
+	}
 
 	log.Println("Storing results ...")
 	file, err := os.OpenFile(*outputFileArg, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
