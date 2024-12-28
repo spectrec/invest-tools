@@ -3,5 +3,7 @@
 *.swp
 bin/
 emitent.cache
+portfolio/all.json
 portfolio/self.json
+portfolio/income.json
 portfolio/price.cache
