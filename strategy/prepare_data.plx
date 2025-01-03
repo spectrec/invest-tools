@@ -111,11 +111,11 @@ my %month2num = (
 
 # Данные взял отсюда; https://base.garant.ru/10180094/
 # Можно ещё отсюда взять (но тут начинается с 2013): https://cbr.ru/hd_base/KeyRate/?UniDbQuery.Posted=True&UniDbQuery.From=17.09.2013&UniDbQuery.To=28.12.2024
-# Просто скопировал обе таблички и вставил без редактирования в файлик data/cb_rate.in, остальное должен сделать скрипт, заморачиваться с датами сильно не стал -
+# Просто скопировал обе таблички и вставил без редактирования в файлик data/bonds.in, остальное должен сделать скрипт, заморачиваться с датами сильно не стал -
 # в результате для каждого месяца вывожу ту ставку, которая была на конец месяца.
 {
-	my $in = 'data/cb_rate.in';
-	my $out = 'data/cb_rate.txt';
+	my $in = 'data/bonds.in';
+	my $out = 'data/bonds.txt';
 
 	my $content = do {
 		open my $fh, '<', $in
@@ -193,9 +193,9 @@ my %month2num = (
 # - https://cbr.ru/statistics/avgprocstav/?UniDbQuery.Posted=True&UniDbQuery.From=2.07.2009&UniDbQuery.To=2.12.2024
 # В качестве результата беру среднее значение за месяц
 {
-	my $in_old = 'data/deposit_rate.in';
-	my $in_new = 'data/deposit_rate.new.in';
-	my $out = 'data/deposit_rate.txt';
+	my $in_old = 'data/deposits.in';
+	my $in_new = 'data/deposits.new.in';
+	my $out = 'data/deposits.txt';
 
 	my $data = {};
 	open my $fh_old, '<', $in_old
