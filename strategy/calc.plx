@@ -90,7 +90,7 @@ if ($args{date_end}) {
 }
 
 die "--date_begin must be lower than --date_end\n"
-	if not $min_date->before($max_date);
+	if $min_date->after($max_date);
 
 my %cache;
 foreach my $type (@types) {
