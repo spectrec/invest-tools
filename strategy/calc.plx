@@ -290,7 +290,7 @@ for (my $i = 0; ; $i++, $date->next()) {
 	debug("%s end, state: %s", $date->to_string(), dump_portfolio($date->diff_years($min_date)));
 }
 
-printf "[%s .. %s] result: %s\n", $min_date->to_string(), $max_date->to_string(), dump_portfolio($date->diff_years($min_date));
+printf "[%s .. %s] result: %s\n", $min_date->to_string(), $max_date->to_string(), dump_portfolio($max_date->diff_years($min_date));
 exit 0;
 
 
@@ -309,9 +309,9 @@ sub dump_portfolio
 		}
 	}
 
-	my $result = sprintf 'in_sum: %.2f result_sum: %.2f yield: %.2f%%', $portfolio{in_sum}, $portfolio_value,
-			     calc_yield($portfolio{in_sum}, $portfolio_value, $spent_years);
-	if ($portfolio{inflation}) {
+	my $result = sprintf 'in_sum: %.2f result_sum: %.2f spent: %.1fy yield: %.2f%%', $portfolio{in_sum}, $portfolio_value,
+			     $spent_years, calc_yield($portfolio{in_sum}, $portfolio_value, $spent_years);
+	if ($cache{inflation}) {
 		$result .= sprintf ' inflation_result: %.2f inflation_yield: %.2f', $portfolio{inflation_result},
 			           calc_yield($portfolio{in_sum}, $portfolio{inflation_result}, $spent_years);
 	}
@@ -483,7 +483,15 @@ sub diff_years
 	my ($self, $date) = @_;
 
 	my $yyyy_diff = $self->{_yyyy} - $date->{_yyyy};
-	my $mm_diff = (12 - $self->{_mm}) + $date->{_mm};
+
+	# 2000/1 - 2000/1 == 0y1m
+	# 2000/1 - 2000/12 == 1y0m
+	my $mm_diff = $self->{_mm} - $date->{_mm} + 1;
+	if ($mm_diff < 0) {
+		# 2001/1 - 2000/12 == 0y2m
+		$mm_diff += 12 + 1;
+		$yyyy_diff--;
+	}
 
 	return $yyyy_diff + $mm_diff / 12.0;
 }
