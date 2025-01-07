@@ -26,6 +26,8 @@ my %args = (
 	extra_payment_period_mon => 0,
 
 	rebalance_period_mon => 0,
+
+	fixed_income_duration => '1y',
 );
 
 Getopt::Long::Configure('auto_help');
@@ -44,10 +46,14 @@ GetOptions(
 	'extra_payment_period_mon=i' => \$args{extra_payment_period_mon},
 
 	'rebalance_period_mon=i' => \$args{rebalance_period_mon},
+
+	'fixed_income_duration=s' => \$args{fixed_income_duration},
 ) or die "Usage: $0 --date_begin 'yyyy/mm' --date_end 'yyyy/mm' --types=... <opts...>\n";
 
 die "missed `--date_begin=yyyy/mm' or `--date_end=yyyy/mm' option\n"
 	if not $args{date_begin} or (not $args{date_end} and not $args{duration});
+
+$args{fixed_income_duration} = { parse_duration($args{fixed_income_duration}) };
 
 my @types = split /,/, $args{types};
 if (not @types) {
@@ -76,17 +82,14 @@ my $min_date = Date->parse($args{date_begin});
 if ($args{date_end}) {
 	$max_date = Date->parse($args{date_end});
 } else {
-	my ($yyyy, $mm) = $args{duration} =~ /(\d+)y(\d+)m/;
-	die "bad `--duration' format, must be `<NUM>y<NUM>m'\n"
-		if not defined $mm;
-
-	if ($yyyy > 0 && $mm == 0) {
+	my %d = parse_duration($args{duration});
+	if ($d{yyyy} > 0 && $d{mm} == 0) {
 		# костыль, чтобы при добавлении 1y0m к 2000/01 получали 2000/12
-		$yyyy--;
-		$mm = 11;
+		$d{yyyy}--;
+		$d{mm} = 11;
 	}
 
-	$max_date = $min_date->copy()->add(yyyy => $yyyy, mm => $mm);
+	$max_date = $min_date->copy()->add(%d);
 }
 
 die "--date_begin must be lower than --date_end\n"
@@ -275,7 +278,7 @@ for (my $i = 0; ; $i++, $date->next()) {
 			# используем годовые депозиты/облигации
 			my $yield_mm = $cash * $cache{ $type }[$i]{val}/100.0 / 12;
 			push @{ $portfolio{assets}{ $type } }, {
-				expire_date => $date->copy()->add(mm => 12),
+				expire_date => $date->copy()->add(%{ $args{fixed_income_duration} }),
 
 				yield_sum => $cash,
 				yield_mm => $yield_mm,
@@ -387,6 +390,18 @@ sub read_data
 	}
 
 	return \@ret;
+}
+
+sub parse_duration
+{
+	my $str = shift;
+
+	my ($yyyy) = $str =~ /(\d+)y/;
+	my ($mm) = $str =~ /(\d+)m/;
+	die "bad duration format `$str', must be `[<NUM>y][<NUM>m]'\n"
+		if not defined $mm and not defined $yyyy;
+
+	return (yyyy => ($yyyy // 0), mm => ($mm // 0));
 }
 
 sub debug
