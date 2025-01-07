@@ -1,10 +1,4 @@
 {
-	"asset_weight_plan": {
-		"crowd_landing": 15,
-		"stock": 20,
-		"fund": 25,
-		"bond": 40
-	},
 	"portfolio": [
 		{
 			"company": "Финам",
@@ -16,7 +10,11 @@
 				{ "type": "fund", "isin": "RU000A105328", "name": "Парул-ЛОГ", "count": 1000, "raw_dividend": 8.43, "dividend_periods": 12 },
 				{ "type": "fund", "isin": "RU000A0JWAW3", "name": "СФНАрБизн", "count": 1, "raw_dividend": 6700, "dividend_periods": 4 },
 
-				{ "type": "etf", "isin": "RU000A104X08", "ticker": "AKMM", "name": "AKMM", "lot_count": 7705, "lot_size": 1 }
+				{ "type": "etf", "isin": "RU000A104X08", "ticker": "AKMM", "name": "AKMM", "lot_count": 7705, "lot_size": 1 },
+
+				{ "type": "div_fund", "isin": "RU000A105328", "name": "Парул-ЛОГ", "count": 1, "raw_dividend": 13.42, "dividend_periods": 12 },
+
+				{ "type": "currency", "ticker": "GLDRUB_TOM", "name": "GOLD", "count": 1 }
 			]
 		},
 		{

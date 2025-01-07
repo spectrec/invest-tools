@@ -9,7 +9,7 @@ use Getopt::Long;
 use LWP::UserAgent;
 use POSIX qw(abs mktime);
 
-my %good_boards = map { $_ => 1 } qw(TQIF TQCB TQBR TQOB TQTF);
+my %good_boards = map { $_ => 1 } qw(TQIF TQCB TQBR TQOB TQTF CETS);
 
 my $price_cache_path = 'price.cache';
 GetOptions(
@@ -51,14 +51,16 @@ foreach my $part (@{ $input_ref->{portfolio} }) {
 		}
 
 		if (not $ref->{price}) {
-			if (not $sec_price_cache->{ $ref->{isin} }) {
-				print "fetching price for `$ref->{isin}'\n";
+			my $sec_id = $ref->{isin} // $ref->{ticker};
+
+			if (not $sec_price_cache->{ $sec_id }) {
+				print "fetching price for `$sec_id'\n";
 				fetch_price($ref);
 
-				$sec_price_cache->{ $ref->{isin} } = $ref->{price};
+				$sec_price_cache->{ $sec_id } = $ref->{price};
 				$need_update_price_cache = 1;
 			} else {
-				$ref->{price} = $sec_price_cache->{ $ref->{isin} };
+				$ref->{price} = $sec_price_cache->{ $sec_id };
 			}
 		}
 
@@ -203,7 +205,7 @@ sub full_price
 	if ($sec->{type} eq 'stock' or $sec->{type} eq 'etf') {
 		return $sec->{price} * $sec->{lot_count} * $sec->{lot_size};
 	}
-	if ($sec->{type} eq 'fund' or $sec->{type} eq 'div_fund') {
+	if ($sec->{type} eq 'fund' or $sec->{type} eq 'div_fund' or $sec->{type} eq 'currency') {
 		return $sec->{price} * $sec->{count};
 	}
 
@@ -220,6 +222,8 @@ sub fetch_price
 		$url = "http://iss.moex.com/iss/engines/stock/markets/bonds/securities/$security->{isin}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
 	} elsif ($security->{type} eq 'stock' or $security->{type} eq 'etf') {
 		$url = "http://iss.moex.com/iss/engines/stock/markets/shares/securities/$security->{ticker}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
+	} elsif ($security->{type} eq 'currency') {
+		$url = "http://iss.moex.com/iss/engines/currency/markets/selt/securities/$security->{ticker}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
 	} else {
 		$url = "http://iss.moex.com/iss/engines/stock/markets/shares/securities/$security->{isin}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
 	}
