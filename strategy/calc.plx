@@ -28,6 +28,8 @@ my %args = (
 	rebalance_period_mon => 0,
 
 	fixed_income_duration => '1y',
+
+	bond_coupon_tax_rate => 0.13,
 );
 
 Getopt::Long::Configure('auto_help');
@@ -48,6 +50,8 @@ GetOptions(
 	'rebalance_period_mon=i' => \$args{rebalance_period_mon},
 
 	'fixed_income_duration=s' => \$args{fixed_income_duration},
+
+	'bond_coupon_tax_rate=f' => \$args{bond_coupon_tax_rate},
 ) or die "Usage: $0 --date_begin 'yyyy/mm' --date_end 'yyyy/mm' --types=... <opts...>\n";
 
 die "missed `--date_begin=yyyy/mm' or `--date_end=yyyy/mm' option\n"
@@ -277,6 +281,10 @@ for (my $i = 0; ; $i++, $date->next()) {
 
 			# используем годовые депозиты/облигации
 			my $yield_mm = $cash * $cache{ $type }[$i]{val}/100.0 / 12;
+			if ($type eq 'bonds' and $args{bond_coupon_tax_rate}) {
+				$yield_mm *= (1.0 - $args{bond_coupon_tax_rate});
+			}
+
 			push @{ $portfolio{assets}{ $type } }, {
 				expire_date => $date->copy()->add(%{ $args{fixed_income_duration} }),
 
