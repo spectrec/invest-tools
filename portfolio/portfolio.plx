@@ -11,6 +11,9 @@ use POSIX qw(abs mktime);
 
 my %good_boards = map { $_ => 1 } qw(TQIF TQCB TQBR TQOB TQTF CETS);
 
+my $ua = LWP::UserAgent->new(timeout => 10);
+$ua->default_header('User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 YaBrowser/24.12.0.0 Safari/537.36');
+
 my $price_cache_path = 'price.cache';
 GetOptions(
 	"price-cache=s" => \$price_cache_path,
@@ -89,20 +92,27 @@ if ($need_update_price_cache) {
 }
 
 printf "\nTotal price: %s\n", price2str($stat->{total_price});
+foreach my $part (@{ $input_ref->{portfolio} }) {
+	my ($sum, %sum_by_type) = (0);
+
+	foreach my $ref (@{ $part->{assets} }) {
+		my $price = full_price($ref);
+
+		$sum += $price;
+		$sum_by_type{ $ref->{type} } += $price;
+	}
+
+	printf "\t%s: %s\n", $part->{company}, price2str($sum);
+	foreach my $type (sort { $sum_by_type{$b} <=> $sum_by_type{$a} } keys %sum_by_type) {
+		printf "\t\t%-15s: %s\n", $type, price2str($sum_by_type{ $type });
+	}
+}
+
+printf "\nTotal by types:\n";
 foreach my $type (sort { $stat->{price_by_type}{$b} <=> $stat->{price_by_type}{$a} } keys %{ $stat->{price_by_type} }) {
 	my $percent = $stat->{price_by_type}{$type} / $stat->{total_price} * 100;
 
-	my $plan = '';
-	if ($input_ref->{asset_weight_plan}{ $type }) {
-		my $expected = $stat->{total_price} / 100 * $input_ref->{asset_weight_plan}{ $type };
-		my $diff = abs($stat->{price_by_type}{$type} - $expected);
-
-		$plan = sprintf ", planned: %s (diff: %s, percent: %.1f%%)",
-			price2str($expected), price2str($diff), $diff/$expected*100;
-	}
-
-	printf "\t%-15s: %s (%.1f%%)%s\n",
-		$type, price2str($stat->{price_by_type}{$type}), $percent, $plan;
+	printf "\t%-15s: %s (%.1f%%)\n", $type, price2str($stat->{price_by_type}{$type}), $percent;
 }
 
 printf "\nExpected cash flow: %s (yield: %.2f%%), monthly: %s\n",
@@ -189,6 +199,9 @@ sub expected_cash_flow
 		return $sec->{dividend_yield} / 100 * $sec->{price} * $sec->{lot_count} * (1 - $tax)
 			if $sec->{dividend_yield};
 
+		return $sec->{raw_dividend} * $sec->{lot_count} * $sec->{lot_size} * (1 - $tax)
+			if $sec->{raw_dividend};
+
 		return 0;
 	}
 
@@ -200,7 +213,7 @@ sub full_price
 	my ($sec) = @_;
 
 	if ($sec->{type} eq 'bond') {
-		return $sec->{nominal} * $sec->{price} / 100.0 * $sec->{count};
+		return $sec->{price} * $sec->{count};
 	}
 	if ($sec->{type} eq 'stock' or $sec->{type} eq 'etf') {
 		return $sec->{price} * $sec->{lot_count} * $sec->{lot_size};
@@ -219,7 +232,7 @@ sub fetch_price
 
 	my $url;
 	if ($security->{type} eq 'bond') {
-		$url = "http://iss.moex.com/iss/engines/stock/markets/bonds/securities/$security->{isin}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
+		$url = "http://iss.moex.com/iss/engines/stock/markets/bonds/securities/$security->{isin}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE,ACCRUEDINT";
 	} elsif ($security->{type} eq 'stock' or $security->{type} eq 'etf') {
 		$url = "http://iss.moex.com/iss/engines/stock/markets/shares/securities/$security->{ticker}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
 	} elsif ($security->{type} eq 'currency') {
@@ -228,22 +241,34 @@ sub fetch_price
 		$url = "http://iss.moex.com/iss/engines/stock/markets/shares/securities/$security->{isin}.json?iss.meta=off&securities.columns=SECID,BOARDID,SHORTNAME,PREVPRICE";
 	}
 
-	my $response = LWP::UserAgent->new(timeout => 10)->get($url);
-	if (not $response->is_success()) {
-		my ($code, $resp) = ($response->code(), $response->decoded_content());
+	my $data;
+	for my $try (1 .. 3) {
+		my $response = $ua->get($url);
+		if (not $response->is_success()) {
+			my ($code, $resp) = ($response->code(), $response->decoded_content());
 
-		chomp $resp;
-		die "request '$url' failed: $resp ($code)\n";
+			chomp $resp;
+			warn "request '$url' failed: $resp ($code)\n";
+			next;
+		}
+
+		$data = $response->decoded_content();
+		last;
 	}
-
-	my $data = $response->decoded_content();
+	die "request '$url' failed: no more tries\n"
+		if not $data;
 
 	my $ref = from_json($data);
 	foreach my $v (@{ $ref->{securities}{data} }) {
-		my ($sec_id, $board_id, $short_name, $price) = @$v;
+		my ($sec_id, $board_id, $short_name, $price, $accrued_int) = @$v;
 		next if not $good_boards{ $board_id };
 
-		$security->{price} = $price;
+		if ($security->{type} eq 'bond') {
+			$security->{price} = $security->{nominal}/100.0*$price + $accrued_int;
+		} else {
+			$security->{price} = $price;
+		}
+
 		return;
 	}
 
