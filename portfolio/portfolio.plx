@@ -273,5 +273,7 @@ sub fetch_price
 	}
 
 	print Dumper $security, $ref;
-	die "can't detect security price ($url)\n";
+	warn "can't detect security price ($url)\n";
+
+	$security->{price} = $security->{default_price} // 0;
 }
