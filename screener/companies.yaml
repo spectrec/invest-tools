@@ -1,0 +1,2180 @@
+companies:
+- name: Сбербанк России ПАО ао
+  inn: 7707083893
+  link: https://www.sberbank.com/ru/investor-relations/groupresults
+  ticker: SBER,SBERP
+  isin: RU0009029540
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7707083893&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.30 AAA)
+  financials:
+    years: 2021, 2022, 2023, 2024
+    revenue(млрд): 2658.0, 2815.4, 3639.3, 4171.7
+    net_income(млрд): 1245.9, 270.5, 1508.6, 1580.3
+    dps(руб): 18.70, 0.0, 25.0, 33.30
+  dividends_policy: 50% от чп по МСФО (до декабря 2026)
+  decision: (2025.12.30) выручка и чп стабильно растут г/г, снижение чп в 2022 связано с формированием резервов (т.е. вроде как это "бумажное" списание), в 2025м заплатили за 2024й дивиденды 34.84р.
+            Судя по отчетности за 9мес, прибыль в 2025 будет выше, чем в 2024, соответственно и дивы тоже, т.е. можно брать до 350р.
+  status: ++
+
+- name: ПАО "Банк "Санкт-Петербург" ао
+  inn: 7831000027
+  link: https://www.bspb.ru/investors/financial-statements/IFRS
+  ticker: BSPB,BSPBP
+  isin: RU0009100945
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7831000027&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.02 AA-)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 43.1, 55.4, 57.5, 53.7, 46.6, 53.8, 44.5, -, -, 96.4, 161.1
+    net_income(млрд): 4.7, 3.6, 4.2, 7.4, 9, 7.9, 10.8, -, -, 47.3, 50.7
+    dps(руб): 0.11, 2.02, 1.05, 1.05, 1.62, 3.71, 3.33, 4.56, 11.81, 40.24, 50.63
+  dividends_policy: 20-50% от ЧП по МСФО
+  decision: (2026.01.04) выручка, чп и дивы растут, судя по отчетности за 9м 2025 чп будет немного ниже, т.е. в идеале брать до 400
+  status: ++
+
+- name: ПАО Московская Биржа
+  inn: 7702077840
+  link: https://www.moex.com/s1456
+  ticker: MOEX
+  isin: RU000A0JR4A1
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7702077840&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 29.4, 44.7, 42.4, 37.2, 41.5, 39.7, 49.4, 55.3, 82.1, 107.1, 155.2
+    net_income(млрд): 16.0, 27.9, 25.1, 20.2, 19.7, 20.1, 25.1, 28, 36.2, 60.7, 79.2
+    dps(руб): 2.38, 3.87, 7.11, 10.17, 5.47, 7.7, 7.93, 9.45, 0, 4.84, 17.35
+  dividends_policy: от 50% ЧП по МСФО до fcf
+  decision: (2026.01.03) выручка растущая, чп тоже, дивы тоже, судя по отчетности за 9м 2025 - чп будет ниже, а вот fcf в несколько раз больше, т.е. дивиденд по идее должно быть не меньше чем за 2024 (26.11), т.е. можно брать до 260
+  status: ++
+
+- name: Т-Технологии МКПАО ао
+  inn: 2540283195
+  link: https://t-technologies.ru/results/ + https://tinkoff-group.com/corporate-governance/annual-reports/
+  ticker: T
+  isin: RU000A107UL4
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=Т-Технологии&inn=&isin=&koNumber=&typeGroup=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 A+)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 31, 42, 56.2, 75, 102, 146, 175, 249, 330, 428, 868
+    net_income(млрд): 3.4, 1.8, 11, 19, 27, 36.1, 44, 63.3, 20.8, 80.9, 122
+    dps(руб): 0.3$, 0, 0.38$, 0.77$, 1.07$, 0.49$, 0.8$, 0.24$, 0, 0, 92.5
+  dividends_policy: 30% от ЧП по МСФО
+  decision: (2025.12.31) стабильно растут выручка и чп, див. доходность низкая, но хорошие темпы роста, eps_2024=538, судя по отчетности за 9м 2025 - за 2025й будет выше чп, но допустим что такая же, т.е. если брать по цене 3500, то e/p=15%
+  status: ++
+
+- name: ПАО ДОМ.РФ
+  inn: 7729355614
+  link: https://e-disclosure.ru/portal/files.aspx?id=1263&type=4
+  ticker: DOMRF
+  isin: RU000A0ZZFU5
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7729355614&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2020-2024
+    revenue(млрд): 78.5, 104.2, 169.5, 264, 567.6
+    net_income(млрд): 26.3, 33.3, 30.3, 47.1, 65.6
+    dps(руб): 220.26, 173.67, 93.08, 92.72, 146.5
+  dividends_policy: 50% от ЧП по МСФО
+  decision: (2026.01.03) выручка и чп растут очень быстро, выглядит что в 2025м рост продолжился, допустим что eps_2025=360 (прогноз чп=65млрд), при цене 2к e/p=18
+  status: ++
+
+
+- name: ПАО НК Роснефть
+  inn: 7706107510
+  link: https://www.rosneft.ru/Investors/statements_and_presentations/Statements/
+  ticker: ROSN
+  isin: RU000A0J2Q06
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7706107510&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.30 AAA)
+  financials:
+    years: 2020, 2021, 2022, 2023, 2024
+    revenue(млрд): 5757, 8761, ?, 9163, 10139
+    net_income(млрд): 132, 883, ?, 1267, 1084
+    ocf(млрд): 1741, 1260, ?, 2765, 2465
+    dps(руб): 6.94, 41.66, 38.36, 59.78, 51.15
+  dividends_policy: 50% от чп по МСФО
+  decision: (2025.12.30) выручка растет, чп волатильна, но в целом тоже растет, дивиденды платит с 1999, повышая если достаточно чп, но в 2025 прибыль упадет в 3 раза, поэтому если и брать, то до 200
+  status: ++
+
+- name: НК ЛУКОЙЛ (ПАО) - ао
+  inn: 7708004767
+  link: https://e-disclosure.ru/portal/files.aspx?id=17&type=4 + https://lukoil.ru/InvestorAndShareholderCenter/FinancialReports
+  ticker: LKOH
+  isin: RU0009024277
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7708004767&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.30 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 5505, 5749, 5227, 5937, 8036, 7841, 5639, 9435, -, 7928, 8621
+    net_income(млрд): 395, 291, 207, 419, 619, 640, 15, 773, -, 1154, 848
+    dps(руб): 154, 177, 195, 215, 250, 542, 259, 877, 694, 945, 1055
+  dividends_policy: 100% от fcf по МСФО
+  decision: (2025.12.30) выручка и чп вволатильны, но в целом имеют тендекцию к росту, дивиденды тоже растут, но в 2025 чп похоже упала в 2 раза, т.е. брать нужно до 5000
+  status: ++
+
+- name: Газпром нефть ПАО ао
+  inn: 5504036333
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=347&type=4&attempt=1
+  ticker: SIBN
+  isin: RU0009062467
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=5504036333&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  financials:
+    years: 2014-2022
+    revenue(млрд): 1408, 1469, 1546, 1858, 2489, 2485, 2000, 3068, 3520, 4100
+    net_income(млрд): 127, 116, 210, 270, 401, 422, 121, 519, 638, 501
+    dps(руб): 6.47, 6.47, 10.7, 15, 30, 37.96, 15, 56, 81.94, 102.43, 79.17
+  dividends_policy: 50% от скорректированной ЧП
+  decision: (2025.12.31) выручка стабильно растет, чп волатильна, но тоже растет, судя по dohod.ru прогноз дивидендов на ближайшие 12м 46р, т.е. в идеале брать дешевле 450р
+  status: ++
+
+- name: ПАО "Татнефть" ао
+  inn: 1644003838
+  link: https://www.tatneft.ru/aktsioneram-i-investoram/raskritie-informatsii/financial-and-accounting-reporting
+  ticker: TATN,TATNP
+  isin: RU0009033591
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=1644003838&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 476, 553, 580, 681, 911, 932, 721, 1265, 1427, 1589, 2030
+    net_income(млрд): 92, 99, 107, 123, 212, 192, 105, 199, 285, 288, 306
+    dps(руб): 10.58, 10.96, 22.81, 39.94, 84.91, 65.47, 22.24, 42.64, 67.28, 87.88, 98.70
+  dividends_policy: 50% от max(ЧП) по МСФО/РСБУ
+  decision: (2025.12.31) выручка растет, чп тоже, но в 2025 чп упала похоже в 3 раза, т.е. брать нужно до 300
+  status: ++
+
+- name: Транснефть ПАО акц.пр.
+  inn: 7706061801
+  link: https://транснефть.рф/investors/for-investor/otchyetnost/consolidated-financial-statements/
+  ticker: TRNFP
+  isin: RU0009091573
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7706061801&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 774.3, 815.6, 848.1, 884.3, 979.9, 1063.8, 962.4, 1051.8, 1204.7, 1330.8, 1423.9
+    net_income(млрд): 59.5, 143.3, 232.8, 191.9, 224.3, 179.3, 133.2, 175.9, 242.5, 296.5, 287.6
+    dps(руб): 7.24, 7.58, 8.23, 81.72, 75.78, 107.06, 116.12, 92.24, 104.97, 166.65, 177.2
+  dividends_policy: 50% от ЧП по МСФО
+  decision: (2026.01.04) по доступной отчетности динамика хорошая у выручки, чп и дивов + историческая динамика у дивов (доход) выглядит хорошо, можно попробовать взять до 1700 для 10% дд
+  status: ++
+
+- name: ПАО «ЛК «Европлан»
+  inn: 9705101614
+  link: https://europlan.ru/investor/reports + https://e-disclosure.ru/portal/files.aspx?id=37082&type=4
+  ticker: LEAS
+  isin: RU000A0ZZFS9
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 7.8, 7.5, 6.8, 7.8, 9.9, 12.5, 14.1, 18.5, 26.3, 33.7, 51.8
+    net_income(млрд): 1.6, 1.4, 2.4, 2.1, 3.2, 4.8, 6.0, 8.6, 11.8, 14.7, 14.9
+    dps(руб): 0, 0, 0, 0, 11.74, 15.69, 23.34, 10, 29.17, 48.34, 75
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.04) выручка, чп и дивы растут, но в 2025 падение чп почти в 4 раза, т.е. брать до 200
+  status: ++
+
+- name: ПАО "НОВАТЭК" ао
+  inn: 6316031581
+  link: https://www.novatek.ru/ru/investors/disclosure/ifrsreporting/ + https://e-disclosure.ru/portal/files.aspx?id=225&type=4
+  ticker: NVTK
+  isin: RU000A0DKVS5
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=6316031581&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.30 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 357.6, 475.3, 537.4, 583.1, 831.7, 862.8, 711.8, 1156.7, -, 1371.5, 1545.8
+    net_income(млрд): 37.2, 74.3, 257.7, 156.3, 163.7, 865.4, 67.8, 432.9, -, 467.7, 481.1
+    dps(руб): 10.3, 13.5, 13.9, 14.95, 26.06, 32.33, 35.56, 71.44, 105.58, 78.59, 82.15
+  dividends_policy: 50% от скорректированной чп по МСФО
+  decision: (2025.12.31) выручка растет, чп правда сильно волатильна, но имеет тенденцию к росту, дивиденды тоже, но в 2025 прибыль на треть меньше, т.е. брать до 600
+  status: ++
+
+- name: Полюс ПАО ао
+  inn: 7703389295
+  link: https://polyus.com/ru/investors/disclosure/ifrs-financials/
+  ticker: PLZL
+  isin: RU000A0JNAA8
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7703389295&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 86.3, 133.8, 163.2, 158.6, 184.6, 257.7, 364.2, 365.1, 294, 469.6, 694.7
+    ebitda(млрд): 39.4, 78.1, 102.2, 99.1, 118.3, 172.2, 269.5, 258.6, 182.8, 336.4, 538.6
+    net_income(млрд): -23.5, 60.1, 93.6, 72.1, 28.2, 124.2, 119.2, 166.8, 111.8, 151.3, 306
+    dps(руб): 0, 0, 0, 25.67, 27.82, 30.66, 48.49, 65.46, 0, 0, 130.18, 143.85
+  dividends_policy: 30% от EBITDA по МСФО, если ЧД/EBITDA < 2.5
+  decision: (2025.12.31) выручка растет, чп волтатильна, но в целом имеет тенденцию к росту, сходу непонятно как прогнозировать чп за 2025, т.к. отчетнось за пол года скорректирована, но допустим что прибыль такая же, т.е брать нужно до 1400, хотя по прогнозу от дохода - до 1200
+  status: ++
+
+
+- name: ФосАгро ПАО ао
+  inn: 7736216869
+  link: https://www.phosagro.ru/investors/reports/msfo/
+  ticker: PHOR
+  isin: RU000A0JRKT8
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7736216869&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 123, 189.7, 187.7, 181.3, 233.4, 248.1, 253.8, 420.4, 569.5, 440.3, 507.6
+    net_income(млрд): -13.4, 36.4, 59.8, 25.3, 22, 49.3, 16.9, 129.6, 184.6, 86, 84.4
+    fcf(млрд): 7, 20, 10, -6, 20, 29, 43, 79, 100, 70, 17
+    dps(руб): 60, 225, 165, 81, 192, 192, 297, 495, 1563, 864, 330
+  dividends_policy: ЧД/EBITDA > 1 => >=75% fcf; ЧД/EBITDA < 1.5 => 50-75% fcf; ЧД/EBITDA > 1.5 => <=50% fcf;
+  decision: (2025.12.31) выручка растущая, чп и fcf более волатильны, дивы в целом тоже растут, прибыль и fcf в 2025 должны быть выше чем в 2024, судя по отчету за 9м, т.е. брать можно до 5000
+  status: ++
+
+- name: ПАО "Органический синтез" ао
+  inn: 1658008723
+  link: https://e-disclosure.ru/portal/files.aspx?id=938&type=4
+  ticker: KZOS,KZOSP
+  isin: RU0009089825
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 54.5, 68.7, 75.5, 72.1, 79.1, 72.5, 62.9, -, -, 99.5, 104.8
+    net_income(млрд): 6.1, 18.6, 17.9, 15, 20, 11.8, 8.4, -, -, 15.8, 10.6
+    dps(руб): 0.34, 1.01, 3.23, 5.07, 4.25, 7.79, 4.55, 9.11, 3.97, 9.1, 6.22
+  dividends_policy: 70% от ЧП по МСФО
+  decision: (2026.01.04) выручка растет неплохо, а вот чп и дивы - неоднозначно, пока игнорирую
+  status: +-
+
+- name: Куйбышевазот ПАО ао
+  inn: 6320005915
+  link: https://www.kuazot.ru/invest/ifrs_reporting/
+  ticker: KAZT,KAZTP
+  isin: RU000A0B9BV2
+  credit_raiting: 
+  financials:
+    years: 2016-2024
+    revenue(млрд): 42.5, 47.7, 63.8, 57.4, 53, 87.4, 80.9, 81.0
+    net_income(млрд): 5.5, 2.5, 7.4, 2.5, 0.8, 21.1, 12.7, 12.4
+    dps(руб): 2, 3, 4.8, 3, 4, 7, 0, 16.8, 32.4, 49, 22
+  dividends_policy: не меньше 30% от чп по рсбу
+  decision: (2026.01.04) смущает волатильность чп и дивов, пока игнорирую
+  status: -
+
+
+- name: Корпоративный центр ИКС 5
+  inn: 9722079341
+  link: https://www.x5.ru/ru/investors/financial-statements/ + https://e-disclosure.ru/portal/files.aspx?id=39008&type=4
+  ticker: X5
+  isin: RU000A108X38
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=9722079341&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  financials:
+    years: 2021-2024
+    revenue(млрд): 2205, 2605, 3145, 3908
+    net_income(млрд): 46.6, 44.1, 78.6, 104
+    dps(руб): 183, 0, 0, 648
+  dividends_policy: размер дивиденда подбирается таким, чтобы ЧД/EBITDA был между 1.2 и 1.4, если он больше 2х - дивы не платят
+  decision: (2025.12.31) выручка и чп растущие, дивы не платили из-за спец. операции пока не завершили редомициляцию, по прогнозу от дохода в следующие 12м дивы будут 528р, т.е. брать можно до 5300
+  status: ++
+
+- name: Группа Черкизово ПАО-ао
+  inn: 7718560636
+  link: https://e-disclosure.ru/portal/files.aspx?id=6652&type=4
+  ticker: GCHE
+  isin: RU000A0JL4R1
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7718560636&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.02 AA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 68.6, 77, 82.4, 90.4, 102.6, 120.1, 128.8, 157.9, 184.3, 226.7, 259.2
+    net_income(млрд): 16.6, 6, 1.8, 5.6, 11.9, 6.6, 15.1, 16.8, 14.6, 33.0, 19.9
+    dps(руб): 34.44, 77.35, 22.75, 73.47, 95.55, 150.42, 109.71, 219.27, 148.05, 118.43, 347.49
+  dividends_policy: 50% от скорректированной ЧП по МСФО
+  decision: (2026.01.04) выручка растущая, чп и дивы волатильны, но в целом с тенденцией к росту, можно попробовать брать до 2000 чтобы была 10% дд, хотя доход прогнозирует 495р дивов, т.е. можно и до 5к брать
+  status: ++
+
+- name: НоваБев Групп ПАО ао
+  inn: 7705634425
+  link: https://novabev.com/investors/disclosures/regulatory-disclosure/#accordion-item-2025 + https://e-disclosure.ru/portal/files.aspx?id=7380&type=4
+  ticker: BELU
+  isin: RU000A0HL5M1
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 46.8, 47.5, 35.9, 37.3, 43.4, 53, 63.2, 74.9, 97.3, 116.8, 135.4
+    net_income(млрд): 1, 0.2, 0.2, 0.6, 0.9, 1.4, 2.4, 3.8, 8.4, 8.0, 4.5
+    dps(руб): с2020: 5.25, 20.34, 34.03, 106.88, 40.62, 45
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) выручка и чп растущие, дивы взял с дохода, в 2025 должны быть результаты как и в 2024, т.е. брать до 450
+  status: ++
+
+
+- name: МКПАО Хэдхантер
+  inn: 3900016369
+  link: https://e-disclosure.ru/portal/files.aspx?id=39017&type=4
+  ticker: HEAD
+  isin: RU000A107662
+  credit_raiting: 
+  financials:
+    years: 2019-2024
+    revenue(млрд): 7.7, 8.2, 15.9, 18, 29.4, 39.6
+    net_income(млрд): 1.5, 1.8, 5.4, 3.6, 12.3, 23.8
+    dps(руб): 23.45, 36.13, 40.33, 64.11, 0, 907
+  dividends_policy: 60-100% от скор ЧП по МСФО
+  decision: (2026.01.04) выручка и чп растут хорошо, прогноз дивов 350 от дохода, т.е. брать можно до 3.5к
+  status: ++
+
+- name: Ростелеком (ПАО) ао.
+  inn: 7707049388
+  link: https://www.company.rt.ru/ir/results_and_presentations/financials/IFRS/2024/4/
+  ticker: RTKM,RTKMP
+  isin: RU0008943394
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7707049388&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 298.9, 297.3, 297.4, 305.3, 320.2, 337.4, 546.8, 580, 627, 707.8, 779.9
+    net_income(млрд): 37.8, 14.3, 12.2, 14.0, 15.0, 16.4, 25.3, 31.8, 35.2, 42.3, 24.0
+    dps(руб): 3.12, 3.34, 5.92, 5.39, 7.55, 2.5, 5, 5, 4.56, 5.45, 6.06
+  dividends_policy: 50% от ЧП по МСФО
+  decision: (2026.01.04) хорошая динамика у выручки, неплохая у чп и дивов, 2025 будет примерно как и 2024, т.е. брать можно до 60 (но это без учета долговой нагрузки)
+  status: ++
+
+
+- name: МКПАО «МД Медикал Груп»
+  inn: 3900026494
+  link: https://www.mcclinics.ru/investors/financial-reports/?year=2024
+  ticker: MDMG
+  isin: RU000A108KL3
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 7.2, 9.5, 12.1, 13.7, 14.9, 16.1, 19.1, 25.2, 25.2, 27.6, 33.1
+    net_income(млрд): 1.3, 1.7, 2.2, 2.7, 2.8, 2.7, 4.3, 6.1, 4.7, 7.8, 10.1
+    dps(руб): 4.01, 6.66, 8.3, 10.67, 10.65, 18.50, 28.8, 37.39, 8.51, 0, 183, 64
+  dividends_policy: до 100% от чп по рсбу|мсфо (выбирает совет директоров), если ЧД/EBITDA не больше 3
+  decision: (2026.01.04) выручка и чп растут идеально, дивы тоже, по прогнозу от дохода дивы 88, т.е. брать до 880, 
+  status: ++
+
+
+- name: "Интер РАО" ПАО ао
+  inn: 2320109650
+  link: https://www.interrao.ru/investors/financial-information/financial-reporting/#657
+  ticker: IRAO
+  isin: RU000A0JPNM1
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=2320109650&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 741.1, 805.3, 868.1, 917, 962.5, 1032, 986.2, -, 1264, 1359, 1548
+    net_income(млрд): 9.7, 23.9, 61.3, 52.5, 70.7, 81.6, 74.9, -, 115.2, 133.1, 144.2
+    dps(руб): 0.001, 0.017, 0.14, 0.13, 0.17, 0.19, 0.18, 0.23, 0.28, 0.32, 0.35
+  dividends_policy: 25% от ЧП по МСФО
+  decision: (2026.01.03) выручка и чп растут, дивы аналогично, брать можно до 3.5р для 10% дд
+  status: ++
+
+- name: Россети Ленэнерго ПАО-ао
+  inn: 7803002209
+  link: https://rosseti-lenenergo.ru/shareholders/fin_reports/?part=1
+  ticker: LSNG,LSNGP
+  isin: RU0009034490
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 41.6, 39, 59, 77.6, 77.9, 82.6, 82.7, 93.5, 95.1, 108.8, 122.7
+    net_income(млрд): -4.2, 0.1, 7.7, 8.2, 10.6, 11.9, 12, 15.4, 19.8, 19.8, 21.1
+    dps(руб): 0.4, 0, 0, 8.11, 13.47, 11.14, 13.62, 15.17, 21.67, 18.83, 22.25
+  dividends_policy: по префам платят 10% от ЧП по РСБУ, но не меньше дивиденда по обычке | не менее 50% от ЧП по макс(МСФО,РСБУ)
+  decision: (2026.01.04) выручка, чп и дивы постепенно растут, если брать - то префы до 220р
+  status: ++
+
+- name: Россети Центр и Приволжье ао
+  inn: 5260200603
+  link: https://mrsk-cp.ru/stockholder_investor/disclosure_reporting_info/finansovaya-informatsiya-i-otchetnost/fin-otchetnost-msfo-mrsk-tsentra-i-privolzhya/
+  ticker: MRKP
+  isin: RU000A0JPN96
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 69.7, 69.2, 78.3, 91, 94.2, 96.5, 96.7, 106.6, 114, 132, 143.5
+    net_income(млрд): -1.6, 3.4, 3.6, 11.3, 11.7, 6.6, 6.4, 9.9, 11, 14, 16.4
+    dps(руб): 0.0031, 0.0083, 0.0117, 0.0402, 0.04074, 0.0163, 0.0259, 0.0278, 0.0321, 0.0388, 0.0502
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) растут выручка, чп и дивы, брать можно до 0.5р для 10% дд (можно даже чуть дороже, т.к. прогноз от дохода 0.06 дивов)
+  status: ++
+
+- name: "Пермэнергосбыт" ПАО ао
+  inn: 5904123809
+  link: https://e-disclosure.ru/portal/files.aspx?id=7344&type=4
+  ticker: PMSB,PMSBP
+  isin: RU000A0ET123
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 32, 32.2, 35.5, 40, 40.5, 42.7, 40.5, 44.1, 45.5, 49.1, 52.6
+    net_income(млрд): 0.3, 0.2, 0.3, 0.5, 0.6, 0.9, 0.7, 0.9, 1.0, 1.7, 2.6
+    dps(руб): 6.85, 6.88, 6.97, 8.37, 10.9, 11.71, 12.5, 14, 15.5, 28.4, 57
+  dividends_policy: по префам: 10% от чп по рсбу, но не меньше чем по обычке
+  decision: (2026.01.05) вот тут прямо хорошо растут выручка, чп и дивы, прогнозный дивиденд 63, т.е. можно брать до 630, думаю лучше префы
+  status: ++
+
+- name: Красноярскэнергосбыт ао
+  inn: 2466132221
+  link: https://e-disclosure.ru/portal/files.aspx?id=8880&type=3
+  ticker: KRSB,KRSBP
+  isin: RU000A0HMLY1
+  credit_raiting: 
+  financials:
+    years: 2020-2024
+    revenue(млрд): 31.1, 33.6, 36.1, 39.4, 43
+    net_income(млрд): 0.8, 1.2, 1.2, 1.7, 2.5
+    dps(руб): 2016: 0.444, 0.507, 0.455, 0.606, 0.647, 0.846, 1.13, 1.331, 2.254
+  dividends_policy: сложное описание расчета https://krsk-sbit.ru/upload/iblock/6a2/ab5s7e243qiebr728ro5aeoyugkcbno2/prilogenie_11.pdf | по префам платят не меньше чем по обычке (устав)
+  decision: (2026.01.05) выручка, чп и дивы растут хорошо, можно брать до 22р
+  status: ++
+
+- name: Ставрополэнергосбыт ПАО ао
+  inn: 2626033550
+  link: https://e-disclosure.ru/portal/files.aspx?id=7416&type=3
+  ticker: STSB,STSBP
+  isin: RU000A0ET1W4
+  credit_raiting: 
+  financials:
+    years: 2020-2024
+    revenue(млрд): 19.4, 21.1, 22.2, 24.6, 27.3
+    net_income(млрд): 0.2, 0.2, 0.5, 0.6, 1.4
+    dps(руб): 2016: 0.022, 0.024, 0.024, 0.028, 0.06, 0.084, 0.169, 0.312, 0.470
+  dividends_policy: 10% от чп по мсфо | по префам платят не меньше чем по обычке (устав)
+  decision: выручка, чп и дивы растут, можно попробовать до 4.5 взять
+  status: ++
+
+
+- name: "Рязанская энергосб.комп" ПАО
+  inn: 6229049014
+  link: https://e-disclosure.ru/portal/files.aspx?id=5422&type=3
+  ticker: RZSB
+  isin: RU000A0D9AF5
+  credit_raiting: 
+  financials:
+    years: 2017-2024
+    revenue(млрд): 9.7, 10.4, 10.9, 11.3, 11.5, 12.2, 13.1, 13.5
+    net_income(млрд): 0.07, 0.1, 0.1, 0.3, 0.5, 0.8, 0.9, 0.9
+    dps(руб): 0.146, 0.360, 0.527, 0.615, 1.451, 2.4, 3.595, 4.215, 3.938
+  dividends_policy: платят вроде исправно и даже растут дивы, но политику не нашел
+  decision: (2026.01.05) выручка, чп и дивы растут красиво, платят походу почти 100% от чп, хоть и красиво растут, но пока совсем маленькие, пока все таки пропущу и понаблюдаю
+  status: +-
+
+- name: ПАО "Россети Центр" ао
+  inn: 6901067107
+  link: https://e-disclosure.ru/portal/files.aspx?id=7985&type=4
+  ticker: MRKC
+  isin: RU000A0JPPL8
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 86.9, 80.8, 86.2, 91.1, 93.9, 94.6, 97.6, 108.1, 114.5, 128.4, 138.1
+    net_income(млрд): -3.2, 0.8, 4.7, 3.0, 2.9, 3.1, 2.1, 4.3, 4.9, 7.9, 6.5
+    dps(руб): 0.0197, 0.0108, 0.044215195, 0.0208, 0.021, 0.02, 0.0335, 0.0338, 0.04521, 0.06621, 0.067638
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) выручка растущая, чп и дивы в целом тоже, но не нравится волатильность по сравнению с остальными
+  status: +-
+
+- name: ПАО Россети Моск.рег. ао
+  inn: 5036065113
+  link: https://rossetimr.ru/invest_news/otchetnost/otchet_msfo/
+  ticker: MSRS
+  isin: RU000A0ET7Y7
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 128, 132.3, 143.3, 150.4, 159.1, 161.1, 163.7, 184.7, 199.6, 229.3, 248.9
+    net_income(млрд): 8, 12.6, 9.3, 1.9, 6.5, 8.1, 4.7, 10.4, 13.4, 26.2, 13.5
+    dps(руб): 0.0597, 0.0422, 0.1297, 0.0312, 0.0316, 0.1014, 0.0255, 0.0493, 0.1799, 0.0121, 0.1428
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) выручка растет, чп и дивы в целом тоже, но мне не нравится волатильность по сравнению с другими россетями, игнорирую
+  status: +-
+
+- name: Группа Позитив ао
+  inn: 9718077239
+  link: https://group.ptsecurity.com/ru/investors/reports-and-results
+  ticker: POSI
+  isin: RU000A103X66
+  credit_raiting: 
+  financials:
+    years: 2018-2024
+    revenue(млрд): 2.5, 3.4, 5.5, 7, 13.7, 22.2, 24.4
+    net_income(млрд): 0.3, 0.1, 1.5, 1.9, 6, 9.6, 3.6
+    dps(руб): 0, 0, 0, 0, 19.56, 77.61, 99.19
+  dividends_policy: 50-100% NIC (управленческая чп по мсфо), при этом ЧД/EBITDA не должен превышать 2.5
+  decision: (2026.01.04) на первый взгляд выглядит неплохо, но чп и пока не хочет возвращаться, поэтому игнорирую
+  status: +-
+
+- name: Озон Фармацевтика
+  inn: 6320080729
+  link: https://ozonpharm.ru/investors/reports-and-results/
+  ticker: OZPH
+  isin: RU000A109B25
+  credit_raiting: 
+  financials:
+    years: 2022-2024
+    revenue(млрд): 18.4, 19.7, 25.5
+    net_income(млрд): 3.2, 4, 4.6
+    dps(руб): 1.0, 1.0, 1.35
+  dividends_policy: ЧД/EBITDA < 0 -> не меньше 50% от чп по мфсо и не больше 100% от fcf; ЧД/EBITDA <= 1 -> не меньше 35% от чп по мфсо и не больше 100% от fcf; ЧД/EBITDA <= 2 -> не меньше 25% от чп; ЧД/EBITDA <= 3 -> не меньше 15% от чп;
+  decision: (2026.01.05) выручка и чп растут, с дивами пока не однозначно, платят совсем недавно, пока игнорирую
+  status: +-
+
+- name: ЕвроТранс ао
+  inn: 5029169023
+  link: https://e-disclosure.ru/portal/files.aspx?id=38758&type=4
+  ticker: EUTR
+  isin: RU000A1002V2
+  credit_raiting: 
+  financials:
+    years: 2021-2024
+    revenue(млрд): 48.9, 64.9, 126.7, 186.1
+    net_income(млрд): 0.5, 1.7, 5.1, 5.5
+    dps(руб): 2023: 8.88, 30.02
+  dividends_policy: 40% от чп по мсфо|рсбу
+  decision: (2026.01.05) выручка и чп растущие, прогноз дивов от дохода 24р, платят только с 2023, пока не трогаю
+  status: +-
+
+- name: Корп. ВСМПО-АВИСМА (ПАО) ао
+  inn: 6607000556
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=1641&type=4
+  ticker: VSMO
+  isin: RU0009100291
+  credit_raiting: 
+  financials:
+    years: 
+    revenue(млрд): 
+    net_income(млрд): 
+    dps(руб): 
+  dividends_policy: не меньше 10% от ЧП по РСБУ
+  decision: (2026.01.03) выручка растущая, а вот чп стоит на месте и дивы снижаются, пока игнорирую
+  status: -
+
+- name: Акрон ПАО ао
+  inn: 5321029508
+  link: https://www.acron.ru/investors/financial-statements/?brand=1988&type=175&year=2024
+  ticker: AKRN
+  isin: RU0009028674
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=5321029508&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 74.6, 106, 89.3, 94.3, 108, 114.8, 119.8, -, 257.1, 179.4, 198.1
+    net_income(млрд): 6.9, 16.7, 25.5, 14.2, 13.3, 24.7, 3.8, -, 91, 35.8, 30.5
+    dps(руб): 152, 139, 335, 442, 225, 366, 432, 780, 240, 0, 427
+  dividends_policy: 30% от ЧП по МСФО
+  decision: (2026.01.03) в целом растущая тенденция у дивов, выручки и чп, смущает волатильность, возможно когда-нибудь потом вернусь, пока пропущу
+  status: -
+
+- name: Мобильные ТелеСистемы ПАО ао
+  inn: 7740000076
+  link: https://moskva.mts.ru/about/investoram-i-akcioneram/korporativnoe-upravlenie/raskritie-informacii/godovaya-otchetnost
+  ticker: MTSS
+  isin: RU0007775219
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7740000076&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 381.8, 431.2, 435.6, 442.9, 480.2, 476.1, 494.9, 534.4, 541.7, 605.9, 703.7
+    net_income(млрд): 51.3, 49.4, 48.4, 56.0, 6.8, 54.2, 61.4, 63.4, 32.5, 54.5, 51.3
+    dps(руб): 24.8, 25.17, 26, 26, 26, 41.91, 29.5, 37.06, 33.85, 34.29, 35
+  dividends_policy: 36р за 2024, 2025, 2026
+  decision: (2026.01.03) в целом, выручка растет хорошо, а вот чп почти на месте, дивы постепенно увеличивают за счет наращивания долгов, в итоге в 2024 капитал стал отрицательным, игнорирую
+  status: -
+
+- name: АЛРОСА ПАО ао
+  inn: 1433000147
+  link: https://alrosa.ru/investors/results-reports/finance/2024/
+  ticker: ALRS
+  isin: RU0007252813
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=1433000147&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 207.1, 224.5, 317, 269.7, 293.8, 232.8, 217.1, 326.9, 295.4, 322.5, 239
+    net_income(млрд): -12.2, 26, 120.1, 75.3, 88.2, 63, 29.8, 91.2, 100.3, 86.9, 21.1
+    dps(руб): 1.47, 1.47, 2.09, 8.93, 11.17, 7.95, 2.63, 18.33, 0, 3.77, 4.51
+  dividends_policy: ЧД/EBITDA < 0 => >=100% fcf; ЧД/EBITDA < 1 => 70-100% fcf; ЧД/EBITDA < 1.5 => 50-70% fcf; (и не меньше 50% от ЧП по МСФО)
+  decision: (2026.01.04) выручка за 10 лет почти не изменилась, чп аналогично, игнорирую
+  status: -
+
+- name: Совкомбанк ао
+  inn: 4401116480
+  link: https://sovcombank.ru/about/finances?utm_referrer=https%3A%2F%2Fyandex.ru%2F
+  ticker: SVCB
+  isin: RU000A0ZZAC4
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=4401116480&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AA)
+  financials:
+    years: 2019-2024
+    revenue(млрд): 109.6, 131.5, 198.9, 260, 306.9, 578.8
+    net_income(млрд): 29.7, 38.5, 50.3, -14.6, 94.1, 75.5
+    dps(руб): 0.53, 0, 0.35, 0, 0.25, 1.14
+  dividends_policy: от 25% до 50% ЧП по МСФО
+  decision: (2026.01.04) выручка растет хорошо, чп в целом тоже растущая, но вот размер и динамика дивов не похожа на растущую, пока игнорирую
+  status: -
+
+- name: Лента МКПАО ао
+  inn: 3906399157
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=38380&type=4 + https://lenta.com/i/o-kompanii/raskrytie-informatsii/otchyotnost/svodnaya-konsolidirovannaya/
+  ticker: LENT
+  isin: RU000A102S15
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=Лента&inn=&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.04 AA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 193.9, 252.7, 306.5, 365.1, 413.5, 417.5, 445.5, 483.6, 537.4, 615.9, 888.3
+    net_income(млрд): 9.1, 9.4, 11.8, 12.9, 11.7, -2.7, 16.5, 12.4, 3.6, -2.6, 22.4
+  dividends_policy: ЧД/EBITDA < 1 => >=100% fcf; ЧД/EBITDA < 1.5 => <100% fcf; ЧД/EBITDA > 1.5 => <50% fcf
+  decision: (2026.01.04) выручка растет хорошими темпами, чп в целом тоже растущая, но не нравятся периодческие убытки и отсутствие дивов, пока игнорирую
+  status: -
+
+- name: Аэрофлот-росс.авиалин(ПАО)ао
+  inn: 7712040126
+  link: https://ir.aeroflot.ru/ru/reporting/financial-results/ifrs/
+  ticker: AFLT
+  isin: RU0009062285
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7712040126&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 277.3, 359.2, 433.9, 474.9, 553.1, 613.8, 270.4, 457.2, 396.4, 596.5, 838.9
+    net_income(млрд): -15.4, -5.8, 37.4, 22.8, -54.3, 10.6, -117.6, -34.1, -50.3, -8.8, 58.5
+  dividends_policy: 50% от ЧП по МСФО
+  decision: (2026.01.04) довольно долго были убыточны и не платили дивы, пока игнорирую
+  status: -
+
+- name: Башнефть АНК ао
+  inn: 0274051582
+  link: https://bashneft.ru/disclosure/finance-results/
+  ticker: BANE,BANEP
+  isin: RU0007976957
+  financials:
+    years: 2014-2024
+    revenue(млрд): 637.2, 611.2, 587.7, 668, 855.5, 848.2, 527.1, 845, -, 1023, 1135.5
+    net_income(млрд): 43.1, 58.1, 52.6, 143, 98.3, 76.5, -11.1, 83.3, -, 177.4, 104.6
+    dps(руб): 211, 113, 164, 148.41, 158.95, 158.95, 107.81, 0.1, 117.29, 199.89, 249.69
+  dividends_policy: 25% ЧП по МСФО при ЧД/EBITDA <= 2
+  decision: (2026.01.04) выручка растущая, а вот чп и дивы волатильны, пока пропущу
+  status: -
+
+- name: Совкомфлот ао
+  inn: 7702060116
+  link: https://www.sovcomflot.ru/investors/disclosure/financialstatementsinrubles/
+  ticker: FLOT
+  isin: RU000A0JXNU8
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7702060116&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 53.1, 90.9, 93, 83.7, 95.6, 107.7, 118.4, 113.4, 129.5, 196.1, 172.4
+    net_income(млрд): 2.5, 20.9, 13.5, -6.4, -2.3, 14.3, 18.8, 3.2, 26.4, 77.1, 37.1
+    dps(руб): 0, 0, 3.12, 0.86, 0.73, 3.65, 6.67, 0, 4.29, 17.59, 0
+  dividends_policy: 25% от ЧП по МСФО
+  decision: (2026.01.04) выручка растущая, чп в целом тоже, но очень волатильна и дивы периодически отменяют, пока игнорю
+  status: -
+
+- name: "Нижнекамскнефтехим" ПАО ао
+  inn: 1651000010
+  link: https://e-disclosure.ru/portal/files.aspx?id=197&type=4
+  ticker: NKNC,NKNCP
+  isin: RU0009100507
+  credit_raiting: 
+  financials:
+    years: 2016-2024
+    revenue(млрд): 158.7, 167.6, 193.8, 178.9, 153.9, -, -, 236.3, 269.7
+    net_income(млрд): 24.3, 24.8, 24.7, 24, 9, -, -, 16.6, 30.7
+    dps(руб): 4.34, 0, 0, 19.94, 9.07, 10.27, 0.74, 1.49, 2.94
+  dividends_policy: фикс по префам и не менее 15% от ЧП по обычке по РСБУ
+  decision: (2026.01.04) выручка растущая, чп волатильна, но в целом тоже, смущают только повышенные дивы в 2019-2021, пока игнорирую
+  status: -
+
+- name: АФК "Система" ПАО ао
+  inn: 7703104630
+  link: https://sistema.ru/investors-and-shareholders/financial + https://e-disclosure.ru/portal/files.aspx?id=4772&type=4
+  ticker: AFKS
+  isin: RU000A0DQZE3
+  credit_raiting: 
+  financials:
+    years: 2020-2024
+    revenue(млрд): 691.6, 802.3, 912.6, 1025.8, 1231.6
+    net_income(млрд): 41.2, 52.8, 43.8, -13.2, -11
+    dps(руб): 
+  dividends_policy: цель 0.52р за 2024 и потом каждый год до 2026 увеличивать на 25-50% сумму дививидента прошлого года
+  decision: (2026.01.04) убытки в 2023, 2024, игнорирую
+  status: -
+
+- name: ПАО ТМК
+  inn: 7710373095
+  link: https://e-disclosure.ru/portal/files.aspx?id=274&type=4 + https://www.tmk-group.ru/Financial_results
+  ticker: TRMK
+  isin: RU000A0B6NK6
+  credit_raiting: 
+  financials:
+    years: 2019-2024
+    revenue(млрд): 308.3, 222.6, 428.9, -, 629.1, 544.2, 532.1
+    net_income(млрд): 3.9, 24.3, 7.1, -, 41.9, 39.3, -27.7
+    dps(руб): 
+  dividends_policy: 25% от чп по мсфо
+  decision: (2026.01.04) снижение выручки после 2022 + убыток в 2024, игнорирую
+  status: -
+
+- name: Юнайтед Медикал Груп ПАО
+  inn: 3900020125
+  link: https://emcinvestors.ru/ + https://www.e-disclosure.ru/portal/files.aspx?id=39022&type=4
+  ticker: GEMC
+  isin: RU000A107JE2
+  dividends_policy: до 100% от накопленной чп по мсфо
+  decision: (2026.01.04) отчетность в евро, и только за 3 года, пока игнорирую
+  status: -
+
+- name: МосЭнерго акции обыкн.
+  inn: 7705035012
+  link: https://mosenergo.gazprom.ru/investors/reports/msfo/ + https://e-disclosure.ru/portal/files.aspx?id=936&type=4
+  ticker: MSNG
+  isin: RU0008958863
+  dividends_policy: 50% от чп по мсфо|рсбу
+  decision: (2026.01.04) нет отчетность за 2023 и 2024, поэтому игнорирую
+  status: -
+
+- name: Группа ЛСР ПАО ао
+  inn: 7838360491
+  link: https://www.lsrgroup.ru/raskryitie-informaczii/buxgalterskaya-otchetnost-po-msfo
+  ticker: LSRG
+  isin: RU000A0JPFP0
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 92.3, 86.8, 98.0, 138.4, 146.3, 110.4, 118.0, 130.5, 139.6, 236.1, 239.2
+    net_income(млрд): 9.2, 10.6, 9.1, 15.8, 16.2, 7.4, 12.0, 16.2, 13.3, 28.3, 28.5
+    dps(руб): 40, 78, 78, 78, 78, 78, 50, 39, 0, 78, 100
+  dividends_policy: не меньше 20% от чп по мсфо или рсбу (но при этом часто платят просто 78р)
+  decision: (2026.01.05) выручка и чп растут, а вот дивы странно платят, пока игнорирую
+  status: -
+
+- name: ПАО "Аптечная сеть 36,6" ао
+  inn: 7722266450
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=1216&type=4
+  ticker: APTK
+  isin: RU0008081765
+  dividends_policy: до 25% чп по рсбу
+  decision: (2026.01.05) не платят дивы последние 10 лет, игнорирую
+  status: -
+
+- name: КАМАЗ ПАО
+  inn: 1650032058
+  link: https://kamaz.ru/investors-and-shareholders/financial-statements/ifrs/
+  ticker: KMAZ
+  isin: RU0008959580
+  dividends_policy: до 25% от чп по рсбу
+  decision: (2025.01.05) дивы не стабильны и часто отменяют, игнорирую
+  status: -
+
+- name: ПАО Фикс Прайс
+  inn: 7743462664
+  link: https://e-disclosure.ru/portal/files.aspx?id=39347&type=4
+  ticker: FIXR
+  isin: RU000A10B5G8
+  dividends_policy: не меньше 50% от чп по мсфо
+  decision: (2026.01.06) судя по доходу - дивы часто не платят, пока игнорирую
+  status: -
+
+- name: Группа Астра ао
+  inn: 7726476459
+  link: https://astra.ru/investors/disclosure/ + https://e-disclosure.ru/portal/files.aspx?id=38906&type=4
+  ticker: ASTR
+  isin: RU000A106T36
+  dividends_policy: ЧД/(EBITDA-CAPEX) <= 1 -> 25% от скор ЧП - CAPEX; ЧД/(EBITDA-CAPEX) <= 2 -> 15% от скор ЧП - CAPEX
+  decision: (2026.01.06) до 2024го дивы не платили, пока игнорирую
+  status: -
+
+- name: Элемент
+  inn: 9703014282
+  link: https://e-disclosure.ru/portal/files.aspx?id=38265&type=4 + https://gkelement.ru/invest/
+  ticker: ELMT
+  isin: RU000A102093
+  dividends_policy: не менее 25% от скор чп по рсбу?
+  decision: (2026.01.06) судя по доходу - дивы платят только последние 2 года, пока игнорирую, нужно понаблюдать
+  status: -
+
+- name: Ренессанс Страхование ао
+  inn: 7725497022
+  link: https://www.renins.ru/about/finance/ + https://e-disclosure.ru/portal/files.aspx?id=37468&type=4
+  ticker: RENI
+  isin: RU000A0ZZM04
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.06) судя по отчетности, периодически бывают убытки и платить начали с 2023го, пока игнорирую, нужно понаблюдать
+  status: -
+
+- name: МТС-Банк ао
+  inn: 7702045051
+  link: https://www.mtsbank.ru/investors-and-shareholders/reports/ + https://e-disclosure.ru/portal/files.aspx?id=1285&type=4
+  ticker: MBNK
+  isin: RU000A0JRH43
+  dividends_policy: 25-50% от скор чп по мсфо
+  decision: (2026.01.05) дивы впервые выплатили в 2024, пока игнорирую
+  status: -
+
+- name: ЭсЭфАй ПАО ао
+  inn: 6164077483
+  link: https://sfiholding.ru/for-investors/#forinv_disclosure
+  ticker: SFIN
+  isin: RU000A0JVW89
+  dividends_policy: 75% от мин(чп по рсбу | fcf)
+  decision: (2026.01.05) вернулись к выплатам в 2023, пока понаблюдаю
+  status: -
+
+- name: Россети Сибирь ао
+  inn: 2460069527
+  link: https://www.rosseti-sib.ru/shareholders_and_investors/finansovaya-otchetnost/finansovaya-otchetnost-po-msfo/
+  ticker: MRKS
+  isin: RU000A0JPPF0
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) не платят дивы с 2020, игнорирую
+  status: -
+
+- name: МКПАО "Циан"
+  inn: 3900031141
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=39286&type=4
+  ticker: CNRU
+  isin: RU000A10ANA1
+  dividends_policy: 60-100% от скор чп по мсфо
+  decision: (2026.01.05) платить начали в 2025, пока игнорирую, нужно понаблюдать
+  status: -
+
+- name: ОГК-2 ПАО ао
+  inn: 2607018122
+  link: https://ogk2.ru/aktsioneram-i-investoram/otchetnost/finansovaya-otchetnost/
+  ticker: OGKB
+  isin: RU000A0JNG55
+  dividends_policy: 50% от чп по мсфо|рсбу
+  decision: (2026.01.05) нет отчетности за 2023 и дальше, игнорирую
+  status: -
+
+- name: ПАО "Селигдар"  ао
+  inn: 1402047184
+  link: https://seligdar.ru/investors/disclosure/reports/
+  ticker: SELG
+  isin: RU000A0JPR50
+  dividends_policy: ЧД/EBITDA < 1 -> 30% чп по мсфо; ЧД/EBITDA < 2 -> 20% чп по мсфо; ЧД/EBITDA < 3 -> 10% чп по мсфо
+  decision: (2026.01.06) убытки в 2023 и 2024, игнорирую
+  status: -
+
+- name: ПАО ГК "ТНС энерго" ао
+  inn: 7705541227
+  link: https://corp.tns-e.ru/investors/financial-statements/consolidated-statements-ifrs/2024/
+  ticker: TNSE
+  isin: RU000A0JUCQ5
+  dividends_policy: 10% от скор чп по рсбу (не проверял, просто предположил что у всех тнс-энерго одинаковая див. политика)
+  decision: не платят с 2016, игнорирую
+  status: -
+
+- name: БАНК УРАЛСИБ ПАО ао
+  inn: 0274062111
+  link: https://uralsib.ru/o-banke/documenty-i-otchetnost/otchetnost-po-msfo
+  ticker: USBN
+  isin: RU0006929536
+  dividends_policy: 50% от чп по рсбу?
+  decision: (2026.01.05) не платят (кроме 2023), пока игнорирую
+  status: -
+
+- name: ВИ.ру
+  inn: 3300010559
+  link: https://ir.vseinstrumenti.ru/information_disclosure?ysclid=md1luj3fa7546985866
+  ticker: VSEH
+  isin: RU000A108K09
+  dividends_policy: 50% от чп по мсфо при ЧД/EBITDA<3
+  decision: (2026.01.05) ещё не платили, пока игнорирую
+  status: -
+
+- name: ПАО "МОСТОТРЕСТ" ао
+  inn: 7701045732
+  link: https://e-disclosure.ru/portal/files.aspx?id=1220&type=4 + https://mostotrest.ru/ru/invest/financial-results/
+  ticker: MSTT
+  isin: RU0009177331
+  dividends_policy: 30% от чп по мсфо
+  decision: (2026.01.05) не платят с 2018, игнорирую
+  status: -
+
+- name: Софтлайн ао
+  inn: 7736227885
+  link: https://softlinegroup.com/investors/finansovye-otchety-i-prezentacii/ + https://e-disclosure.ru/portal/files.aspx?id=37065&type=4
+  ticker: SOFL
+  isin: RU000A0ZZBC2
+  dividends_policy: 25% от чп по мсфо
+  decision: (2026.01.05) пока не платили, игнорирую
+  status: -
+
+- name: ХЭНДЕРСОН ао
+  inn: 5047265516
+  link: https://e-disclosure.ru/portal/files.aspx?id=38967&type=4
+  ticker: HNFG
+  isin: RU000A106XF2
+  dividends_policy: 50% чп по мсфо при ЧД/EBITDA < 2.5
+  decision: (2026.01.05) платить начали в 2024, пока не полезу, понаблюдаю
+  status: -
+
+- name: Каршеринг Руссия ао
+  inn: 9718236471
+  link: https://e-disclosure.ru/portal/files.aspx?id=38653&type=4
+  ticker: DELI
+  isin: RU000A107J11
+  dividends_policy: 50% чп по мсфо при ЧД/EBITDA < 3
+  decision: (2026.01.05) платить начали похоже только в 2024, пока наблюдаю, не лезу
+  status: -
+
+- name: Диасофт ао
+  inn: 9715302870
+  link: https://e-disclosure.ru/portal/files.aspx?id=38975&type=4
+  ticker: DIAS
+  isin: RU000A107ER5
+  dividends_policy: 50% от EBITDA по МСФО
+  decision: (2026.01.05) платить начали похоже только в 2024, пока наблюдаю, не лезу
+  status: -
+
+- name: Группа Аренадата
+  inn: 9717163245
+  link: https://e-disclosure.ru/portal/files.aspx?id=39154&type=4 + https://ir.arenadata.tech/finansovaya-otchyotnost.html
+  ticker: DATA
+  isin: RU000A108ZR8
+  dividends_policy: 50% NIC по мсфо|рсбу
+  decision: (2026.01.05) платить начали похоже только в 2025, пока наблюдаю, не лезу
+  status: -
+
+- name: ГК БАЗИС
+  inn: 9722103241
+  link: https://e-disclosure.ru/portal/files.aspx?id=39611&type=4
+  ticker: BAZA
+  isin: RU000A10CTQ0
+  dividends_policy: 25-50% от NIC в зависимости от ЧД/OIBDAC
+  decision: (2026.01.05) пока не платили, игнорирую
+  status: -
+
+- name: ПАО ИВА ао
+  inn: 1683020450
+  link: https://e-disclosure.ru/portal/files.aspx?id=39102&type=4
+  ticker: IVAT
+  isin: RU000A108GD8
+  dividends_policy: 25% от скор чп по мсфо при ЧД/EBITDA < 2
+  decision: (2026.01.05) пока не платили, игнорирую
+  status: -
+
+- name: АПРИ
+  inn: 7453326003
+  link: https://e-disclosure.ru/portal/files.aspx?id=37277&type=4
+  ticker: APRI
+  isin: RU000A108LJ5
+  dividends_policy: 25-50% от чп по мсфо
+  decision: (2026.01.05) платить начали похоже только в 2024, пока наблюдаю, не лезу
+  status: -
+
+- name: Займер ао
+  inn: 5406836941
+  link: https://e-disclosure.ru/portal/files.aspx?id=38344&type=4
+  ticker: ZAYM
+  isin: RU000A107RM8
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) платить начали похоже только в 2024, пока наблюдаю, не лезу
+  status: -
+
+- name: "Центр междун. торговли"ПАО ао
+  inn: 7703034574
+  link: https://e-disclosure.ru/portal/files.aspx?id=9304&type=4
+  ticker: WTCM,WTCMP
+  isin: RU0008137070
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 6.2, 5.7, 6, 6.2, 7.2, 7.2, 5.2, 6.6, 6.8, 8.3, 9.5
+    net_income(млрд): 2.3, 0.2, -1.8, 0.1, 1.6, 1.2, -0.1, 2, 0.6, 3.6, 3.1
+    dps(руб): 2017: 0.4819, 0.56225, 0.5622, 0.56, 0.56225, 0.56225, 0.6868, 0.883534136546
+  dividends_policy: 25% чп по рсбу
+  decision: (2026.01.05) выручка растущая, чп волатильна, но в целом тоже, думаю, дивы не снижают, но пока все таки не полезу, надо понаблюдать ещё
+  status: -
+
+- name: "Таттелеком" ПАО ао
+  inn: 1681000024
+  link: https://e-disclosure.ru/portal/files.aspx?id=814&type=4
+  ticker: TTLK
+  isin: RU000A0HM5C1
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 7.4, 7.9, 8.2, 8.5, 9.1, 9.5, 9.8, 9.9, 10.3, 10.9, 11.6
+    net_income(млрд): -1.9, -0.2, 0.1, 0.2, 0.4, 0.8, 1.8, 2.4, 2.4, 2.6, 2.2
+    dps(руб): 2016: 0.0091, 0.019222, 0.01932, 0.02021, 0.0393, 0.04285, 0.05085, 0.04887, 0.03775
+  dividends_policy: 50% от чп по рсбу?
+  decision: (2026.01.05) выручка растет потихоньку, чп в целом тоже, сомнения вызывают только снижение дивов последние 2 года, пока игнорирую
+  status: -
+
+- name: Россети Урал (ПАО) ао
+  inn: 6671163413
+  link: https://e-disclosure.ru/portal/files.aspx?id=12105&type=4
+  ticker: MRKU
+  isin: RU000A0JPPT1
+  credit_raiting: 
+  financials:
+    years: 2014-2024
+    revenue(млрд): 68.9, 69.6, 74.7, 81.1, 100.3, 106.1, 88.6, 96.5, 102.9, 106.1, 115.2
+    net_income(млрд): 0.8, 1.4, 1.3, 4.1, 0.6, 2.7, 0.6, 3.8, 4.2, 11.8, 12.6
+    dps(руб): 0.0058, 0.0142, 0.0083, 0.0216, 0.003, 0.0105, 0, 0.0249, 0.02397, 0.05441, 0.07577
+  dividends_policy: 50% от чп по рсбу|мсфо
+  decision: (2026.01.05) выручка растет, чп волатильна но в целом тоже растет, но не нравится нестабильность дивов, тоже пока игнорю
+  status: -
+
+- name: Россети Волга ао
+  inn: 6450925977
+  link: https://e-disclosure.ru/portal/files.aspx?id=12131&type=4
+  ticker: MRKV
+  isin: RU000A0JPPN4
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) у них не понравилась почти полная отмена дивов в 2020-2022, пока игнорирую
+  status: -
+
+- name: Курганская генер.комп.ПАО ао
+  inn: 4501122913
+  link: https://e-disclosure.ru/portal/files.aspx?id=17935&type=4
+  ticker: KGKC,KGKCP
+  isin: RU000A0JP120
+  dividends_policy: по префам: 15% от чп по рсбу и не меньше обычки
+  decision: (2026.01.05) судя по смартлабу дивы снижаются с 2017 на обычну, а по префам платят больше чем зарабывают, игнорирую
+  status: -
+
+- name: ПАО "Уральская кузница" ао
+  inn: 7420000133
+  link: https://e-disclosure.ru/portal/files.aspx?id=5234&type=4
+  ticker: URKZ
+  isin: RU000A0JPFY2
+  decision: (2026.01.05) пока не платили, игнорирую
+  status: -
+
+- name: ВУШ Холдинг ао
+  inn: 9703103060
+  link: https://e-disclosure.ru/portal/files.aspx?id=38772&type=4
+  ticker: WUSH
+  isin: RU000A105EX7
+  dividends_policy: до 50% чп по мсфо? при ЧД/EBITDA<2.5
+  decision: (2026.01.05) платить начали с 2023, пока наблюдаю, не лезу
+  status: -
+
+- name: Россети Сев. Кавказ ао
+  inn: 2632082033
+  link: https://www.rossetisk.ru/shareholders_and_investors/raskrytie_informatsii/mezhdunarodnaya_otchetnost/
+  ticker: MRKK
+  isin: RU000A0JPPQ7
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.05) не платят с 2014, игнорирую
+  status: -
+
+- name: ТНС энерго Ростов. ПАО ао
+  inn: 6168002922
+  link: https://e-disclosure.ru/portal/files.aspx?id=6930&type=4
+  ticker: RTSB,RTSBP
+  isin: RU000A0D8PB4
+  dividends_policy: 10% от скор чп по рсбу
+  decision: (2026.01.05) с 2016 по 2024 отменяли выплаты 5 раз, пока игнорирую
+  status: -
+
+- name: Камчатскэнерго ПАО ао
+  inn: 4100000668
+  link: https://e-disclosure.ru/portal/files.aspx?id=1409&type=4
+  ticker: KCHE,KCHEP
+  isin: RU0006753498
+  dividends_policy: по префам платят 10% от чп по рсбу?, но не меньше чем по обычке
+  decision: (2026.01.05) не платят с 2016, игнорирую
+  status: -
+
+- name: ТНС энерго Воронеж ПАО ао
+  inn: 3663050467
+  link: https://e-disclosure.ru/portal/files.aspx?id=4717&type=3
+  ticker: VRSB,VRSBP
+  isin: RU000A0DPG67
+  dividends_policy: 10% от скор чп по рсбу
+  decision: (2026.01.05) с 2016 по 2024 отменяли выплаты 4 раз, пока игнорирую
+  status: -
+
+- name: ТНС энерго Нижний Новг.ПАО ао
+  inn: 5260148520
+  link: https://e-disclosure.ru/portal/files.aspx?id=7022&type=3
+  ticker: NNSB,NNSBP
+  isin: RU000A0ET5A1
+  dividends_policy: 10% от скор чп по рсбу
+  decision: (2026.01.05) не платят с 2016, игнорирую
+  status: -
+
+- name: ТНС энерго Кубань ПАО ао
+  inn: 2308119595
+  link: https://e-disclosure.ru/portal/files.aspx?id=10624&type=3
+  ticker: KBSB
+  isin: RU000A0JNJ11
+  dividends_policy: 10% от скор чп по рсбу
+  decision: (2026.01.05) с 2016 по 2024 отменяли выплаты 4 раз, пока игнорирую
+  status: -
+
+- name: ТНС энерго Ярославль ПАО ао
+  inn: 7606052264
+  link: https://e-disclosure.ru/portal/files.aspx?id=6050&type=3
+  ticker: YRSB,YRSBP
+  isin: RU000A0D8760
+  dividends_policy: 10% от скор чп по рсбу (не проверял, просто предположил что у всех тнс-энерго одинаковая див. политика)
+  decision: (2026.01.05) не платят с 2016, игнорирую
+  status: -
+
+- name: Россети Юг  (ПАО) ао
+  inn: 6164266561
+  link: https://e-disclosure.ru/portal/files.aspx?id=11999&type=4
+  ticker: MRKY
+  isin: RU000A0JPPG8
+  dividends_policy: 50% от чп по мсфо (не проверял, поставил как и всем россетям)
+  decision: (2026.01.05) не платят с 2019, игнорирую
+  status: -
+
+- name: ПАО Россети Северо-Запад ао
+  inn: 7802312751
+  link: https://e-disclosure.ru/portal/files.aspx?id=12761&type=4
+  ticker: MRKZ
+  isin: RU000A0JPPB9
+  dividends_policy: 50% от чп по мсфо (не проверял, поставил как и всем россетям)
+  decision: (2026.01.05) не платят с 2019, игнорирую
+  status: -
+
+- name: ао ПАО "ТГК-14"
+  inn: 7534018889
+  link: https://e-disclosure.ru/portal/files.aspx?id=9396&type=4
+  ticker: TGKN
+  isin: RU000A0H1ES3
+  dividends_policy: 50% от чп по рсбу
+  decision: (2026.01.05) платить начали с 2022, пока понаблюдаю, не лезу
+  status: -
+
+- name: ТНС энерго Марий Эл ПАО ао
+  inn: 1215099739
+  link: https://e-disclosure.ru/portal/files.aspx?id=6070&type=3
+  ticker: MISB,MISBP
+  isin: RU000A0D8K33
+  dividends_policy: 10% от скор чп по рсбу (не проверял, просто предположил что у всех тнс-энерго одинаковая див. политика)
+  decision: (2026.01.05) отменяли дивы в 2020 и 2023, пока игнорирую
+  status: -
+
+- name: "Газпром" (ПАО) ао
+  inn: 7736050003
+  link: https://www.gazprom.ru/investors/disclosure/reports/2024/
+  ticker: GAZP
+  isin: RU0007661625
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7736050003&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  financials:
+    years: 2014-2024
+    revenue(млрд): 5589, 6073, 6111, 6546, 8224, 7659, 6322, 10241, 11673, 8541, 10715
+    net_income(млрд): 157, 805, 997, 766, 1529, 1270, 162, 2159, 1311, -583, 1319
+    dps(руб): 7.20, 7.89, 8.04, 8.04, 16.61, 15.24, 12.55, 0, 51.03, 0, 0
+  dividends_policy: 50% от скорректированной ЧП, если ЧД/EBITDA < 2.5
+  decision: (2025.12.31) дивы не платят, убытки недавно были, пока игнорирую
+  status: -
+
+- name: ГМК "Нор.Никель" ПАО ао
+  inn: 8401005730
+  link: https://nornickel.ru/investors/disclosure/financials/
+  ticker: GMKN
+  isin: RU0007288411
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=8401005730&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  decision: (2025.12.31) старая див. политика прекратила действие в 2023, с тех пор дивы не платили, пока игноририрую
+  status: -
+
+- name: МКПАО ЯНДЕКС
+  inn: 3900019850
+  link: https://ir.yandex.ru/financial-releases?year=2025 + https://porti.ru/company/mfso/MOEX:YDEX + https://ir.yandex/financial-releases?archive
+  ticker: YDEX
+  isin: RU000A107T19
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=3900019850&isin=&koNumber=&typeGroup=3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  decision: (2025.12.31) нет див. политики, да и дивы начали платить только в 2024, пока игнорирую
+  status: -
+
+- name: МКПАО Озон
+  inn: 3900045916
+  link: https://e-disclosure.ru/portal/files.aspx?id=39583&type=4
+  ticker: OZON
+  isin: RU000A10CW95
+  decision: (2025.12.31) нет див. политики, поэтому пока игнорирую
+  status: -
+
+- name: ГАЗ-Тек ПАО ао
+  inn: 7705821841
+  link: https://gaz-tek.ru/svodnaya.html + https://gaz-tek.ru/fin.html
+  ticker: GAZT
+  isin: RU000A0JS199
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7705821841&isin=&koNumber=&typeGroup=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 A+)
+  decision: (2025.12.31) не нашел в див. политике информацию о размере дивов и в целом историю дивидендов, поэтому игнорирую
+  status: -
+
+- name: Сургутнефтегаз ПАО акции об.
+  inn: 8602060555
+  link: https://www.surgutneftegas.ru/investors/essential_information/reporting/
+  ticker: SNGS,SNGSP
+  isin: RU0008926258
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=Сургутнефтегаз&inn=&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 A+)
+  financials:
+    years: 2017-2024
+    dps(руб): 1.38, 7.62, 0.97, 6.72, 4.73, 0.8, 12.29, 8.5
+  dividends_policy: дивы по префам составляют 10% от ЧП + дивы по префам должны быть не меньше дивов по обычке
+  decision: (2025.12.31) чп и дивы волатильны, и насколько я помню - сильно зависят от курса доллара (из-за переоценки), поэтому пока игнорирую это дело
+  status: -
+
+- name: Северсталь (ПАО)ао
+  inn: 3528000597
+  link: https://severstal.com/rus/ir/indicators-reporting/financial-results/
+  ticker: CHMF
+  isin: RU0009046510
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=3528000597&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2025.12.31 AAA)
+  financials:
+    years: 2014-2025
+    revenue(млрд): 311.5, 382, 385, 450, 528, 517, 485, 835, -, 649, 701, 802
+    net_income(млрд): -53, 34.4, 102, 145, 128, 114, 74, 299, -, 108, 193, 149
+    fcf(млрд): 50, 90, 47, 70, 97, 67, 57, 258, -, 150, 106, 58
+    dps(руб): 62.86, 53.26, 73.14, 110.06, 156.37, 121.7, 106.39, 253.42, 0, 0, 309.93, 0
+  dividends_policy: ЧД/EBITDA < 0.5 => >100% fcf; ЧД/EBITDA < 1 => 100% fcf; ЧД/EBITDA > 1 => 50% fcf;
+  decision: (2026.01.01) пока игнорирую, т.к. перестали дивы платить
+  status: -
+
+- name: ПАО "НЛМК" ао
+  inn: 4823006703
+  link: https://nlmk.com/ru/about/governance/regulatory-disclosure/financial-statements/?apply_filter=Y&documents_filter%5Bkeywords%5D=&documents_filter%5Byear%5D=all
+  ticker: NLMK
+  isin: RU0009046452
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=4823006703&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  dividends_policy: ЧД/EBITDA < 1 => >=100% fcf; ЧД/EBITDA > 1 => 50% fcf
+  decision: (2026.01.01) пока игнорирую, т.к. перестали дивы платить
+  status: -
+
+- name: "Магнитогорск.мет.комб" ПАО ао
+  inn: 7414003633
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=9&type=4
+  ticker: MAGN
+  isin: RU0009084396
+  dividends_policy: ЧД/EBITDA < 1 => >=100% fcf; ЧД/EBITDA > 1 => 50% fcf
+  decision: (2026.01.01) пока игнорирую, т.к. перестали дивы платить
+  status: -
+
+- name: РУСАЛ ОК МКПАО ао
+  inn: 3906394938
+  link: https://rusal.ru/investors/financial-stat/msfo/
+  ticker: RUAL
+  isin: RU000A1025V3
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=3906394938&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 A+)
+  decision: (2026.01.01) платили дивиденды до 2017 включительно + в 2022, в остальные годы не платили, поэтому игнорирую
+  status: -
+
+- name: Об.авиастр.корп. ПАО ао
+  inn: 7708619320
+  link: 
+  ticker: UNAC
+  isin: RU000A0JPLZ7
+  decision: (2026.01.01) не нашел у них див. политику и в целом информации о выплатах, игнорирую
+  status: -
+
+- name: ао ПАО Банк ВТБ
+  inn: 7702070139
+  link: https://www.vtb.ru/ir/statements/results/
+  ticker: VTBR
+  isin: RU000A0JP5V6
+  dividends_policy: 25% от ЧП по МСФО
+  decision: (2026.01.01) не платили дивы в 2022-2024, и до этого не сказать что дивы росли, поэтому пока игнорирую
+  status: -
+
+- name: ПИК СЗ (ПАО) ао
+  inn: 7713011336
+  link: https://pik-group.ru/about/news-and-reports/reports/financial-results + https://e-disclosure.ru/portal/files.aspx?id=44&type=4
+  ticker: PIKK
+  isin: RU000A0JP7J7
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7713011336&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AA-)
+  decision: (2026.01.01) не платят дивиденды с 2022 включительно, игнорирую
+  status: -
+
+- name: "Яковлев" ПАО ак.об.-3
+  inn: 3807002509
+  link: https://e-disclosure.ru/portal/files.aspx?id=76&type=4
+  ticker: IRKT
+  isin: RU0006752979
+  decision: (2026.01.01) не нашел у них див. политику, игнорирую
+  status: -
+
+- name: "Магнит" ПАО ао
+  inn: 2309085638
+  link: https://www.magnit.com/ru/disclosure/financial-statements/
+  ticker: MGNT
+  isin: RU000A0JKQU8
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=2309085638&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  decision: (2026.01.01) нет четких указаний в див. политике, дивы платят, но на первый взгляд не похоже что они росли после 2014, поэтому пока игнорю
+  status: -
+
+- name: МКПАО ЭН+ ГРУП ао
+  inn: 3906382033
+  link: https://enplusgroup.com/ru/investors/results-and-disclosure/ifrs/
+  ticker: ENPG
+  isin: RU000A100K72
+  decision:  (2026/01/01) - не платят дивиденды с 2018го, игнорирую
+  status: -
+
+- name: "МКБ" ПАО ао
+  inn: 7734202860
+  link: https://ir.mkb.ru/investor-relations/reports/ifrs/2024
+  ticker: CBOM
+  isin: RU000A0JUG31
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7734202860&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01, AA, A+)
+  decision: c 2014 до 2024 платили только 1 раз в 2019, поэтому пока игнорю
+  status: -
+
+- name: ПАО "РусГидро"
+  inn: 2460066195
+  link: https://rushydro.ru/investors/disclosure/reports/otchetnost-msfo
+  ticker: HYDR
+  isin: RU000A0JPKH7
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=2460066195&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AAA)
+  dividends_policy: 50% от ЧП по МСФО, но не ниже средних дивов за последние 3 года
+  decision: (2026.01.01) пока игнорю, т.к. дивы отменили до 2029
+  status: -
+
+- name: ГАЗ-сервис (ПАО) ао
+  inn: 7726510741
+  link: https://gaz-services.ru/fin.html
+  ticker: GAZS
+  isin: RU000A0JQG78
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=7726510741&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 A+)
+  decision: (2026.01.01) похоже что не платят дивы совсем, поэтому пока игнорирую
+  status: -
+
+- name: Международная компания ПАО ВК
+  inn: 3900015862
+  link: https://vk.company/ru/investors/results/
+  ticker: VKCO
+  isin: RU000A106YF0
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=3900015862&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AA)
+  decision: (2026.01.01) не платят дивы, игнорирую
+  status: -
+
+- name: НМТП (ПАО) ао
+  inn: 2315004404
+  link: https://e-disclosure.ru/portal/files.aspx?id=3900&type=4
+  ticker: NMTP
+  isin: RU0009084446
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=2315004404&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.01 AA+)
+  decision: (2026.01.02) не нашел див. политику на сайте, хотя судя по доходу - должны платить 50% от чп, пока игнорирую
+  status: -
+
+- name: "ФСК - Россети" ПАО
+  inn: 4716016979
+  link: https://e-disclosure.ru/portal/files.aspx?id=379&type=4
+  ticker: FEES
+  isin: RU000A0JPNN9
+  credit_raiting: https://ratings.cbr.ru/?formSearh=advanced&ratingName=&inn=4716016979&isin=&koNumber=&typeGroup=2%2C3%2C4%2C5%2C6%2C7%2C8&dateFrom=&dateTo=&disclaimer=1 (2026.01.02 AAA)
+  decision: (2026.01.02) не платят дивиденды с 2022, пока игнорирую
+  status: -
+
+- name: ДВ морское пароходство ПАО ао
+  inn: 2540047110
+  link: https://www.fesco.ru/ru/investor/ + https://e-disclosure.ru/portal/files.aspx?id=83&type=4
+  ticker: FESH
+  isin: RU0008992318
+  dividends_policy: (2026.01.02) не нашел див политику и информацию о выплатах, игнориую
+  decision: 
+  status: -
+
+- name: ГАЗКОН (ПАО) ао
+  inn: 7726510759
+  link: https://gazcon.ru/fin.html
+  ticker: GAZC
+  isin: RU000A0JQG86
+  decision: (2026.01.02) в див. политике на нешел как определяется размер дивов, + информации по прошлым выплатам тоже не нашел, игнорирую
+  status: -
+
+- name: ЮГК
+  inn: 7424024375
+  link: https://ugold.ru/information + https://e-disclosure.ru/portal/files.aspx?id=11794&type=4
+  ticker: UGLD
+  isin: RU000A0JPP37
+  dividends_policy: 50% от ЧП по МСФО если ЧД/EBITDA < 3
+  decision: (2026.01.02) не платят дивы с 2022го, поэтому пока игнорирую
+  status: -
+
+- name: ПАО Распадская ао
+  inn: 4214002316
+  link: https://raspadskaya.com/ru/investors/reports-and-results/financial-statements/
+  ticker: RASP
+  isin: RU000A0B90N8
+  dividends_policy: с 2022 дивы не платили, пока игнориую
+  decision: 
+  status: -
+
+- name: Группа Русагро
+  inn: 5003077160
+  link: https://www.rusagrogroup.ru/ru/investoram/otchety-i-publikacii/
+  ticker: RAGR
+  isin: RU000A0JQUZ6
+  decision: (2026.01.02) не платят с 2022, пока игнорирую
+  status: -
+
+- name: Росгосстрах СК ПАО ао
+  inn: 7707067683
+  link: https://www.rgs.ru/about/raskrytie-informatsii/bukhgalterskaya-otchetnost
+  ticker: RGSS
+  isin: RU0008010855
+  decision: (2026.01.02) непонятно как считаются дивиденды и история выплат пока, пока игнорирую
+  status: -
+
+- name: Сегежа ао
+  inn: 9703024202
+  link: https://segezha-group.com/investors/report/financial-results/
+  ticker: SGZH
+  isin: RU000A102XG9
+  dividends_policy: 75-100% от fcf (считают по-своему)
+  decision: (2026.01.02) не платили за 2022-2024, пока игнорирую
+  status: -
+
+- name: Юнипро ПАО ао
+  inn: 8602067092
+  link: https://unipro.energy/shareholders/reports/finance_reports/2024/
+  ticker: UPRO
+  isin: RU000A0JNGA5
+  decision: (2026.01.02) не платили дивы в 2021-2024, игнорирую
+  status: -
+
+- name: ПАО НПК ОВК ао
+  inn: 7705522866
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=35102&type=4
+  ticker: UWGN
+  isin: RU000A0JVBT9
+  decision: (2026.01.02) из див политики непонятно как определяется размер дивов, игнорирую
+  status: -
+
+- name: ПАО "МГТС" ао (5 в)
+  inn: 7710016640
+  link: https://e-disclosure.ru/portal/files.aspx?id=1017&type=4
+  ticker: MGTS,MGTSP
+  isin: RU0009036461
+  dividends_policy: не меньше 10% от чп по префам и не меньше дивов по обычке
+  decision: (2026.01.02) с 2020го не платят, игнорирую
+  status: -
+
+- name: Авиакомпания "ЮТэйр" (ПАО) ао
+  inn: 7204002873
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=1171&type=4
+  ticker: UTAR
+  isin: RU0007661385
+  decision: (2026.01.02) не нашел див. политику, игнорирую
+  status: -
+
+- name: ПРОМОМЕД
+  inn: 9702034818
+  link: https://promomed.ru/investors/information-disclosure-pao
+  ticker: PRMD
+  isin: RU000A108JF7
+  dividends_policy: ЧД/EBITDA <= 1 -> 50% от скорр ЧП по МСФО, ЧД/EBITDA <= 2 -> 25%, ЧД/EBITDA <= 2.5 -> 15%, иначе - не платят
+  decision: (2026.01.02) похоже что не платят дивы и судя по интернетам не будут платить до 2027, игнорирую
+  status: -
+
+- name: ИНГРАД ПАО ао
+  inn: 7702336269
+  link: https://www.ingrad.ru/disclosure_msfo + https://e-disclosure.ru/portal/files.aspx?id=1664&type=4
+  ticker: KFBA
+  isin: RU000A0DJ9B4
+  decision: (2026.01.02) не нашел инфу о дивидендах, игнорирую
+  status: -
+
+- name: ГК Самолет ао
+  inn: 9731004688
+  link: https://samolet.ru/investors/shareholders/financialresults/ + https://e-disclosure.ru/portal/files.aspx?id=36419&type=4
+  ticker: SMLT
+  isin: RU000A0ZZG02
+  decision: (2026.01.02) не платят дивы в 2022-2024, игнорирую
+  status: -
+
+- name: АКБ "АВАНГАРД" ПАО ао
+  inn: 7702021163
+  link: https://www.avangard.ru/rus/about/inforaskr/
+  ticker: AVAN
+  isin: RU000A0DM7B3
+  decision: (2026.01.02) не нашел конкретных рекомендаций в див. политике, пока игнорирую
+  status: -
+
+- name: ПАО ИНАРКТИКА
+  inn: 7816430057
+  link: https://inarctica.com/investors/reports-and-results/financial-statements/
+  ticker: AQUA
+  isin: RU000A0JQTS3
+  decision: (2026.01.02) - платят вроде регулярно, но при этом в див политике нет четких указаний как считать размер дивов
+  status: -
+
+- name: ННК-Варьеганнефтегаз ПАО ао
+  inn: 8609000160
+  link: https://e-disclosure.ru/portal/files.aspx?id=3166&type=4
+  ticker: VJGZ,VJGZP
+  isin: RU0009046460
+  decision: (2026.01.02) не платят дивы с 2020, игнорирую
+  status: -
+
+- name: Якутская топл.-энерг. комп. ао
+  inn: 1435032049
+  link: https://e-disclosure.ru/portal/files.aspx?id=4994&type=4
+  ticker: YAKG
+  isin: RU0007796819
+  decision: (2026.01.02) если верить интернетам - не платят дивы с 2016 (исключение 2021), + не нашел в див политике инфу о размере дивов, игнорирую
+  status: -
+
+- name: ао "Славнефть-Мегионнефтегаз"
+  inn: 8605003932
+  link: https://e-disclosure.ru/portal/files.aspx?id=568&type=4
+  ticker: MFGS,MFGSP
+  isin: RU0009011126
+  decision: (2026.01.02) не платили дивиденды с 2014, игнорирую
+  status: -
+
+- name: Ашинский метзавод ПАО ао
+  inn: 7401000473
+  link: https://amet.ru/invest/opening/reports/ + https://e-disclosure.ru/portal/files.aspx?id=1334&type=4
+  ticker: AMEZ
+  isin: RU000A0B88G6
+  decision: (2026.01.02) не нашел информацию по размеру дивов в див. политике, игнорю
+  status: -
+
+- name: ап"Объединён.  маш. заводы"
+  inn: 6663059899
+  link: https://e-disclosure.ru/portal/files.aspx?id=249&type=4
+  ticker: OMZZP
+  isin: RU0009090559
+  decision: (2026.01.02) не нашел инфу по див. политике и дивидендам, игнорирую
+  status: -
+
+- name: НКХП ПАО ао
+  inn: 2315014748
+  link: https://e-disclosure.ru/portal/files.aspx?id=10198&type=3
+  ticker: NKHP
+  isin: RU000A0BLWD7
+  decision: (2026.01.02) не нашел информацию об определении размера дивов, хотя вроде платят регулярно, но пока игнорю
+  status: -
+
+- name: СПБ Биржа ао
+  inn: 7801268965
+  link: https://e-disclosure.ru/portal/files.aspx?id=4566&type=4
+  ticker: SPBE
+  isin: RU000A0JQ9P9
+  decision: (2026.01.02) не нашел инфу об определении размера дивов, игнорирую
+  status: -
+
+- name: Южный Кузбасс ПАО ао
+  inn: 4214000608
+  link: https://www.e-disclosure.ru/portal/files.aspx?id=1411&type=4
+  ticker: UKUZ
+  isin: RU0005294775
+  decision: (2026.01.02) не нашел информации о дивах, игнорю
+  status: -
+
+- name: Мечел ПАО ао
+  inn: 7703370008
+  link: https://e-disclosure.ru/portal/files.aspx?id=1942&type=4
+  ticker: MTLR,MTLRP
+  isin: RU000A0DKXV5
+  decision: (2026.01.02) не платят дивы с 2022, игнорирую
+  status: -
+
+- name: "ДЭК" ПАО ао
+  inn: 2723088770
+    link: https://e-disclosure.ru/portal/files.aspx?id=11385&type=4
+  ticker: DVEC
+  isin: RU000A0JP2W1
+  decision: (2026.01.02) не нашел инфу о размере дивидендов, игнорирую
+  status: -
+
+- name: РКК Энергия им.С.П.Королева ао
+  inn: 5018033937
+  link: https://e-disclosure.ru/portal/files.aspx?id=1615&type=4 + https://www.energia.ru/ru/disclose/consolidated.html
+  ticker: RKKE
+  isin: RU0009095939
+  decision: (2026.01.02) не нашел инфу о размере дивидендов, игнорирую
+  status: -
+
+- name: РуссНефть НК ПАО ао
+  inn: 7717133960
+  link: https://russneft.ru/shareholders/financial_statements/?year=2024
+  ticker: RNFT
+  isin: RU000A0JSE60
+  dividends_policy: по префам платят 60-100млн$ в зависимости от цен на нефть
+  decision: (2026.01.02) фиксированный дивиденд зависящий от цены на нефть и курса доллара, пока игнорирую
+  status: -
+
+- name: ао ПАО "ТГК-1"
+  inn: 7841312071
+  link: https://e-disclosure.ru/portal/files.aspx?id=7263&type=4
+  ticker: TGKA
+  isin: RU000A0JNUD0
+  decision: (2026.01.02) не платят дивы с 2021го, игнорирую
+  status: -
+
+- name: Абрау-Дюрсо ПАО ао
+  inn: 7727620673
+  link: https://e-disclosure.ru/portal/files.aspx?id=26517&type=4
+  ticker: ABRD
+  isin: RU000A0JS5T7
+  decision: (2026.01.02) не нашел див. политику, хотя и платят вроде регулярно, пока игнорирую
+  status: -
+
+- name: Выборгский Суд.Завод ПАО ао
+  inn: 4704012874
+  link: https://e-disclosure.ru/portal/files.aspx?id=419&type=4
+  ticker: VSYD,VSYDP
+  isin: RU0006334372
+  decision: (2026.01.02) не нашел инфу по дивидендам, игнорирую
+  status: -
+
+- name: "ЭЛ5-Энерго" ПАО
+  inn: 6671156423
+  link: https://e-disclosure.ru/portal/files.aspx?id=5732&type=4
+  ticker: ELFV
+  isin: RU000A0F5UN3
+  decision: (2026.01.02) не платят дивы с 2021 и если верить доходу - не будут до 2027го
+  status: -
+
+- name: ПАО "СОЛЛЕРС"
+  inn: 3528079131
+  link: https://e-disclosure.ru/portal/files.aspx?id=1324&type=4
+  ticker: SVAV
+  isin: RU0006914488
+  decision: (2026.01.02) не понял их див. политику, пока игнорю
+  status: -
+
+- name: "КрасныйОктябрь" ПАО - ао
+  inn: 7706043263
+  link: https://e-disclosure.ru/portal/files.aspx?id=468&type=4
+  ticker: KROT,KROTP
+  isin: RU0008913850
+  dividends_policy: 
+  decision: (2026.01.02) не нашел их див политику и в целом инфу по дивам, пока игнорю
+  status: -
+
+- name: ПАО ГЛОРАКС
+  inn: 9729387137
+  link: https://e-disclosure.ru/portal/files.aspx?id=38535&type=4
+  ticker: GLRX
+  isin: RU000A10CRQ4
+  dividends_policy: до 30% от чп по мсфо при ЧД/EBITDA < 3
+  decision: (2026.01.02) дивы не платили до сих пор, пока игнорю
+  status: -
+
+- name: "Русолово" ПАО ао
+  inn: 7706774915
+  link: https://e-disclosure.ru/portal/files.aspx?id=31422&type=4
+  ticker: ROLO
+  isin: RU000A0JU1B0
+  decision: (2026.01.02) не нашел инфу о дивидендах, игнорирую
+  status: -
+
+- name: Славнефть-ЯНОС (ПАО) ао
+  inn: 7601001107
+  link: https://e-disclosure.ru/portal/files.aspx?id=947&type=4
+  ticker: JNOS,JNOSP
+  isin: RU0009100895
+  decision: (2026.01.02) судя по смартлабу - платят каждый год по 0.01р по префам, это 0.1% дд, игнорирую
+  status: -
+
+- name: МКПАО Эталон Груп
+  inn: 3900042827
+  link: https://www.etalongroup.com/investors/reports/
+  ticker: ETLN
+  isin: RU000A10C1L6
+  dividends_policy: 40% от чп по мсфо
+  decision: (2026.01.02) не платят с 2021 (судя по смартлабу), но с 2025го у них новая див. политика, пока игнорирую (нужно посмотерть за выплатами и их результатами несколько лет)
+  status: -
+
+- name: Павловский автобус ПАО ао
+  inn: 5252000350
+  link: https://e-disclosure.ru/portal/files.aspx?id=3638&type=2
+  ticker: PAZA
+  isin: RU0009083240
+  decision: (2026.01.02) судя по сматрлабу, не платят дивы, игнорирую
+  status: -
+
+- name: "М.видео" ПАО ао
+  inn: 7707602010
+  link: https://e-disclosure.ru/portal/files.aspx?id=11014&type=4
+  ticker: MVID
+  isin: RU000A0JPGA0
+  decision: (2026.01.02) не платят дивы с 2022, пока игнорирую
+  status: -
+
+- name: Белон ОАО ао
+  inn: 5410102823
+  link: https://e-disclosure.ru/portal/files.aspx?id=332&type=4
+  ticker: BLNG
+  isin: RU000A0J2QG8
+  decision: (2026.01.02) не платят дивы с 2016го судя по смартлабу, игнорирую
+  status: -
+
+- name: "ЧМК" ПАО ао
+  inn: 7450001007
+  link: https://e-disclosure.ru/portal/files.aspx?id=2116&type=4
+  ticker: CHMK
+  isin: RU0007665170
+  decision: (2026.01.01) судя по смартлабу, не платят с 2018, игнорирую
+  status: -
+
+- name: Бурятзолото ПАО ао
+  inn: 0323027345
+  link: https://e-disclosure.ru/portal/files.aspx?id=1499&type=4
+  ticker: BRZL
+  isin: RU0009288658
+  decision: (2026.01.02) судя по смартлабу не платят с 2018, игнорирую
+  status: -
+
+- name: Завод им. И.А.Лихачева ПАО ао
+  inn: 7725043886
+  link: https://e-disclosure.ru/portal/files.aspx?id=3649&type=4
+  ticker: ZILL
+  isin: RU0009086193
+  decision: (2026.01.02) судя по смартлабу не платят с 2022
+  status: -
+
+- name: ПАО "ГТМ" ао
+  inn: 9701082537
+  link: https://e-disclosure.ru/portal/files.aspx?id=37114&type=4
+  ticker: GTRK
+  isin: RU000A0ZYD22
+  decision: (2026.01.02) не платят с 2019 судя по смартлабу, игнорирую
+  status: -
+
+- name: Липецкая энергосбыт.ком.ОАО ао
+  inn: 4822001244
+  link: https://e-disclosure.ru/portal/files.aspx?id=5082&type=3
+  ticker: LPSB
+  isin: RU000A0D8MR7
+  decision: (2026.01.02) впервые заплатили в 2024, пока стоит понаблюдать, лезть не буду
+  status: -
+
+- name: ГАЗ ПАО ао
+  inn: 5200000046
+  link: https://e-disclosure.ru/portal/files.aspx?id=859&type=2
+  ticker: GAZA,GAZAP
+  isin: RU0009034268
+  decision: (2026.01.02) не платят дивы с 2021, игнорирую
+  status: -
+
+- name: "ЧКПЗ" ПАО ао
+  inn: 7449006184
+  link: https://e-disclosure.ru/portal/files.aspx?id=3306&type=3
+  ticker: CHKZ
+  isin: RU000A0JNST0
+  decision: (2026.01.02) по префам фиксирвоанные выплаты, сколько по обычке - непонятно, поэтому игнорирую
+  status: -
+
+- name: ао ПАО "ТГК-2"
+  inn: 7606053324
+  link: https://e-disclosure.ru/portal/files.aspx?id=7968&type=4
+  ticker: TGKB,TGKBP
+  isin: RU000A0JNGS7
+  decision: (2026.01.02) не платят дивы с 2016, пока игнорирую
+  status: -
+
+- name: Самараэнерго (ПАО) - ао
+  inn: 6315222985
+  link: https://e-disclosure.ru/portal/files.aspx?id=506&type=4
+  ticker: SAGO,SAGOP
+  isin: RU0009098255
+  decision: (2026.01.02) начали платить в 2022, в 2024 пропустили, игнорирую
+  status: -
+
+- name: Ламбумиз
+  inn: 7729038566
+  link: https://e-disclosure.ru/portal/files.aspx?id=36391&type=3
+  ticker: LMBZ
+  isin: RU000A108ZX6
+  dividends_policy: 10% от чп по рсбу
+  decision: (2026.01.03) выручка меньше 10млрд, игнорирую
+  status: -
+
+- name: Коршуновский ГОК ПАО ао
+  inn: 3834002314
+  link: https://e-disclosure.ru/portal/files.aspx?id=3552&type=3
+  ticker: KOGK
+  isin: RU0002155359
+  decision: (2026.01.02) не платят с 2019 (смартлаб), игнорирую
+  status: -
+
+- name: РУСС-ИНВЕСТ ИК ПАО ао
+  inn: 7704081545
+  link: https://e-disclosure.ru/portal/files.aspx?id=579&type=4
+  ticker: RUSI
+  isin: RU000A0JQ9W5
+  decision: (2026.01.02) не платят с 2011 (судя по их же сайту), игнорирую
+  status: -
+
+- name: "Лензолото" ПАО ао
+  inn: 3802000096
+  link: https://e-disclosure.ru/portal/files.aspx?id=1991&type=3
+  ticker: LNZL,LNZLP
+  isin: RU000A0JP1N2
+  decision: игнорирую, ее вроде ликвидировать собрались
+  status: -
+
+- name: Саратовский НПЗ ПАО ао
+  inn: 6451114900
+  link: https://e-disclosure.ru/portal/files.aspx?id=3707&type=3
+  ticker: KRKN,KRKNP
+  isin: RU0009100408
+  dividends_policy: по префам: 10% чп по рсбу и не меньше чем по обычке
+  decision: (2026.01.03) убыток в 2023, пока игнорирую
+  status: -
+
+- name: ПАО "Сахалинэнерго" ао
+  inn: 6500000024
+  link: https://e-disclosure.ru/portal/files.aspx?id=4842&type=4
+  ticker: SLEN
+  isin: RU0009280465
+  decision: (2026.01.02) не платят (смартлаб)
+  status: -
+
+- name: АКБ "Приморье" ао
+  inn: 2536020789
+  link: https://e-disclosure.ru/portal/files.aspx?id=2839&type=3
+  ticker: PRMB
+  isin: RU000A0DPNQ5
+  decision: судя по "доходу" - в див. полите нет информации о дивидендах
+  status: -
+
+- name: ПАО "Артген"
+  inn: 7702508905
+  link: https://e-disclosure.ru/portal/files.aspx?id=7814&type=4
+  ticker: ABIO
+  isin: RU000A0JNAB6
+  dividends_policy: 40-60% от чп по рсбу
+  decision: (2026.01.03) маленькая, выручка меньше 10млрд в 2024, игнорирую
+  status: -
+
+- name: НПО Наука ао
+  inn: 7714005350
+  link: https://e-disclosure.ru/portal/files.aspx?id=691&type=4
+  ticker: NAUK
+  isin: RU000A0JRPX9
+  decision: (2026.01.02) нет див. политики и судя по смартлабу выплаты волатильны, игнорирую
+  status: -
+
+- name: Газпром газорасп Р-н-Д ПАО ао
+  inn: 6163000368
+  link: https://e-disclosure.ru/portal/files.aspx?id=2047&type=3
+  ticker: RTGZ
+  isin: RU000A0JPG04
+  decision: (2026.01.02) не платят с 2019 (смартлаб), игнорю
+  status: -
+
+- name: "ЕвропЭлектротехника" ПАО ао
+  inn: 7716814300
+  link: https://e-disclosure.ru/portal/files.aspx?id=36330&type=4
+  ticker: EELT
+  isin: RU000A0JWW54
+  dividends_policy: 50% от чп по мсфо
+  decision: (2026.01.03) выручка меньше 10 млрд за 2024, слишком маленькая пока игнорирую
+  status: -
+
+- name: СТГ ао
+  inn: 9704168849
+  link: https://e-disclosure.ru/portal/files.aspx?id=38808&type=4
+  ticker: CARM
+  isin: RU000A105NV2
+  decision: (2026.01.02) не платят с 2021 (смартлаб)
+  status: -
+
+- name: Химпром ПАО ап
+  inn: 2124009521
+  link: https://e-disclosure.ru/portal/files.aspx?id=5727&type=4
+  ticker: HIMCP
+  isin: RU0009099006
+  decision: (2026.01.02) не платят с 2024 (доход и смартлаб), пока игнорирую
+  status: -
+
+- name: Ковровский механический завод
+  inn: 3305004397
+  link: https://e-disclosure.ru/portal/files.aspx?id=8976&type=3
+  ticker: KMEZ
+  isin: RU0006753613
+  decision: (2026.01.02) не платят с 2020 (смартлаб)
+  status: -
+
+- name: АК "Якутскэнерго" (ПАО) ао
+  inn: 1435028701
+  link: https://e-disclosure.ru/portal/files.aspx?id=169&type=4
+  ticker: YKEN,YKENP
+  isin: RU0009257075
+  decision: (2026.01.02) не платят дивы с 2016 (смартлаб)
+  status: -
+
+- name: ГК РБК ПАО ао
+  inn: 7728547955
+  link: https://e-disclosure.ru/portal/files.aspx?id=24832&type=2
+  ticker: RBCM
+  isin: RU000A0JR6A6
+  decision: (2026.01.02) не платят дивы с 2019 (смартлаб)
+  status: -
+
+- name: "Волгоград.энергосбыткомп" ПАО
+  inn: 3445071523
+  link: https://e-disclosure.ru/portal/files.aspx?id=6223&type=3
+  ticker: VGSB,VGSBP
+  isin: RU000A0D8L73
+  decision: (2026.01.02) не платят дивы с 2020 (смартлаб)
+  status: -
+
+- name: Наука-Связь ПАО ао
+  inn: 7714716995
+  link: https://e-disclosure.ru/portal/files.aspx?id=20639&type=4
+  ticker: NSVZ
+  isin: RU000A0JQLB6
+  decision: (2026.01.02) не платят дивы с 2020 (смартлаб)
+  status: -
+
+- name: ЗВЕЗДА ПАО ао
+  inn: 7811038760
+  link: https://e-disclosure.ru/portal/files.aspx?id=2537&type=3
+  ticker: ZVEZ
+  isin: RU0009091300
+  decision: (2026.01.02) не платят дивы с 2022 (смартлаб)
+  status: -
+
+- name: Ижсталь ПАО ао 2в.
+  inn: 1826000655
+  link: https://e-disclosure.ru/portal/files.aspx?id=4089&type=4
+  ticker: IGST,IGSTP
+  isin: RU0002155292
+  decision: (2026.01.02) не платят дивы с 2020 (смартлаб)
+  status: -
+
+- name: РоссийскийДорож Банк ПАО ао
+  inn: 7718011918
+  link: https://e-disclosure.ru/portal/files.aspx?id=1398&type=3
+  ticker: RDRB
+  isin: RU000A0JU6Q7
+  dividends_policy: 25% от чп по мсфо
+  decision: (2026.01.03) маленькая, выручка за 2024 меньше 10млрд, пока игнорирую
+  status: -
+
+- name: ТЕПЛАНТ восток (ПАО) ао
+  inn: 7447014976
+  link: https://e-disclosure.ru/portal/files.aspx?id=4744&type=4
+  ticker: PRFN
+  isin: RU000A0JNXF9
+  decision: (2026.01.02) не платят дивы с 2020 (смартлаб)
+  status: -
+
+- name: МГКЛ ао
+  inn: 7707600245
+  link: https://e-disclosure.ru/portal/files.aspx?id=11244&type=4
+  ticker: MGKL
+  isin: RU000A0JVJQ8
+  dividends_policy: 25-50% от чп по рсбу
+  decision: (2026.01.03) выручка в 2024 меньше 10млрд, пока игнорирую
+  status: -
+
+- name: Соликамский магн.завод(ОАО)ао
+  inn: 5919470019
+  link: https://e-disclosure.ru/portal/files.aspx?id=6100&type=3
+  ticker: MGNZ
+  isin: RU0009100911
+  decision: (2026.01.03) не платят с 2023, пока игнорирую
+  status: -
+
+- name: Алкогольная Группа Кристалл
+  inn: 9731121416
+  link: https://e-disclosure.ru/portal/files.aspx?id=39009&type=4
+  ticker: KLVZ
+  isin: RU000A107KX0
+  decision: (2026.01.03) не нашел у них див политику, игнорирую
+  status: -
+
+- name: Южно-Уральский никел. комб. ао
+  inn: 5613000143
+  link: https://e-disclosure.ru/portal/files.aspx?id=3987&type=4
+  ticker: UNKL
+  isin: RU0004887991
+  decision: (2026.01.03) не платят дивы, игнорирую
+  status: -
+
+- name: Саратовэнерго(ПАО)-ао
+  inn: 6450014808
+  link: https://e-disclosure.ru/portal/files.aspx?id=3346&type=3
+  ticker: SARE,SAREP
+  isin: RU0009100754
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: Нижнекамскшина ПАО ао
+  inn: 1651000027
+  link: https://e-disclosure.ru/portal/files.aspx?id=152&type=3
+  ticker: NKSH
+  isin: RU0009100515
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: ао ПАО "Россети Томск"
+  inn: 7017114672
+  link: https://e-disclosure.ru/portal/files.aspx?id=7242&type=3
+  ticker: TORS,TORSP
+  isin: RU000A0ETZF2
+  dividends_policy: 50% от чп по мсфо (не проверял, поставил как и всем россетям)
+  decision: (2026.01.03) выруцчка постепенно растет, но чп и дивы волательны, да и выручка только подбирается к 10млрд, пока игнорирую
+  status: -
+
+- name: НЕФАЗ ПАО ао
+  inn: 0264004103
+  link: https://e-disclosure.ru/portal/files.aspx?id=227&type=3
+  ticker: NFAZ
+  isin: RU0009115604
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: ЦГРМ ГЕНЕТИКО ао
+  inn: 9731078633
+  link: https://e-disclosure.ru/portal/files.aspx?id=38201&type=3
+  ticker: GECO
+  isin: RU000A105BN4
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: "Астраханская ЭСК" ПАО
+  inn: 3017041554
+  link: https://e-disclosure.ru/portal/files.aspx?id=5966&type=3
+  ticker: ASSB
+  isin: RU000A0D8MM8
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: ао"Тамбов.энергсбыт.комп."ПАО
+  inn: 6829010210
+  link: https://e-disclosure.ru/portal/files.aspx?id=5121&type=3
+  ticker: TASB,TASBP
+  isin: RU000A0D8NG8
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: РН-Западная Сибирь ПАО ао
+  inn: 8620003528
+  link: https://e-disclosure.ru/portal/files.aspx?id=3867&type=3
+  ticker: CHGZ
+  isin: RU0009082291
+  decision: (2026.01.03) не платят дивы (бкс), игнорирую
+  status: -
+
+- name: ао"Калужская сбыт.комп."ПАО
+  inn: 4029030252
+  link: https://e-disclosure.ru/portal/files.aspx?id=5830&type=4
+  ticker: KLSB
+  isin: RU000A0DKZK3
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: ПАО ММЦБ ао
+  inn: 7736317497
+  link: https://e-disclosure.ru/portal/files.aspx?id=37646&type=3
+  ticker: GEMA
+  isin: RU000A100GC7
+  decision: (2026.01.03) выручка за 2024 350млн, слишком маленькая, пока не лезу
+  status: -
+
+- name: РОСИНТЕР РЕСТОРАНТС (ПАО)
+  inn: 7722514880
+  link: https://e-disclosure.ru/portal/files.aspx?id=9038&type=4
+  ticker: ROST
+  isin: RU000A0JP922
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: "Центральный Телеграф" ПАО ао
+  inn: 7710146208
+  link: https://e-disclosure.ru/portal/files.aspx?id=369&type=3
+  ticker: CNTL,CNTLP
+  isin: RU0007665147
+  decision: (2026.01.03) выручка за 2024 1млрд, слишком маленькая, пока не лезу
+  status: -
+
+- name: Донской завод радиодеталей ао
+  inn: 7114001610
+  link: https://e-disclosure.ru/portal/files.aspx?id=5496&type=4
+  ticker: DZRD,DZRDP
+  isin: RU000A0JQW11
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: Фармсинтез ПАО ао
+  inn: 7801075160
+  link: https://e-disclosure.ru/portal/files.aspx?id=4378&type=4
+  ticker: LIFE
+  isin: RU000A0JR514
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: "Магаданэнерго" ПАО ао
+  inn: 4909047148
+  link: https://e-disclosure.ru/portal/files.aspx?id=3566&type=4
+  ticker: MAGE,MAGEP
+  isin: RU0006758919
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: Левенгук ПАО ао
+  inn: 7839462305
+  link: https://e-disclosure.ru/portal/files.aspx?id=31319&type=4
+  ticker: LVHK
+  isin: RU000A0JT7Y2
+  decision: (2026.01.03) выручка за 2024 1млрд, слишком маленькая, пока не лезу
+  status: -
+
+- name: Мордовск.энергсбыт.комп.ПАО ао
+  inn: 1326192645
+  link: https://e-disclosure.ru/portal/files.aspx?id=5754&type=3
+  ticker: MRSB
+  isin: RU000A0D9AJ7
+  dividends_policy: не меньше 5% от EBITDA по МСФО
+  decision: (2026.01.03) выручка 2024 меньше 10млрд, пока не лезу
+  status: -
+
+- name: УК Арсагера ПАО-ао
+  inn: 7840303927
+  link: https://e-disclosure.ru/portal/files.aspx?id=7220&type=4
+  ticker: ARSA
+  isin: RU000A0JP0Q7
+  decision: (2026.01.03) дивы не стабильны, у этой компании лучше смотреть их фонды, чем акции (они сами так говорили в своих лекциях)
+  status: -
+
+- name: Туймаз. завод автобетоновозов
+  inn: 0269008334
+  link: https://e-disclosure.ru/portal/files.aspx?id=7220&type=4
+  ticker: TUZA
+  isin: RU000A0HL7A2
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: ТКЗ Красный котельщик ПАО ап
+  inn: 6154023009
+  link: https://e-disclosure.ru/portal/files.aspx?id=222&type=4
+  ticker: KRKOP
+  isin: RU0009098131
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: Владимирский химич.з-д(ПАО) ао
+  inn: 3302000669
+  link: https://e-disclosure.ru/portal/files.aspx?id=86&type=4
+  ticker: VLHZ
+  isin: RU0007984761
+  decision: (2026.01.03) не платят дивы (смартлаб), игнорирую
+  status: -
+
+- name: Завод ДИОД ПАО ао
+  inn: 7725024805
+  link: https://e-disclosure.ru/portal/files.aspx?id=10180&type=4
+  ticker: DIOD
+  isin: RU000A0JQWC1
+  decision: (2026.01.03) маленькая компания (выручка меньше 1млнд), пока игнорирую
+  status: -
+
+- name: Банк "Кузнецкий" ПАО ао
+  inn: 5836900162
+  link: https://e-disclosure.ru/portal/files.aspx?id=30898&type=3
+  ticker: KUZB
+  isin: RU000A0JSQ66
+  decision: (2026.01.03) маленькая компания (выручка 1.2млрд за 2024), пока игнорирую
+  status: -
+
+- name: Башинформсвязь(ПАО) ап
+  inn: 0274018377
+  link: https://e-disclosure.ru/portal/files.aspx?id=201&type=4
+  ticker: BISVP
+  isin: RU0009100176
+  financials:
+    years: 2018-2024
+    revenue(млрд): 8.3, 9.6, 16.1, 21.6, 25.7, 31.9, 25.9
+    net_income(млрд): 1.8, 2.2, 1.0, 2.4, 2.8, 2.6, 0.8
+  dividends_policy: 10% от чп по рсбу (доход)
+  decision: (2026.01.03) рост выручки остановился в последние годы, чп при этом не особо изменилась, пока игнорирую
+  status: -
+
+- name: Светофор Групп ао
+  inn: 7814693830
+  link: https://e-disclosure.ru/portal/files.aspx?id=37412&type=3
+  ticker: SVET,SVETP
+  isin: RU000A100592
+  dividends_policy: 50% от чп по рсбу, по префам 18% от чп
+  decision: (2026.01.03) маленькая компания (выручка меньше 1млнд), пока игнорирую
+  status: -
